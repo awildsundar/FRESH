@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://c43y7nu4sfey0"]
+
+[ext_resource type="Theme" uid="uid://d0gsu4euvwmc2" path="res://assets/themes/dialogue_main.tres" id="1_cho1d"]
+[ext_resource type="Script" uid="uid://doy586bu0w1uo" path="res://scripts/dialogue ui/ButtonChoice.gd" id="2_2y7ds"]
+[ext_resource type="Shader" uid="uid://v25fv3pgcsls" path="res://assets/shaders/dots.gdshader" id="2_7f57b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnisv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e24f2"]
+shader = ExtResource("2_7f57b")
+shader_parameter/frame_size = 10.0
+shader_parameter/dot_size = 0.4
+shader_parameter/edge_softness = 0.1
+shader_parameter/brightness_variation = 0.0
+shader_parameter/brightness_threshold = 0.01
+shader_parameter/rotation_angle = 0.0
+shader_parameter/blend_mode = true
+shader_parameter/color1 = Color(0, 0, 0, 1)
+shader_parameter/color2 = Color(0.70575434, 0.31594193, 0.35765678, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dnisv"]
+expand_margin_left = 15.0
+expand_margin_top = 5.0
+expand_margin_right = 15.0
+expand_margin_bottom = 5.0
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -45.5
+offset_right = 275.0
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme = ExtResource("1_cho1d")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dnisv")
+script = ExtResource("2_2y7ds")
+hover_time = 0.1
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_e24f2")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dnisv")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "OH NO"
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]

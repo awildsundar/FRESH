@@ -1,0 +1,34 @@
+[
+	{"speed": 5.0},
+	{"speaker": "Archita", "text": "Hello... Is it on?"},
+	{"speed": 0.5},
+	{"speaker": "Marino", "text": "I think so."},
+	{"speed": 1.0},
+	{"speaker": "Kazuki", "text": "Maybe the [b]big red light[/b] can tell us!"},
+	{"cutscene": ["1", "2"]},
+	{"speaker": "Archita", "text": "Oh shut up!"},
+	{"speaker": "Archita", "text": "We are the... wait what are we again?"},
+	{"speaker": "Marino", "text": "We never came up with a name."},
+	{"cutscene": ["2", "3"]},
+	{"speaker": "Kazuki", "text": "Shit, we can't make a vlog without a name! What should it be?"},
+	
+	{"choices": 
+		[
+			{"text": "Phantom Thieves", "goto": "Phantom Thieves"},
+			{"text": "The Midnight Jewellers", "goto": "The Midnight Jewellers"},
+			{"text": "I dunno.", "goto": "I dunno."}
+		]
+	},
+	
+	{"header": "Phantom Thieves"},
+	{"speaker": "Kazuki", "text": "We can't just rip off Persona!"},
+	{"goto": "I dunno."},
+	
+	{"header": "The Midnight Jewellers"},
+	{"speaker": "Marino", "text": "That sounds like a sex store."},
+	{"goto": "I dunno."},
+	
+	{"header": "I dunno."},
+	{"cutscene": ["3", "4"]},
+	{"speaker": "Marino", "text": "This is hopeless..."},
+]

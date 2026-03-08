@@ -1,0 +1,55 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://d0gsu4euvwmc2"]
+
+[ext_resource type="FontFile" uid="uid://bcerfql0dx2fx" path="res://assets/fonts/REVISTA.ttf" id="1_28624"]
+[ext_resource type="FontFile" uid="uid://b5dhckroyimyu" path="res://assets/fonts/AlumniSansSC-VariableFont_wght.ttf" id="2_28624"]
+[ext_resource type="StyleBox" uid="uid://d2vyytb1qmbgd" path="res://assets/themes/character_name_stylebox.tres" id="3_28624"]
+
+[sub_resource type="FontVariation" id="FontVariation_gn4rb"]
+base_font = ExtResource("2_28624")
+variation_opentype = {
+2003265652: 500
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gn4rb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0dvrn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_28624"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vwcx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phb0b"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+
+[sub_resource type="FontVariation" id="FontVariation_f8sgq"]
+base_font = ExtResource("2_28624")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="FontVariation" id="FontVariation_28624"]
+base_font = ExtResource("2_28624")
+variation_opentype = {
+2003265652: 300
+}
+
+[resource]
+Button/font_sizes/font_size = 75
+Button/fonts/font = SubResource("FontVariation_gn4rb")
+Button/styles/focus = SubResource("StyleBoxEmpty_gn4rb")
+Button/styles/hover = SubResource("StyleBoxEmpty_0dvrn")
+Button/styles/normal = SubResource("StyleBoxEmpty_28624")
+Button/styles/pressed = SubResource("StyleBoxEmpty_0vwcx")
+Label/font_sizes/font_size = 60
+Label/fonts/font = ExtResource("1_28624")
+Label/styles/normal = ExtResource("3_28624")
+Panel/styles/panel = SubResource("StyleBoxFlat_phb0b")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
+RichTextLabel/font_sizes/bold_font_size = 55
+RichTextLabel/font_sizes/normal_font_size = 55
+RichTextLabel/fonts/bold_font = SubResource("FontVariation_f8sgq")
+RichTextLabel/fonts/normal_font = SubResource("FontVariation_28624")
