@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://c6ldg60vhftek"]
+[gd_scene format=4 uid="uid://c6ldg60vhftek"]
 
 [ext_resource type="Script" uid="uid://cvpooeswrpwfe" path="res://scripts/Enemy.gd" id="1_3gvst"]
 [ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_55jtl"]
@@ -256,6 +256,33 @@ blend_shape_mode = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_55jtl"]
 size = Vector3(50, 50, 50)
+
+[sub_resource type="Animation" id="Animation_55jtl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature/Skeleton3D/BoneAttachment3D:bone_name")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["mixamorig_RightToeBase"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Armature/Skeleton3D/BoneAttachment3D/HitBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_us8gq"]
 resource_name = "death"
@@ -5803,33 +5830,6 @@ tracks/97/interp = 1
 tracks/97/loop_wrap = true
 tracks/97/keys = PackedFloat32Array(0, 1, 0.35144532, -1.4208277e-08, -1.2295025e-07, 0.9362084, 0.033333335, 1, 0.35144532, -1.4208277e-08, -1.2295025e-07, 0.9362084, 0.06666667, 1, 0.31235585, 1.642933e-08, -1.7575199e-07, 0.9499652, 0.1, 1, 0.27785936, -2.6345738e-08, -1.2250091e-07, 0.9606218, 0.13333334, 1, 0.2795349, 4.222216e-08, -1.226533e-07, 0.9601355, 0.16666667, 1, 0.32190996, 4.2503476e-08, -1.10763715e-07, 0.9467703, 0.2, 1, 0.33407873, -6.6153966e-08, -1.5380113e-08, 0.94254524, 0.23333333, 1, 0.34705925, 1.2308177e-08, -7.021857e-08, 0.93784326, 0.26666668, 1, 0.3770396, 2.3349859e-08, -1.4118419e-07, 0.9261971, 0.3, 1, 0.4220101, 5.1009152e-08, -2.3381561e-07, 0.9065912, 0.33333334, 1, 0.53398246, 2.900842e-08, -1.765782e-07, 0.84549564, 0.36666667, 1, 0.5838217, -0.04778871, -0.02501333, 0.8100882, 0.4, 1, 0.29723278, -9.657787e-09, -1.1971257e-07, 0.9548051, 0.43333334, 1, 0.28600556, 4.8642374e-08, -1.3630505e-07, 0.958228, 0.46666667, 1, 0.30486283, 1.1583034e-07, -1.4967377e-07, 0.9523963, 0.5, 1, 0.2473461, -1.1838884e-08, -1.7318017e-07, 0.9689272, 0.53333336, 1, 0.27467132, 3.295278e-08, -1.2916973e-07, 0.9615382, 0.56666666, 1, 0.35144514, -2.572755e-08, -1.3156001e-07, 0.9362086)
 
-[sub_resource type="Animation" id="Animation_55jtl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D/BoneAttachment3D:bone_name")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["mixamorig_RightToeBase"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/Skeleton3D/BoneAttachment3D/HitBox:monitoring")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jtwqh"]
 _data = {
 &"RESET": SubResource("Animation_55jtl"),
@@ -5851,7 +5851,7 @@ radius = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3gvst"]
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("anim_player", "detection_area", "limit_area", "mesh", "nav_agent", "lock_on_indicator")]
+[node name="Enemy" type="CharacterBody3D" unique_id=1772613504 node_paths=PackedStringArray("anim_player", "detection_area", "limit_area", "mesh", "nav_agent", "lock_on_indicator")]
 collision_layer = 2
 script = ExtResource("1_3gvst")
 anim_player = NodePath("FemaleBody/AnimationPlayer")
@@ -5861,12 +5861,12 @@ mesh = NodePath("FemaleBody")
 nav_agent = NodePath("NavigationAgent3D")
 lock_on_indicator = NodePath("LockOnIndicator")
 
-[node name="FemaleBody" type="Node3D" parent="."]
+[node name="FemaleBody" type="Node3D" parent="." unique_id=1791655757]
 
-[node name="Armature" type="Node3D" parent="FemaleBody"]
+[node name="Armature" type="Node3D" parent="FemaleBody" unique_id=390526189]
 transform = Transform3D(0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="FemaleBody/Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="FemaleBody/Armature" unique_id=675991235]
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, -5.0098134e-07, 6.4714376e-09, 0, 0.012916446, 0.99991655, -5.010231e-07, -0.9999166, 0.012916445, -7.727291e-06, 1.5543158, -104.27487)
@@ -6323,57 +6323,55 @@ bones/64/position = Vector3(4.0447713e-07, 9.278136, 1.0895112e-06)
 bones/64/rotation = Quaternion(1.2162601e-08, -0.011869151, -1.4436452e-10, 0.99992955)
 bones/64/scale = Vector3(1, 1, 1)
 
-[node name="Beta_Joints" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="Beta_Joints" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=508518616]
 mesh = SubResource("ArrayMesh_rcche")
 skin = SubResource("Skin_g7kxm")
 
-[node name="Beta_Surface" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="Beta_Surface" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=433025419]
 mesh = SubResource("ArrayMesh_cahtm")
 skin = SubResource("Skin_g7kxm")
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=206596267]
 transform = Transform3D(-0.41610587, -0.9067377, -0.06842744, -0.90659356, 0.40786457, 0.10832609, -0.07031429, 0.10711098, -0.99175763, -4.800245, -20.484509, -0.9453516)
 bone_name = "mixamorig_RightToeBase"
 bone_idx = 58
 
-[node name="HitBox" type="Area3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D"]
+[node name="HitBox" type="Area3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D" unique_id=122081377]
 monitorable = false
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox" unique_id=1002130416]
 shape = SubResource("BoxShape3D_55jtl")
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="FemaleBody"]
-libraries = {
-&"": SubResource("AnimationLibrary_jtwqh")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FemaleBody" unique_id=526511659]
+libraries/ = SubResource("AnimationLibrary_jtwqh")
 playback_default_blend_time = 0.25
 
-[node name="DetectionArea" type="Area3D" parent="FemaleBody"]
+[node name="DetectionArea" type="Area3D" parent="FemaleBody" unique_id=1609596539]
 monitorable = false
 
-[node name="DetectBox" type="CollisionShape3D" parent="FemaleBody/DetectionArea"]
+[node name="DetectBox" type="CollisionShape3D" parent="FemaleBody/DetectionArea" unique_id=1134539024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
 shape = SubResource("BoxShape3D_3gvst")
 
-[node name="LimitArea" type="Area3D" parent="FemaleBody"]
+[node name="LimitArea" type="Area3D" parent="FemaleBody" unique_id=759707850]
 
-[node name="LimitCylinder" type="CollisionShape3D" parent="FemaleBody/LimitArea"]
+[node name="LimitCylinder" type="CollisionShape3D" parent="FemaleBody/LimitArea" unique_id=715778141]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_55jtl")
 debug_color = Color(0.33833334, 0.7, 0, 0.41960785)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1304060759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_3gvst")
 
-[node name="LockOnIndicator" type="Sprite3D" parent="."]
+[node name="LockOnIndicator" type="Sprite3D" parent="." unique_id=95342739]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 visible = false
 pixel_size = 0.005
 billboard = 1
 texture = ExtResource("2_55jtl")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1893583717]
 
 [connection signal="body_entered" from="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox" to="." method="damage"]

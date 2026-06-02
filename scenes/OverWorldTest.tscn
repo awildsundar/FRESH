@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://blq5h3bovmvqp"]
+[gd_scene format=3 uid="uid://blq5h3bovmvqp"]
 
 [ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/Player.tscn" id="1_ewub1"]
 [ext_resource type="Script" uid="uid://ccedidpxucfwg" path="res://scripts/interactable classes/DialogueInteractable.gd" id="2_lugn5"]
@@ -126,28 +126,28 @@ albedo_color = Color(0.5706444, 0.36327228, 0.44793844, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_balxo"]
 material = SubResource("StandardMaterial3D_xb0qy")
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=702390178]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=445103383]
 environment = SubResource("Environment_amem7")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1521081213]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=584215343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 use_collision = true
 size = Vector3(10, 0.5, 10)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=942424764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
 use_collision = true
 size = Vector3(5, 4, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_ewub1")]
+[node name="Player" parent="." unique_id=1303752194 instance=ExtResource("1_ewub1")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." node_paths=PackedStringArray("cutscene_player")]
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=820319636 node_paths=PackedStringArray("cutscene_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -4)
 script = ExtResource("2_lugn5")
 ch_list = Dictionary[String, Color]({
@@ -160,26 +160,24 @@ oneshot = true
 cutscene_name = "test"
 cutscene_player = NodePath("AnimationPlayer")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=180419111]
 mesh = SubResource("BoxMesh_ewub1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=535866263]
 shape = SubResource("BoxShape3D_lugn5")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody3D"]
-libraries = {
-&"": SubResource("AnimationLibrary_amem7")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody3D" unique_id=948823495]
+libraries/ = SubResource("AnimationLibrary_amem7")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=795004685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -2.5)
 script = ExtResource("3_amem7")
 scene = "uid://b7q4webcoivt4"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1735342826]
 mesh = SubResource("BoxMesh_balxo")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=208044596]
 shape = SubResource("BoxShape3D_lugn5")
 
 [editable path="Player"]

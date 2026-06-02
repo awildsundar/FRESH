@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cy7q15dradsep"]
+[gd_scene format=4 uid="uid://cy7q15dradsep"]
 
 [ext_resource type="Script" uid="uid://raxwijuok62h" path="res://scripts/Player.gd" id="1_p0vlq"]
 [ext_resource type="Script" uid="uid://csx0gg56jykap" path="res://scripts/CameraRig.gd" id="2_v6fml"]
@@ -295,7 +295,7 @@ _data = {
 &"RESET": SubResource("Animation_3li8b")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("mesh_main", "interact_ray", "anim_player", "nav_agent")]
+[node name="Player" type="CharacterBody3D" unique_id=432533020 node_paths=PackedStringArray("mesh_main", "interact_ray", "anim_player", "nav_agent")]
 collision_mask = 3
 script = ExtResource("1_p0vlq")
 mesh_main = NodePath("FemaleBody")
@@ -303,11 +303,11 @@ interact_ray = NodePath("FemaleBody/InteractionRay")
 anim_player = NodePath("FemaleBody/AnimationPlayer")
 nav_agent = NodePath("NavigationAgent3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1251224684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_3vyb7")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="." node_paths=PackedStringArray("interact_ray")]
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=759930845 node_paths=PackedStringArray("interact_ray")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 top_level = true
 shape = SubResource("SphereShape3D_5q5h1")
@@ -318,17 +318,17 @@ min_angle = -80.0
 lock_on_distance = 50.0
 interact_ray = NodePath("../FemaleBody/InteractionRay")
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1214149717]
 
-[node name="CameraPos" type="Node3D" parent="."]
+[node name="CameraPos" type="Node3D" parent="." unique_id=506595259]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="FemaleBody" type="Node3D" parent="."]
+[node name="FemaleBody" type="Node3D" parent="." unique_id=1687900391]
 
-[node name="Armature" type="Node3D" parent="FemaleBody"]
+[node name="Armature" type="Node3D" parent="FemaleBody" unique_id=1097181609]
 transform = Transform3D(0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="FemaleBody/Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="FemaleBody/Armature" unique_id=166121555]
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, -5.0098134e-07, 6.4714376e-09, 0, 0.012916446, 0.99991655, -5.010231e-07, -0.9999166, 0.012916445, -7.727291e-06, 1.5543158, -104.27487)
@@ -785,40 +785,38 @@ bones/64/position = Vector3(4.0447713e-07, 9.278136, 1.0895112e-06)
 bones/64/rotation = Quaternion(1.2162601e-08, -0.011869151, -1.4436452e-10, 0.99992955)
 bones/64/scale = Vector3(1, 1, 1)
 
-[node name="Beta_Joints" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="Beta_Joints" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=1505502600]
 mesh = SubResource("ArrayMesh_rcche")
 skin = SubResource("Skin_g7kxm")
 
-[node name="Beta_Surface" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="Beta_Surface" type="MeshInstance3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=9767859]
 mesh = SubResource("ArrayMesh_cahtm")
 skin = SubResource("Skin_g7kxm")
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="FemaleBody/Armature/Skeleton3D"]
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="FemaleBody/Armature/Skeleton3D" unique_id=1246083732]
 transform = Transform3D(0.702399, -0.6406305, -0.3102056, 0.68447965, 0.7274836, 0.04748337, 0.1952502, -0.24568188, 0.9494825, 5.728529, 55.934795, -131.16957)
 bone_name = "mixamorig_LeftHand"
 bone_idx = 34
 
-[node name="HitBox" type="Area3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D"]
+[node name="HitBox" type="Area3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D" unique_id=1386194400]
 transform = Transform3D(1, 2.9802322e-08, 3.7252903e-09, 0, 1.0000001, 0, 2.7939677e-09, 0, 1.0000001, 9.738132, 30.95266, -1.4602814)
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox" unique_id=503207630]
 shape = SubResource("BoxShape3D_3li8b")
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="FemaleBody"]
-libraries = {
-&"": SubResource("AnimationLibrary_mdl7e"),
-&"combat": ExtResource("3_3li8b")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FemaleBody" unique_id=1044746514]
+libraries/ = SubResource("AnimationLibrary_mdl7e")
+libraries/combat = ExtResource("3_3li8b")
 playback_default_blend_time = 0.25
 
-[node name="InteractionRay" type="RayCast3D" parent="FemaleBody"]
+[node name="InteractionRay" type="RayCast3D" parent="FemaleBody" unique_id=548186366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, 3)
 collision_mask = 3
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=475015332]
 
 [connection signal="body_entered" from="FemaleBody/Armature/Skeleton3D/BoneAttachment3D/HitBox" to="." method="damage"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://d0gsu4euvwmc2"]
+[gd_resource type="Theme" format=3 uid="uid://d0gsu4euvwmc2"]
 
 [ext_resource type="FontFile" uid="uid://bcerfql0dx2fx" path="res://assets/fonts/REVISTA.ttf" id="1_28624"]
 [ext_resource type="FontFile" uid="uid://b5dhckroyimyu" path="res://assets/fonts/AlumniSansSC-VariableFont_wght.ttf" id="2_28624"]

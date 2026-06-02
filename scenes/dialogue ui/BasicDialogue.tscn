@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfcahsdhhxqng"]
+[gd_scene format=3 uid="uid://cfcahsdhhxqng"]
 
 [ext_resource type="Theme" uid="uid://d0gsu4euvwmc2" path="res://assets/themes/dialogue_main.tres" id="1_e6bhl"]
 [ext_resource type="Script" uid="uid://dyrc2ml3u0ptc" path="res://scripts/dialogue ui/BasicDialogueComponent.gd" id="2_3c441"]
 [ext_resource type="StyleBox" uid="uid://d2vyytb1qmbgd" path="res://assets/themes/character_name_stylebox.tres" id="3_3x5r4"]
 
-[node name="BasicDialogue" type="Control" node_paths=PackedStringArray("dialogue_display", "ch_name", "choice_list")]
+[node name="BasicDialogue" type="Control" unique_id=554498208 node_paths=PackedStringArray("dialogue_display", "ch_name", "choice_list")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,7 +18,7 @@ ch_name = NodePath("Label")
 choice_list = NodePath("CenterContainer/VBoxContainer")
 ch_stylebox = ExtResource("3_3x5r4")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1725274369]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03125
@@ -30,7 +30,7 @@ grow_vertical = 0
 theme = ExtResource("1_e6bhl")
 metadata/_edit_use_anchors_ = true
 
-[node name="Dialogue Display" type="RichTextLabel" parent="Panel"]
+[node name="Dialogue Display" type="RichTextLabel" parent="Panel" unique_id=223641792]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,7 +43,7 @@ text = "hmm"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=1644177671]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -57,7 +57,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "test"
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1509272473]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +65,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1944378327]
 layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
