@@ -3,10 +3,19 @@ class_name DialogueInteractable
 
 @export_file("*.json") var timeline: String = "res://dialogues/tests/test1.json"
 # TODO: replace Node3D with custom class
+
+## Who is in this dialogue?
 @export var ch_list: Dictionary[String, Color]
+
+## Who is the main character in this chapter?
 @export var main_ch: String = "Archita"
+
+## Does the dialogue have a cutscene attached?
 @export var important_timeline: bool = false
+
 @export var oneshot: bool = false
+
+## What is the name of the cutscene in the anim player?
 @export var cutscene_name: String
 @export var cutscene_player: AnimationPlayer
 
