@@ -9,11 +9,12 @@ func enter(enemy: Enemy) -> void:
 func transition(enemy: Enemy) -> void:
 	var current_target: Node3D = enemy.find_nearest_candidate("Character")
 	var body: Array[Node3D] = enemy.limit_area.get_overlapping_bodies()
-	for node in body:
-		if node is Character:
-			enemy.change_state_to(States.enemy_states["idle"])
 	if current_target == null:
 		enemy.change_state_to(States.enemy_states["idle"])
+	for node in body:
+		if node is Character:
+			if node.hp > 0.0:
+				enemy.change_state_to(States.enemy_states["attack"])
 
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:

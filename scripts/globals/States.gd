@@ -1,11 +1,17 @@
 extends Node
 
-var character_states: Dictionary[String, BaseCharacterState] = {
-	"idle": IdleCharacterState.new(),
-	"move": MoveCharacterState.new(),
-	"attack": AttackCharacterState.new(),
-	"hurt": HurtCharacterState.new(),
-	"dash": DashCharacterState.new()
+var player_states: Dictionary[String, BasePlayerState] = {
+	"idle": IdlePlayerState.new(),
+	"move": MovePlayerState.new(),
+	"attack": AttackPlayerState.new(),
+	"hurt": HurtPlayerState.new(),
+	"dash": DashPlayerState.new(),
+	"death": DeathPlayerState.new(),
+	"switch": SwitchPlayerState.new()
+}
+
+var cpu_states: Dictionary[String, BaseCPUState] = {
+	"idle": IdleCPUState.new()
 }
 
 var enemy_states: Dictionary[String, BaseEnemyState] = {

@@ -11,8 +11,7 @@ func transition(enemy: Enemy) -> void:
 
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:
-	await enemy.anim_player.animation_finished
-	enemy.queue_free()
+	pass
 
 ##Runs when state is exited
 func exit(enemy: Enemy) -> void:

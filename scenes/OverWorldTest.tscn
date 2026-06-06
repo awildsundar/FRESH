@@ -146,6 +146,7 @@ use_collision = true
 size = Vector3(5, 4, 1)
 
 [node name="Player" parent="." unique_id=1303752194 instance=ExtResource("1_ewub1")]
+in_control = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=820319636 node_paths=PackedStringArray("cutscene_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -4)

@@ -1,10 +1,7 @@
 extends Control
 class_name BasicDialogue
 
-#TODO: implement logic for character expressions
-#TODO: implement logic for cutscenes
-	#TODO: play/pause external animation from marker
-#TODO: implement variable text speed (may require refactoring)
+#TODO: implement logic for character expressions and speech
 
 #node references
 @export var dialogue_display: RichTextLabel

@@ -9,14 +9,9 @@ signal animation_cancelled
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
 @export var nav_agent: NavigationAgent3D
+@export var hitbox: ShapeCast3D
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var rig: SpringArm3D = $SpringArm3D
-
-var can_move: bool = true
-var input_dir: Vector2
-var move_dir: Vector3
-
-var state: BaseCharacterState = States.character_states["idle"]
 
 #gameplay vars
 @export_category("Gameplay")
@@ -25,8 +20,20 @@ var state: BaseCharacterState = States.character_states["idle"]
 @export var atk: float = 50.0
 @export var def: float = 50.0
 @export var hp: float = 100.0
+@export var in_control: bool = false
+@export var control_distance: float = 100.0
+
+var can_move: bool = true
+var input_dir: Vector2
+var move_dir: Vector3
+
+var state
 
 func _ready() -> void:
+	if in_control:
+		state = States.player_states["idle"]
+	else:
+		state = States.cpu_states["idle"]
 	state.enter(self)
 	SignalBus.timeline_started.connect(enable_movement.bind(false))
 	SignalBus.timeline_ended.connect(enable_movement.bind(true))
@@ -40,12 +47,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			if interact_ray.is_colliding():
 				var collision: Object = interact_ray.get_collider()
 				if collision is BaseInteractable:
-					change_state_to(States.character_states["idle"])
+					change_state_to(States.player_states["idle"])
 					collision.interact()
-		if event.is_action_pressed("attack"):
-			change_state_to(States.character_states["attack"])
-		if event.is_action_pressed("dash"):
-			change_state_to(States.character_states["dash"])
+		if in_control:
+			if event.is_action_pressed("attack"):
+				change_state_to(States.player_states["attack"])
+			if event.is_action_pressed("dash"):
+				change_state_to(States.player_states["dash"])
+			if event.is_action_pressed("switch_control"):
+				change_state_to(States.player_states["switch"])
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -56,19 +66,29 @@ func _physics_process(delta: float) -> void:
 	state.update(self, delta)
 
 ##Changes the current state and runs the proper functions
-func change_state_to(next_state: BaseCharacterState) -> void:
-	state.exit(self)
-	state = next_state
-	state.enter(self)
+func change_state_to(next_state: BaseState) -> void:
+	if state != States.player_states["death"]:
+		state.exit(self)
+		state = next_state
+		state.enter(self)
 
-func find_nearest_candidate(group: String, min_distance: float) -> Node3D:
+func enable_control(switch: bool) -> void:
+	in_control = switch
+	if in_control:
+		change_state_to(States.player_states["idle"])
+		camera.make_current()
+	else:
+		change_state_to(States.cpu_states["idle"])
+		camera.clear_current()
+
+func find_nearest_candidate(group: String, max_distance: float) -> Node3D:
 	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
 	var nearest: Node3D = null
 	
 	for candidate in candidates:
 		if is_instance_valid(candidate):
 			var dist: float = global_position.distance_to(candidate.global_position)
-			if dist < min_distance:
+			if dist < max_distance:
 				nearest = candidate
 	
 	return nearest
@@ -86,10 +106,7 @@ func enable_movement(allowed: bool) -> void:
 func cancel() -> void:
 	emit_signal("animation_cancelled")
 
-func damage(body: Node3D) -> void:
-	if body is Enemy:
-		body.hurt(atk)
-
 func hurt(damage: float) -> void:
-	change_state_to(States.character_states["hurt"])
+	if state is BasePlayerState:
+		change_state_to(States.player_states["hurt"])
 	hp -= damage
