@@ -14,6 +14,8 @@ var choices_shown: bool = false
 var locked_on: bool = false
 var current_target: Node3D
 
+var current_event: InputEvent
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = get_parent()
@@ -23,31 +25,36 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	self.global_position = lerp(global_position, camera_pos.global_position, 0.25)
 	
-	if locked_on && current_target != null:
+	if locked_on && is_instance_valid(current_target) && current_target.state != States.enemy_states["death"]:
 		_locked_cam()
 	else:
 		spring_length = lerp(spring_length, 4.0, 0.5)
+		locked_on = false
 		
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
+	current_event = event
+	
 	if event.is_action_pressed("escape"):
 		get_tree().quit()
 	
-	if event.is_action_pressed("lock_on"):
-		locked_on = !locked_on
-		if locked_on:
-			_set_target(find_nearest_candidate("Enemy"))
-		else:
-			if current_target != null && current_target is Enemy:
-				current_target.lock_on_indicator.hide()
-	
-	if locked_on:
-		if Input.is_action_just_pressed("switch_view_left"):
-			switch_target("left", "Enemy")
-		elif Input.is_action_just_pressed("switch_view_right"):
-			switch_target("right", "Enemy")
-	
 	if choices_shown == false:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+		if event.is_action_pressed("lock_on"):
+			locked_on = !locked_on
+			var enemy: Node3D = find_nearest_candidate("Enemy")
+			if locked_on and enemy != null:
+				_set_target(enemy)
+			else:
+				locked_on = false
+				current_target.lock_on_indicator.hide()
+	
+		if locked_on:
+			if Input.is_action_just_pressed("switch_view_left"):
+				switch_target("left", "Enemy")
+			elif Input.is_action_just_pressed("switch_view_right"):
+				switch_target("right", "Enemy")
+			
 		if event is InputEventMouseMotion:
 			rotation_degrees.x -= event.relative.y * sensitivity
 			if locked_on == false:
@@ -60,11 +67,12 @@ func find_nearest_candidate(group: String) -> Node3D:
 	var nearest: Node3D = null
 	
 	for candidate in candidates:
-		if is_instance_valid(candidate):
+		if is_instance_valid(candidate) and candidate.is_queued_for_deletion() == false:
 			var dist: float = player.global_position.distance_to(candidate.global_position)
 			if dist < lock_on_distance and camera.is_position_in_frustum(candidate.global_position):
 				nearest = candidate
 	
+	print(nearest.name)
 	return nearest
 
 
@@ -80,6 +88,7 @@ func switch_target(dir: String, group: String) -> void:
 	for candidate in candidates:
 		if candidate == current_target: continue
 		if not is_instance_valid(candidate): continue
+		if candidate.hp <= 0.0: continue
 		
 		if player.global_position.distance_to(candidate.global_position) > lock_on_distance: continue
 		
@@ -101,7 +110,7 @@ func switch_target(dir: String, group: String) -> void:
 				closest_screen_dist = score
 				best_candidate = candidate
 		
-		if best_candidate:
+		if is_instance_valid(best_candidate):
 			_set_target(best_candidate)
 
 func _set_target(target: Node3D) -> void:

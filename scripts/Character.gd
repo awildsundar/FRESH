@@ -27,7 +27,7 @@ var can_move: bool = true
 var input_dir: Vector2
 var move_dir: Vector3
 
-var state
+var state: BaseState
 
 func _ready() -> void:
 	if in_control:
@@ -67,10 +67,11 @@ func _physics_process(delta: float) -> void:
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseState) -> void:
-	if state != States.player_states["death"]:
-		state.exit(self)
-		state = next_state
-		state.enter(self)
+	if state == States.player_states["death"]:
+		return
+	state.exit(self)
+	state = next_state
+	state.enter(self)
 
 func enable_control(switch: bool) -> void:
 	in_control = switch

@@ -20,9 +20,9 @@ func transition(player: Character) -> void:
 			closest_dist = dist
 			closest_character = ch
 	
-	await player.get_tree().create_timer(1.0).timeout
-	player.enable_control(false)
+	await player.anim_player.animation_finished
 	closest_character.enable_control(true)
+	player.enable_control(false)
 
 ##Runs during a state
 func update(player: Character, delta: float) -> void:

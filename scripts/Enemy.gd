@@ -11,8 +11,6 @@ class_name Enemy
 @export var nav_agent: NavigationAgent3D
 @export var lock_on_indicator: Sprite3D
 
-var state: BaseEnemyState = States.enemy_states["idle"]
-
 #gameplay vars
 @export_category("Gameplay")
 @export var speed: float = 5.0
@@ -23,9 +21,12 @@ var state: BaseEnemyState = States.enemy_states["idle"]
 
 @onready var state_indicator: Label3D = $StateIndicator
 
+var state: BaseEnemyState
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("Enemy")
+	state = States.enemy_states["idle"]
 	state.enter(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,10 +37,11 @@ func _physics_process(delta: float) -> void:
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseEnemyState) -> void:
-	if state != States.enemy_states["death"] && is_inside_tree():
-		state.exit(self)
-		state = next_state
-		state.enter(self)
+	if state == States.enemy_states["death"]:
+		return
+	state.exit(self)
+	state = next_state
+	state.enter(self)
 
 func find_nearest_candidate(group: String) -> Node3D:
 	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)

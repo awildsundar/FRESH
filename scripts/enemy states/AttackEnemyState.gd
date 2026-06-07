@@ -12,9 +12,9 @@ func enter(enemy: Enemy) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
-	if enemy.is_inside_tree():
-		await enemy.anim_player.animation_finished
-		await enemy.get_tree().create_timer(enemy.rest_time).timeout
+	await enemy.anim_player.animation_finished
+	await enemy.get_tree().create_timer(enemy.rest_time).timeout
+	if is_instance_valid(enemy) and enemy.is_queued_for_deletion() == false:
 		enemy.change_state_to(States.enemy_states["idle"])
 
 ##Runs during a state

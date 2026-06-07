@@ -47,11 +47,11 @@ size = Vector3(30, 0.5, 30)
 [node name="Enemy" parent="NavigationRegion3D" unique_id=1303781746 instance=ExtResource("1_ldgcu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, -6)
 
-[node name="Enemy2" parent="NavigationRegion3D" unique_id=1136398246 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, 6.5)
+[node name="Enemy2" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("1_ldgcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.548557, 0, 7.9512835)
 
-[node name="Enemy3" parent="NavigationRegion3D" unique_id=1924213201 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 0, -7.5)
+[node name="Enemy3" parent="NavigationRegion3D" unique_id=1616498366 instance=ExtResource("1_ldgcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.397562, 0, 7.478734)
 
-[node name="Enemy4" parent="NavigationRegion3D" unique_id=2078117894 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 7)
+[node name="Enemy4" parent="NavigationRegion3D" unique_id=1139161273 instance=ExtResource("1_ldgcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.909972, 0, -12.036014)
