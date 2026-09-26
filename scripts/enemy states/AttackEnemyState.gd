@@ -22,7 +22,7 @@ func update(enemy: Enemy, delta: float) -> void:
 	if enemy.hitbox.enabled:
 		if enemy.hitbox.is_colliding():
 			var body: Object = enemy.hitbox.get_collider(0)
-			if body is Character:
+			if body is ArenaCharacter:
 				body.hurt(enemy.atk)
 				enemy.hitbox.enabled = false
 

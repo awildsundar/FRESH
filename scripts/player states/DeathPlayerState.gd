@@ -2,12 +2,12 @@ extends BasePlayerState
 class_name DeathPlayerState
 
 ##Runs when state is entered
-func enter(player: Character) -> void:
+func enter(player: ArenaCharacter) -> void:
 	player.anim_player.play("combat/death")
 
 ##Runs a frame before update is called, allows for transitions
-func transition(player: Character) -> void:
-	var closest_character: Character = null
+func transition(player: ArenaCharacter) -> void:
+	var closest_character: ArenaCharacter = null
 	var closest_dist: float = INF
 	var screen_center: Vector2 = player.get_viewport().get_visible_rect().size
 	var characters: Array = player.get_tree().get_nodes_in_group("Character")
@@ -25,9 +25,9 @@ func transition(player: Character) -> void:
 	player.enable_control(false)
 
 ##Runs during a state
-func update(player: Character, delta: float) -> void:
+func update(player: ArenaCharacter, delta: float) -> void:
 	pass
 
 ##Runs when state is exited
-func exit(player: Character) -> void:
+func exit(player: ArenaCharacter) -> void:
 	pass

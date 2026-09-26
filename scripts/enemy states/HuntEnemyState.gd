@@ -13,7 +13,7 @@ func transition(enemy: Enemy) -> void:
 		if current_target == null:
 			enemy.change_state_to(States.enemy_states["idle"])
 		for node in body:
-			if node is Character:
+			if node is ArenaCharacter:
 				if node.hp > 0.0:
 					enemy.change_state_to(States.enemy_states["attack"])
 

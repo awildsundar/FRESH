@@ -1,3 +1,5 @@
+@abstract
+
 extends BaseState
 class_name BaseEnemyState
 

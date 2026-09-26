@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://blq5h3bovmvqp"]
 
-[ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/Player.tscn" id="1_ewub1"]
-[ext_resource type="Script" uid="uid://ccedidpxucfwg" path="res://scripts/interactable classes/DialogueInteractable.gd" id="2_lugn5"]
+[ext_resource type="PackedScene" uid="uid://dehe3vrgd3mg8" path="res://scenes/OverworldPlayer.tscn" id="1_kye7l"]
 [ext_resource type="Script" uid="uid://de5np50q6i020" path="res://scripts/interactable classes/SceneInteractable.gd" id="3_amem7"]
+[ext_resource type="Script" uid="uid://bbmolr22abo0a" path="res://scripts/interactable classes/DialogueInteractable.gd" id="3_xb0qy"]
+[ext_resource type="Resource" uid="uid://dbv86jcvdmet5" path="res://dialogues/test.dialogue" id="4_xb0qy"]
+[ext_resource type="Script" uid="uid://oeysidl5f8tu" path="res://scripts/NPC.gd" id="5_balxo"]
+[ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="6_kye7l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ewub1"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -17,116 +20,101 @@ sky = SubResource("Sky_lugn5")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amem7"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ewub1"]
-material = SubResource("StandardMaterial3D_amem7")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_lugn5"]
-
-[sub_resource type="Animation" id="Animation_amem7"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-4, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_lugn5"]
-resource_name = "test"
-length = 5.0
-markers = [{
-"color": Color(1, 1, 1, 1),
-"name": &"1",
-"time": 0.0
-}, {
-"color": Color(1, 1, 1, 1),
-"name": &"2",
-"time": 2.0
-}, {
-"color": Color(1, 1, 1, 1),
-"name": &"3",
-"time": 4.0
-}, {
-"color": Color(1, 1, 1, 1),
-"name": &"4",
-"time": 5.0
-}]
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 2, 0, 2),
-"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0, 4, -0.33333334, 0, 0.5, 0, 4, -0.25, 0, 0.25, 0, 4, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 2, 4, 5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2, 0, 2),
-"points": PackedFloat32Array(0.5, -0.25, 0, 0.25, 0, 1.5, -0.33333334, 0, 0.5, 0, 0.5, -0.25, 0, 0.25, 0, 0.5, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 2, 4, 5)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:position:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2, 0, 2),
-"points": PackedFloat32Array(-4, -0.25, 0, 0.25, 0, -4, -0.33333334, 0, 0.5, 0, -4, -0.25, 0, 0.25, 0, -3, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 2, 4, 5)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_amem7"]
-_data = {
-&"RESET": SubResource("Animation_amem7"),
-&"test": SubResource("Animation_lugn5")
-}
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xb0qy"]
 albedo_color = Color(0.5706444, 0.36327228, 0.44793844, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_balxo"]
 material = SubResource("StandardMaterial3D_xb0qy")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lugn5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d7enn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d7enn"]
+
+[sub_resource type="Animation" id="Animation_kye7l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -1.0471976, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jji4p"]
+resource_name = "sad"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 0.18946455),
+"update": 0,
+"values": [Vector3(0, -1.0471976, 0), Vector3(0, -1.0471976, 0.31415927)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjamo"]
+_data = {
+&"RESET": SubResource("Animation_kye7l"),
+&"sad": SubResource("Animation_jji4p")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lugn5"]
+albedo_color = Color(0.36564252, 0.5687303, 0.38477054, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_amem7"]
+material = SubResource("StandardMaterial3D_lugn5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1w3v"]
+
+[sub_resource type="Animation" id="Animation_balxo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qjamo"]
+resource_name = "sad"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.435, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nx3q3"]
+_data = {
+&"RESET": SubResource("Animation_balxo"),
+&"sad": SubResource("Animation_qjamo")
+}
+
 [node name="Node3D" type="Node3D" unique_id=702390178]
+
+[node name="Player" parent="." unique_id=432533020 instance=ExtResource("1_kye7l")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=445103383]
 environment = SubResource("Environment_amem7")
@@ -145,40 +133,60 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
 use_collision = true
 size = Vector3(5, 4, 1)
 
-[node name="Player" parent="." unique_id=1303752194 instance=ExtResource("1_ewub1")]
-in_control = true
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=820319636 node_paths=PackedStringArray("cutscene_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -4)
-script = ExtResource("2_lugn5")
-ch_list = Dictionary[String, Color]({
-"Archita": Color(0.99999994, 0.79410034, 0.03673801, 1),
-"Kazuki": Color(0.8496299, 0.36391148, 0.41539907, 1),
-"Marino": Color(0.3895755, 0.5446995, 0.811771, 1)
-})
-important_timeline = true
-oneshot = true
-cutscene_name = "test"
-cutscene_player = NodePath("AnimationPlayer")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=180419111]
-mesh = SubResource("BoxMesh_ewub1")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=535866263]
-shape = SubResource("BoxShape3D_lugn5")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody3D" unique_id=948823495]
-libraries/ = SubResource("AnimationLibrary_amem7")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=795004685]
+[node name="battle" type="StaticBody3D" parent="." unique_id=795004685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -2.5)
 script = ExtResource("3_amem7")
 scene = "uid://b7q4webcoivt4"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1735342826]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="battle" unique_id=1735342826]
 mesh = SubResource("BoxMesh_balxo")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=208044596]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="battle" unique_id=208044596]
 shape = SubResource("BoxShape3D_lugn5")
 
-[editable path="Player"]
+[node name="dialogue" type="StaticBody3D" parent="." unique_id=413609775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, -2.5)
+script = ExtResource("3_xb0qy")
+dialogue = ExtResource("4_xb0qy")
+anim_name = "test"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dialogue" unique_id=1846165888]
+shape = SubResource("BoxShape3D_lugn5")
+
+[node name="Minnie" type="CharacterBody3D" parent="dialogue" unique_id=704612274]
+transform = Transform3D(0.49999997, 0, -0.86602545, 0, 1, 0, 0.86602545, 0, 0.49999997, 0, 0, 2)
+script = ExtResource("5_balxo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dialogue/Minnie" unique_id=884790743]
+shape = SubResource("BoxShape3D_d7enn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dialogue/Minnie" unique_id=448070567]
+mesh = SubResource("BoxMesh_d7enn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="dialogue/Minnie" unique_id=1719033895]
+libraries/ = SubResource("AnimationLibrary_qjamo")
+
+[node name="DialogueStateContext" type="Node" parent="dialogue/Minnie" unique_id=1773663560 node_paths=PackedStringArray("target")]
+script = ExtResource("6_kye7l")
+alias = "Minnie"
+target = NodePath("..")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"
+
+[node name="Archita" type="CharacterBody3D" parent="dialogue" unique_id=583539032]
+script = ExtResource("5_balxo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dialogue/Archita" unique_id=2085530347]
+mesh = SubResource("BoxMesh_amem7")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dialogue/Archita" unique_id=375780327]
+shape = SubResource("BoxShape3D_i1w3v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="dialogue/Archita" unique_id=425671002]
+libraries/ = SubResource("AnimationLibrary_nx3q3")
+
+[node name="DialogueStateContext" type="Node" parent="dialogue/Archita" unique_id=1485993196 node_paths=PackedStringArray("target")]
+script = ExtResource("6_kye7l")
+alias = "Archita"
+target = NodePath("..")
+metadata/_custom_type_script = "uid://cd3222nx3y3k5"

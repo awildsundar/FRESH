@@ -4,67 +4,66 @@ extends SpringArm3D
 @export var min_angle: float = -30.0
 @export var max_angle: float = 30.0
 @export var lock_on_distance: float = 10.0
-@export var interact_ray: RayCast3D
 
 @onready var camera: Camera3D = $Camera3D
 @onready var camera_pos: Node3D = $"../CameraPos"
 
 var player: CharacterBody3D
-var choices_shown: bool = false
 var locked_on: bool = false
 var current_target: Node3D
-
-var current_event: InputEvent
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player = get_parent()
-	SignalBus.choice_started.connect(_disable_cam_movement.bind(true))
-	SignalBus.choice_finished.connect(_disable_cam_movement.bind(false))
 
 func _physics_process(delta: float) -> void:
 	self.global_position = lerp(global_position, camera_pos.global_position, 0.25)
 	
-	if locked_on && is_instance_valid(current_target) && current_target.state != States.enemy_states["death"]:
+	if player.state == States.player_states["switch"]:
+		spring_length = lerp(spring_length, 1.0, 0.5)
+	else:
+		spring_length = lerp(spring_length, 4.0, 0.5)
+	
+	if locked_on && is_instance_valid(current_target):
 		_locked_cam()
 	else:
 		spring_length = lerp(spring_length, 4.0, 0.5)
 		locked_on = false
 		
-func _unhandled_input(event: InputEvent) -> void:
-	current_event = event
-	
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		get_tree().quit()
-	
-	if choices_shown == false:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
-		if event.is_action_pressed("lock_on"):
-			locked_on = !locked_on
-			var enemy: Node3D = find_nearest_candidate("Enemy")
-			if locked_on and enemy != null:
-				_set_target(enemy)
-			else:
-				locked_on = false
-				current_target.lock_on_indicator.hide()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-		if locked_on:
-			if Input.is_action_just_pressed("switch_view_left"):
-				switch_target("left", "Enemy")
-			elif Input.is_action_just_pressed("switch_view_right"):
-				switch_target("right", "Enemy")
-			
-		if event is InputEventMouseMotion:
-			rotation_degrees.x -= event.relative.y * sensitivity
-			if locked_on == false:
-				_free_cam(event)
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	if event.is_action_pressed("lock_on"):
+		locked_on = !locked_on
+		var enemy: Node3D = find_nearest_candidate("Enemy")
+		if locked_on and enemy != null:
+			_set_target(enemy)
+		else:
+			locked_on = false
+			if is_instance_valid(current_target):
+				current_target.lock_on_indicator.hide()
+
+	if locked_on:
+		if Input.is_action_just_pressed("switch_view_left"):
+			switch_target("left", "Enemy")
+		elif Input.is_action_just_pressed("switch_view_right"):
+			switch_target("right", "Enemy")
+		
+	if event is InputEventMouseMotion:
+		rotation_degrees.x -= event.relative.y * sensitivity
+		if locked_on == false:
+			_free_cam(event)
 
 func find_nearest_candidate(group: String) -> Node3D:
 	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
 	var nearest: Node3D = null
+	
+	for unwanted_candidate in candidates:
+		if unwanted_candidate.state == States.enemy_states["death"]:
+			candidates.erase(unwanted_candidate)
 	
 	for candidate in candidates:
 		if is_instance_valid(candidate) and candidate.is_queued_for_deletion() == false:
@@ -72,7 +71,6 @@ func find_nearest_candidate(group: String) -> Node3D:
 			if dist < lock_on_distance and camera.is_position_in_frustum(candidate.global_position):
 				nearest = candidate
 	
-	print(nearest.name)
 	return nearest
 
 
@@ -114,17 +112,15 @@ func switch_target(dir: String, group: String) -> void:
 			_set_target(best_candidate)
 
 func _set_target(target: Node3D) -> void:
-	if current_target is Enemy:
+	if is_instance_valid(current_target):
 		current_target.lock_on_indicator.hide()
 	current_target = target
-	if target is Enemy:
-		target.lock_on_indicator.show()
+	target.lock_on_indicator.show()
 
 func _free_cam(event: InputEvent) -> void:
 	rotation_degrees.y -= event.relative.x * sensitivity
 	
 	rotation_degrees.x = clampf(rotation_degrees.x, min_angle, max_angle)
-	interact_ray.rotation_degrees.x = -rotation_degrees.x
 
 func _locked_cam() -> void:
 	spring_length = lerp(spring_length, 3.0, 0.5)
@@ -134,6 +130,3 @@ func _locked_cam() -> void:
 	var player_rot: Vector2 = Vector2(player.global_position.x, player.global_position.z)
 	var dir: Vector2 = -(look_target - player_rot)
 	rotation.y = lerp_angle(rotation.y, atan2(dir.x, dir.y), 0.25)
-
-func _disable_cam_movement(choice: bool) -> void:
-	choices_shown = choice

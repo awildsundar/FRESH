@@ -7,7 +7,10 @@ func enter(player: Character) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: Character) -> void:
-	if player.move_dir != Vector3.ZERO && player.can_move == true && player.in_control:
+	if player.move_dir != Vector3.ZERO && player.can_move == true:
+		if player is ArenaCharacter:
+			if player.in_control == false:
+				return
 		player.change_state_to(States.player_states["move"])
 
 ##Runs during a state

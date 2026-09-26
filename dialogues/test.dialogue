@@ -1,0 +1,21 @@
+~ start
+Minnie: Archita... [$> Minnie.emote("sad")]have you told Gwen's uncle yet?
+Archita: Uh... not yet...[next=auto]
+Minnie: Not yet!? You have to! He's her legal guardian, he should know that Gwen's missing!
+Archita: I know! But...
+Archita: ...[$> Archita.emote("sad")]He thinks im [b]crazy[/b] Minnie. If I tell him what I told you, he might... you know.
+Minnie: *sigh* I know, 'Chi. But this is above us, what are we supposed to do?
+Minnie: He can file a report, get authorities involved. They can find her.
+Archita: How are they gonna find a magical bird's nest?[next=auto]
+Minnie: How are [shake]you[/shake]?
+Archita: ...
+- Tell => tell
+- Don't tell => dont_tell
+
+~ tell
+Archita: Fine. I'll call him.
+=> END!
+
+~ dont_tell
+Archita: No. I can't tell him. Not until I have proof.
+=> END!
