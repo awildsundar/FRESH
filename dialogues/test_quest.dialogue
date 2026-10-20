@@ -1,0 +1,5 @@
+~ start
+Danny: Welcome to your first quest! [$> QuestManager.start_quest(Danny.quest)]
+Danny: I hope this works correctly the first time... [$> QuestManager.update_quest()]
+Danny: Okay, be honest, it's so cooked huh?
+=> END

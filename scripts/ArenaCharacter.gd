@@ -36,9 +36,13 @@ var atk_buffer := []
 var is_attacking: bool = false
 var buffer_input: bool = true
 
+var arena_manager: ArenaManager
 var state: BaseState
 
 func _ready() -> void:
+	arena_manager = self.get_tree().current_scene
+	arena_manager.characters.append(self)
+	
 	if in_control:
 		state = States.player_states["idle"]
 	else:
@@ -109,4 +113,4 @@ func cancel() -> void:
 func hurt(damage: float) -> void:
 	if state is BasePlayerState:
 		change_state_to(States.player_states["hurt"])
-	hp -= damage
+	arena_manager.player_hp -= damage

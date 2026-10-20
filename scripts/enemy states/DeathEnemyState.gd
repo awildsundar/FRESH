@@ -4,6 +4,9 @@ class_name DeathEnemyState
 ##Runs when state is entered
 func enter(enemy: Enemy) -> void:
 	enemy.anim_player.play("death")
+	enemy.arena_manager.enemies.erase(enemy)
+	if enemy.arena_manager.enemies.is_empty():
+		enemy.arena_manager.battle_won()
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:

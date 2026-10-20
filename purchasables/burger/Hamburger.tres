@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://sjaebalb4fdu"]
+
+[ext_resource type="Script" uid="uid://b5kq3qdns8qcp" path="res://scripts/abstracts/ItemData.gd" id="1_0f13s"]
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_8co2w"]
+
+[resource]
+script = ExtResource("1_0f13s")
+item_type = 1
+item_name = "Hamburger"
+icon = ExtResource("1_8co2w")
+description = "Just a regular hamburger."
+price = 5
+atk = 10
+metadata/_custom_type_script = "uid://b5kq3qdns8qcp"

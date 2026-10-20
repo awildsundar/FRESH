@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/ArenaPlayer.tscn" id="1_favoq"]
 [ext_resource type="PackedScene" uid="uid://c6ldg60vhftek" path="res://scenes/Enemy.tscn" id="1_ldgcu"]
+[ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -22,6 +23,13 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 cell_height = 0.01
 
 [node name="Arena" type="Node3D" unique_id=914889805]
+script = ExtResource("1_wmg8w")
+
+[node name="Player" parent="." unique_id=432533020 instance=ExtResource("1_favoq")]
+in_control = true
+
+[node name="Player2" parent="." unique_id=1147003936 instance=ExtResource("1_favoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -5)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453346797]
 environment = SubResource("Environment_wmg8w")
@@ -29,15 +37,6 @@ environment = SubResource("Environment_wmg8w")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1056155136]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
-
-[node name="Player1" parent="." unique_id=2033747010 instance=ExtResource("1_favoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4177089, 0, 1.3365947)
-in_control = true
-
-[node name="Player2" parent="." unique_id=432533020 instance=ExtResource("1_favoq")]
-
-[node name="Player3" parent="." unique_id=1351050981 instance=ExtResource("1_favoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -4)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1888215311]
 navigation_mesh = SubResource("NavigationMesh_ldgcu")
@@ -51,10 +50,4 @@ size = Vector3(30, 0.5, 30)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, -6)
 
 [node name="Enemy2" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.548557, 0, 7.9512835)
-
-[node name="Enemy3" parent="NavigationRegion3D" unique_id=1616498366 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.397562, 0, 7.478734)
-
-[node name="Enemy4" parent="NavigationRegion3D" unique_id=1139161273 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.909972, 0, -12.036014)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 1)

@@ -1,6 +1,8 @@
 extends SpringArm3D
 
+@export var interact_ray: RayCast3D
 @export_range(0.1, 1.0, 0.1) var sensitivity: float
+@export var spring_distance: float = 4.0
 @export var min_angle: float = -30.0
 @export var max_angle: float = 30.0
 @export var lock_on_distance: float = 10.0
@@ -22,21 +24,21 @@ func _physics_process(delta: float) -> void:
 	if player.state == States.player_states["switch"]:
 		spring_length = lerp(spring_length, 1.0, 0.5)
 	else:
-		spring_length = lerp(spring_length, 4.0, 0.5)
+		spring_length = lerp(spring_length, spring_distance, 0.5)
 	
 	if locked_on && is_instance_valid(current_target):
 		_locked_cam()
 	else:
-		spring_length = lerp(spring_length, 4.0, 0.5)
+		spring_length = lerp(spring_length, spring_distance, 0.5)
 		locked_on = false
 		
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		get_tree().quit()
 		
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	if event.is_action_pressed("lock_on"):
+	if event.is_action_pressed("lock_on") && player is ArenaCharacter:
 		locked_on = !locked_on
 		var enemy: Node3D = find_nearest_candidate("Enemy")
 		if locked_on and enemy != null:

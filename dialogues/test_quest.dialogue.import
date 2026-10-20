@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://b0y7yiw0ul7ui"
+path="res://.godot/imported/test_quest.dialogue-1e7cb1995fd9179fa8fe4c35c0210e2d.tres"
+
+[deps]
+
+source_file="res://dialogues/test_quest.dialogue"
+dest_files=["res://.godot/imported/test_quest.dialogue-1e7cb1995fd9179fa8fe4c35c0210e2d.tres"]
+
+[params]
+
+defaults=true

@@ -3,12 +3,16 @@ class_name DialogueInteractable
 
 @export var dialogue: DialogueResource
 @export var cue: String = "start"
+@export var quest: Quest
 @export var anim_player: AnimationPlayer
 @export var anim_name: String
 
 var cutscene_enabled: bool = false
 
 func _ready() -> void:
+	icon_display = get_icon_display()
+	toggle_icon_visibility(false)
+	
 	if anim_player != null:
 		cutscene_enabled = true
 

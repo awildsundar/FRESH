@@ -18,14 +18,19 @@ class_name Enemy
 @export var def: float = 50.0
 @export var hp: float = 100.0
 @export var rest_time: float = 0.5
+@export var shards: int = 5
 
 @onready var state_indicator: Label3D = $StateIndicator
 
+var arena_manager: ArenaManager
 var state: BaseEnemyState
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	arena_manager = self.get_tree().current_scene
+	arena_manager.enemies.append(self)
 	add_to_group("Enemy")
+	
 	state = States.enemy_states["idle"]
 	state.enter(self)
 

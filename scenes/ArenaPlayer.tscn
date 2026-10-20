@@ -260,8 +260,8 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3li8b"]
-size = Vector3(30, 30, 30)
+[sub_resource type="BoxShape3D" id="BoxShape3D_d7enn"]
+size = Vector3(50, 50, 50)
 
 [sub_resource type="Animation" id="Animation_3li8b"]
 length = 0.001
@@ -290,6 +290,7 @@ mesh_main = NodePath("FemaleBody")
 anim_player = NodePath("FemaleBody/AnimationPlayer")
 nav_agent = NodePath("NavigationAgent3D")
 hitbox = NodePath("FemaleBody/Armature/Skeleton3D/BoneAttachment3D/ShapeCast3D")
+max_buffer_size = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1251224684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -785,10 +786,11 @@ transform = Transform3D(-0.028433532, 0.9800392, -0.19676045, 0.9926813, 0.05079
 bone_name = "mixamorig_LeftHandMiddle4"
 bone_idx = 46
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D" unique_id=1223231051]
+[node name="ShapeCast3D" type="ShapeCast3D" parent="FemaleBody/Armature/Skeleton3D/BoneAttachment3D" unique_id=974597420]
 enabled = false
-shape = SubResource("BoxShape3D_3li8b")
+shape = SubResource("BoxShape3D_d7enn")
 collision_mask = 2
+debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FemaleBody" unique_id=1044746514]
 libraries/ = SubResource("AnimationLibrary_mdl7e")

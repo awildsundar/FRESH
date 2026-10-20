@@ -16,7 +16,7 @@ func enter(player: ArenaCharacter) -> void:
 	player.is_attacking = true
 	
 	if player.atk_buffer != []:
-		var action = player.atk_buffer.pop_front()
+		var action: Variant = player.atk_buffer.pop_front()
 		player.anim_player.play(anims.get(action))
 
 ##Runs a frame before update is called, allows for transitions

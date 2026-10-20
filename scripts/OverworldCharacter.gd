@@ -9,7 +9,7 @@ signal animation_cancelled
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
-@onready var rig: SpringArm3D = $SpringArm3D
+@onready var camera_rig: SpringArm3D = $SpringArm3D
 
 #gameplay vars
 @export_category("Gameplay")
@@ -20,6 +20,8 @@ var can_move: bool = true
 var input_dir: Vector2
 var move_dir: Vector3
 
+var last_target: Object = null
+
 var state: BaseState = States.player_states["idle"]
 
 func _ready() -> void:
@@ -29,14 +31,31 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if can_move == true:
-		if event.is_action_pressed("interact"):
-			if interact_ray.is_colliding():
-				var collision: Object = interact_ray.get_collider()
-				if collision is BaseInteractable:
-					change_state_to(States.player_states["idle"])
-					collision.interact()
+		if interact_ray.is_colliding():
+			var current_target: Object = interact_ray.get_collider()
+			if current_target is BaseInteractable:
+				if event.is_action_pressed("interact"):
+					current_target.interact()
+	
+	interact_ray.rotation_degrees.x = -camera_rig.rotation_degrees.x
 
 func _physics_process(delta: float) -> void:
+	if interact_ray.is_colliding():
+		var current_target: Object = interact_ray.get_collider()
+		if current_target is BaseInteractable:
+			if current_target != last_target:
+				current_target.toggle_icon_visibility(true)
+				last_target = current_target
+		else:
+			if last_target != null:
+				last_target.toggle_icon_visibility(false)
+				last_target = null
+	else:
+			if last_target != null:
+				last_target.toggle_icon_visibility(false)
+				last_target = null
+	
+	
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	move_dir = (camera.global_basis * Vector3(input_dir.x, 0, input_dir.y))
 	move_dir = Vector3(move_dir.x, 0, move_dir.z).normalized()

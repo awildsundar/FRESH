@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://b7kuy4ynppbqd"]
+
+[ext_resource type="Script" uid="uid://b5kq3qdns8qcp" path="res://scripts/abstracts/ItemData.gd" id="1_dilek"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0chwt"]
+load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.s3tc.ctex"
+
+[resource]
+script = ExtResource("1_dilek")
+item_type = 1
+item_name = "Soft Drink"
+icon = SubResource("CompressedTexture2D_0chwt")
+description = "Just a regular... soft drink."
+price = 2
+speed = 10
+metadata/_custom_type_script = "uid://b5kq3qdns8qcp"

@@ -7,7 +7,7 @@ func enter(player: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
-	if player.hp <= 0.0:
+	if player.arena_manager.player_hp <= 0.0:
 		player.change_state_to(States.player_states["death"])
 	await player.animation_cancelled
 	if player.move_dir != Vector3.ZERO:
