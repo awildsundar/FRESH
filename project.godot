@@ -26,6 +26,7 @@ DialogueManager="*uid://c3rodes2l3gxb"
 TransitionManager="*uid://cn5m03fqgcveg"
 DataManager="*uid://dltdrgoosr3b3"
 QuestManager="*uid://d1gxgqy6tfl4x"
+StoryManager="*uid://7r205s80hcxv"
 
 [debug]
 

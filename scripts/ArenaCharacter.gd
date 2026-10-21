@@ -49,8 +49,6 @@ func _ready() -> void:
 		state = States.cpu_states["idle"]
 	state.enter(self)
 
-	add_to_group("Character")
-
 func _unhandled_input(event: InputEvent) -> void:
 	if in_control:
 		if event.is_action_pressed("dash"):
@@ -88,14 +86,23 @@ func enable_control(switch: bool) -> void:
 		change_state_to(States.cpu_states["idle"])
 		camera.clear_current()
 
-func find_nearest_candidate(group: String, max_distance: float) -> Node3D:
-	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
+##Finds the nearest node specified by the group, 0 = enemies, 1 = characters
+func find_nearest_candidate(group: int, max_distance: float) -> Node3D:
+	var candidates: Array
+	
+	if group == 0:
+		candidates = arena_manager.enemies
+	else:
+		candidates = arena_manager.characters
+	
+	var lowest_dist: float = INF
 	var nearest: Node3D = null
 	
 	for candidate in candidates:
 		if is_instance_valid(candidate):
 			var dist: float = global_position.distance_to(candidate.global_position)
-			if dist < max_distance:
+			if dist < max_distance && dist < lowest_dist:
+				lowest_dist = dist
 				nearest = candidate
 	
 	return nearest

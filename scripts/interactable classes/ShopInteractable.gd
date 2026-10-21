@@ -1,13 +1,13 @@
 extends BaseInteractable
 class_name ShopInteractable
 
-enum SHOP_TYPE {
-	BURGER,
-	COFFEE,
-	BAKERY
-}
+@export var shop: Shop
 
-@export var shop_type: SHOP_TYPE
+var shop_ui: PackedScene = preload("uid://cmu8rlfgh4hxu")
 
 func interact() -> void:
-	pass
+	var player: OverworldCharacter = get_player()
+	var ui: ShopManager = shop_ui.instantiate()
+	ui.shop = shop
+	ui.player = player
+	self.add_child(ui)

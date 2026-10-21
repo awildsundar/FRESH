@@ -16,6 +16,7 @@ var current_target: Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	player = get_parent()
 
 func _physics_process(delta: float) -> void:
@@ -35,12 +36,10 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		get_tree().quit()
-		
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	if event.is_action_pressed("lock_on") && player is ArenaCharacter:
 		locked_on = !locked_on
-		var enemy: Node3D = find_nearest_candidate("Enemy")
+		var enemy: Node3D = find_nearest_candidate()
 		if locked_on and enemy != null:
 			_set_target(enemy)
 		else:
@@ -50,17 +49,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if locked_on:
 		if Input.is_action_just_pressed("switch_view_left"):
-			switch_target("left", "Enemy")
+			switch_target("left")
 		elif Input.is_action_just_pressed("switch_view_right"):
-			switch_target("right", "Enemy")
+			switch_target("right")
 		
 	if event is InputEventMouseMotion:
 		rotation_degrees.x -= event.relative.y * sensitivity
 		if locked_on == false:
 			_free_cam(event)
 
-func find_nearest_candidate(group: String) -> Node3D:
-	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
+func find_nearest_candidate() -> Node3D:
+	var candidates: Array = player.arena_manager.enemies
 	var nearest: Node3D = null
 	
 	for unwanted_candidate in candidates:
@@ -76,10 +75,10 @@ func find_nearest_candidate(group: String) -> Node3D:
 	return nearest
 
 
-func switch_target(dir: String, group: String) -> void:
+func switch_target(dir: String) -> void:
 	if not current_target or not camera: return
 	
-	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
+	var candidates: Array = player.arena_manager.enemies
 	var best_candidate: Node3D = null
 	var closest_screen_dist: float = INF
 	

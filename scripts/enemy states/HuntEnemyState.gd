@@ -8,7 +8,7 @@ func enter(enemy: Enemy) -> void:
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
 	if enemy.limit_area.is_inside_tree():
-		var current_target: Node3D = enemy.find_nearest_candidate("Character")
+		var current_target: Node3D = enemy.find_nearest_candidate()
 		var body: Array[Node3D] = enemy.limit_area.get_overlapping_bodies()
 		if current_target == null:
 			enemy.change_state_to(States.enemy_states["idle"])
@@ -19,7 +19,7 @@ func transition(enemy: Enemy) -> void:
 
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:
-	var current_target: Node3D = enemy.find_nearest_candidate("Character")
+	var current_target: Node3D = enemy.find_nearest_candidate()
 	if current_target != null && enemy.limit_area.has_overlapping_bodies() == false:
 		var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 		var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)

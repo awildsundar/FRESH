@@ -44,6 +44,12 @@ func get_mesh_instances() -> Array[MeshInstance3D]:
 	
 	return meshes
 
+func get_player() -> OverworldCharacter:
+	for child in get_parent().get_children():
+		if child is OverworldCharacter:
+			return child
+	return null
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func interact() -> void:
 	pass

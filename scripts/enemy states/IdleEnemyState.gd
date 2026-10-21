@@ -7,12 +7,8 @@ func enter(enemy: Enemy) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
-	if enemy.detection_area.is_inside_tree():
-		if enemy.detection_area.has_overlapping_bodies():
-			for body in enemy.detection_area.get_overlapping_bodies():
-				if body is ArenaCharacter:
-					if body.hp > 0.0:
-						enemy.change_state_to(States.enemy_states["hunt"])
+	if enemy.arena_manager.characters != []:
+		enemy.change_state_to(States.enemy_states["hunt"])
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:
 	pass

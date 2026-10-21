@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dfgh1ensb4r1a"]
+
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_whafs"]
+[ext_resource type="Script" uid="uid://cwwwvv7xbie7o" path="res://scripts/GUI/ShopStockButton.gd" id="2_tu7uc"]
+
+[node name="Button" type="Button" unique_id=1653722003]
+theme_override_font_sizes/font_size = 20
+text = "PRICE"
+icon = ExtResource("1_whafs")
+icon_alignment = 1
+vertical_icon_alignment = 0
+script = ExtResource("2_tu7uc")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

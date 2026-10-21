@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Quest" format=3 uid="uid://dlh5nq0aysplw"]
 
-[ext_resource type="Script" uid="uid://cxts0bylvviqx" path="res://scripts/abstracts/Quest.gd" id="1_sa42d"]
+[ext_resource type="Script" uid="uid://cxts0bylvviqx" path="res://scripts/inheritables/Quest.gd" id="1_sa42d"]
 
 [resource]
 script = ExtResource("1_sa42d")

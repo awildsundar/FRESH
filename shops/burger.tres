@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Shop" format=3 uid="uid://bhjn8am4xbq8h"]
+
+[ext_resource type="Script" uid="uid://j2awinpda33k" path="res://scripts/inheritables/Shop.gd" id="1_unsh3"]
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_or2lh"]
+[ext_resource type="Script" uid="uid://b5kq3qdns8qcp" path="res://scripts/inheritables/ItemData.gd" id="3_30gxw"]
+[ext_resource type="Resource" uid="uid://sjaebalb4fdu" path="res://purchasables/burger/Hamburger.tres" id="4_bhv5a"]
+[ext_resource type="Resource" uid="uid://b7kuy4ynppbqd" path="res://purchasables/burger/SoftDrink.tres" id="5_23xvr"]
+
+[resource]
+script = ExtResource("1_unsh3")
+shop_logo = ExtResource("2_or2lh")
+stock = Array[ExtResource("3_30gxw")]([ExtResource("4_bhv5a"), ExtResource("5_23xvr")])
+metadata/_custom_type_script = "uid://j2awinpda33k"

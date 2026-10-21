@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://cmu8rlfgh4hxu"]
+
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_owitj"]
+[ext_resource type="Script" uid="uid://1t7nqfidnlvv" path="res://scripts/managers/ShopManager.gd" id="1_yoj64"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qq7pr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d7enn"]
+
+[node name="Control" type="CanvasLayer" unique_id=1540201986]
+process_mode = 3
+layer = 2
+script = ExtResource("1_yoj64")
+
+[node name="Control" type="Control" parent="." unique_id=2067085048]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=1989384687]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer" unique_id=954575537]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="ShopKeeperDisplay" type="Panel" parent="Control/MarginContainer/HBoxContainer" unique_id=1397987205]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qq7pr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay" unique_id=508019095]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShopIcon" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer" unique_id=53565667]
+layout_mode = 2
+texture = ExtResource("1_owitj")
+stretch_mode = 2
+
+[node name="ShopLevel" type="Label" parent="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer" unique_id=39140983]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "LEVEL"
+
+[node name="Panel" type="Panel" parent="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer" unique_id=1082731312]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d7enn")
+
+[node name="Exit" type="Button" parent="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer" unique_id=488918488]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 45
+text = "EXIT"
+
+[node name="StockDisplay" type="Panel" parent="Control/MarginContainer/HBoxContainer" unique_id=1862203816]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/HBoxContainer/StockDisplay" unique_id=1512964418]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 30
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/MarginContainer/HBoxContainer/StockDisplay/MarginContainer" unique_id=2101259374]
+layout_mode = 2
+size_flags_horizontal = 0
+horizontal_scroll_mode = 0
+
+[node name="Stock" type="GridContainer" parent="Control/MarginContainer/HBoxContainer/StockDisplay/MarginContainer/ScrollContainer" unique_id=1812617555]
+layout_mode = 2
+columns = 4
+
+[node name="DetailDisplay" type="Panel" parent="Control/MarginContainer/HBoxContainer" unique_id=204235544]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer/DetailDisplay" unique_id=1537796151]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemIcon" type="TextureRect" parent="Control/MarginContainer/HBoxContainer/DetailDisplay/VBoxContainer" unique_id=1809769456]
+layout_mode = 2
+texture = ExtResource("1_owitj")
+expand_mode = 4
+
+[node name="ItemName" type="RichTextLabel" parent="Control/MarginContainer/HBoxContainer/DetailDisplay/VBoxContainer" unique_id=1410706584]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 60
+text = "ITEM NAME"
+fit_content = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/MarginContainer/HBoxContainer/DetailDisplay/VBoxContainer" unique_id=107560569]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemDescription" type="Label" parent="Control/MarginContainer/HBoxContainer/DetailDisplay/VBoxContainer/ScrollContainer" unique_id=2057105216]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "ITEM DESCRIPTIONITEM DESCRIPTIONITEM DESCRIPTIONITEM DESCRIPTIONITEM DESCRIPTIONITEM DESCRIPTION"
+autowrap_mode = 2
+
+[node name="ItemStats" type="Label" parent="Control/MarginContainer/HBoxContainer/DetailDisplay/VBoxContainer" unique_id=302725811]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ATTACK
+DEF
+SPEED
+OWNED"
+
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

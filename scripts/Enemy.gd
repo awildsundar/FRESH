@@ -4,7 +4,6 @@ class_name Enemy
 #config vars
 @export_category("Config")
 @export var anim_player: AnimationPlayer
-@export var detection_area: Area3D
 @export var hitbox: ShapeCast3D
 @export var limit_area: Area3D
 @export var mesh: Node3D
@@ -13,6 +12,7 @@ class_name Enemy
 
 #gameplay vars
 @export_category("Gameplay")
+@export var attack_distance: float = 100.0
 @export var speed: float = 5.0
 @export var atk: float = 50.0
 @export var def: float = 50.0
@@ -29,7 +29,6 @@ var state: BaseEnemyState
 func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.enemies.append(self)
-	add_to_group("Enemy")
 	
 	state = States.enemy_states["idle"]
 	state.enter(self)
@@ -48,14 +47,16 @@ func change_state_to(next_state: BaseEnemyState) -> void:
 	state = next_state
 	state.enter(self)
 
-func find_nearest_candidate(group: String) -> Node3D:
-	var candidates: Array[Node] = get_tree().get_nodes_in_group(group)
+func find_nearest_candidate() -> Node3D:
+	var candidates: Array[Character] = arena_manager.characters
+	var lowest_dist: float = INF
 	var nearest: Node3D = null
 	
 	for candidate in candidates:
 		if is_instance_valid(candidate):
 			var dist: float = global_position.distance_to(candidate.global_position)
-			if dist < detection_area.get_child(0).shape.size.z:
+			if dist < attack_distance && dist < lowest_dist:
+				lowest_dist = dist
 				nearest = candidate
 	
 	return nearest

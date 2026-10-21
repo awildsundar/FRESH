@@ -12,7 +12,7 @@ func enter(player: ArenaCharacter) -> void:
 func transition(player: ArenaCharacter) -> void:
 	var closest_dist: float = INF
 	var screen_center: Vector2 = player.get_viewport().get_visible_rect().size
-	var characters: Array = player.get_tree().get_nodes_in_group("Character")
+	var characters: Array = player.arena_manager.characters
 	characters.erase(player)
 	
 	for ch in characters:
