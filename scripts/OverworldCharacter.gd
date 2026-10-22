@@ -24,8 +24,11 @@ var last_target: Object = null
 
 var state: BaseState = States.player_states["idle"]
 
+var overworld_manager: OverWorldManager
+
 func _ready() -> void:
 	state.enter(self)
+	overworld_manager = self.get_tree().current_scene
 	DialogueManager.dialogue_started.connect(enable_movement.bind(false))
 	DialogueManager.dialogue_ended.connect(enable_movement.bind(true))
 
@@ -38,6 +41,13 @@ func _unhandled_input(event: InputEvent) -> void:
 					current_target.interact()
 	
 	interact_ray.rotation_degrees.x = -camera_rig.rotation_degrees.x
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("main_menu"):
+		if overworld_manager.main_menu.visible == false:
+			overworld_manager.main_menu.show()
+		else:
+			overworld_manager.main_menu.hide()
 
 func _physics_process(delta: float) -> void:
 	if interact_ray.is_colliding():

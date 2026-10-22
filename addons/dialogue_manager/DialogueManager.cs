@@ -276,6 +276,18 @@ namespace DialogueManagerRuntime
         }
 
 
+
+        /// <summary>
+        /// Set the default balloon to use at runtime.
+        /// </summary>
+        /// <param name="balloonScene"></param>
+        /// <returns></returns>
+        public static Error SetDefaultBalloon(Variant balloonScene)
+        {
+            return (Error)(int)Instance.Call("set_default_balloon", balloonScene);
+        }
+
+
         /// <summary>
         /// Show the example balloon
         /// </summary>
@@ -981,6 +993,7 @@ namespace DialogueManagerRuntime
             InlineMutations = (Array<Godot.Collections.Array>)data.Get("inline_mutations");
             Time = (string)data.Get("time");
             Tags = (Array<string>)data.Get("tags");
+            ExtraGameStates = (Array<Variant>)data.Get("extra_game_states");
 
             foreach (var concurrent_line_data in (Array<RefCounted>)data.Get("concurrent_lines"))
             {

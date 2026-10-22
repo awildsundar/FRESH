@@ -598,6 +598,23 @@ func create_resource_from_text(text: String) -> Resource:
 #region Balloon helpers
 
 
+## Set the default balloon to use at runtime.
+func set_default_balloon(balloon_scene: Variant) -> Error:
+	var balloon_scene_path: String = ""
+
+	if balloon_scene is String:
+		balloon_scene_path = balloon_scene
+	elif balloon_scene is PackedScene:
+		balloon_scene_path = balloon_scene.resource_path
+
+	if not ["tscn", "scn"].has(balloon_scene_path.get_extension()):
+		return ERR_INVALID_DATA
+
+	ProjectSettings.set_setting(DMSettings.BALLOON_PATH, balloon_scene_path)
+
+	return OK
+
+
 ## Show the example balloon
 func show_example_dialogue_balloon(resource: DialogueResource, cue: String = "", extra_game_states: Array = []) -> CanvasLayer:
 	var balloon: Node = load(_get_example_balloon_path()).instantiate()
@@ -606,7 +623,7 @@ func show_example_dialogue_balloon(resource: DialogueResource, cue: String = "",
 
 
 ## Show the configured dialogue balloon
-func show_dialogue_balloon(resource: DialogueResource, cue: String = "", cutscene_enabled: bool = false, extra_game_states: Array = []) -> Node:
+func show_dialogue_balloon(resource: DialogueResource, cue: String, cutscene_enabled: bool, extra_game_states: Array = []) -> Node:
 	var balloon_path: String = DMSettings.get_setting(DMSettings.BALLOON_PATH, _get_example_balloon_path())
 	if not ResourceLoader.exists(balloon_path):
 		balloon_path = _get_example_balloon_path()
@@ -614,7 +631,7 @@ func show_dialogue_balloon(resource: DialogueResource, cue: String = "", cutscen
 
 
 ## Show a given balloon scene
-func show_dialogue_balloon_scene(balloon_scene: Variant, resource: DialogueResource, cue: String = "", cutscene_enabled: bool = false, extra_game_states: Array = []) -> Node:
+func show_dialogue_balloon_scene(balloon_scene: Variant, resource: DialogueResource, cue: String, cutscene_enabled: bool, extra_game_states: Array = []) -> Node:
 	if balloon_scene is String:
 		balloon_scene = load(balloon_scene)
 	if balloon_scene is PackedScene:
@@ -652,7 +669,7 @@ func _start_balloon(balloon: Node, resource: DialogueResource, cue: String, cuts
 	assert(is_instance_valid(current_scene))
 
 	current_scene.add_child(balloon)
-	
+
 	balloon.cutscene = cutscene_enabled
 
 	if balloon.has_method(&"start"):
@@ -742,11 +759,16 @@ func translate(data: Dictionary) -> String:
 		return data.text
 
 	var static_id: String = data.get(&"static_id", data.text)
-
-	if static_id == "" or static_id == data.text:
-		return tr(data.text, "dialogue")
+	if DMSettings.get_setting(DMSettings.USE_STATIC_IDS_AS_TRANSLATION_KEYS, true):
+		if static_id.is_empty() or static_id == data.text:
+			return tr(data.text, "dialogue")
+		else:
+			return tr(static_id, "dialogue")
 	else:
-		return tr(data.text, StringName(static_id))
+		if static_id.is_empty() or static_id == data.text:
+			return tr(data.text)
+		else:
+			return tr(data.text, static_id)
 
 
 # Create a line of dialogue
@@ -846,16 +868,18 @@ func _send_state_to_debugger() -> void:
 
 	var serialised_context: Dictionary = {}
 	for key: String in _registered_contexts.keys():
-		serialised_context[key] = _get_serialised_state_node(
-			key,
-			_registered_contexts.get(key)
-		)
+		if is_instance_valid(_registered_contexts.get(key)):
+			serialised_context[key] = _get_serialised_state_node(
+				key,
+				_registered_contexts.get(key)
+			)
 	var serialised_autoloads: Dictionary = {}
 	for key: String in _autoloads.keys():
-		serialised_autoloads[key] = _get_serialised_state_node(
-			key,
-			_autoloads.get(key)
-		)
+		if is_instance_valid(_autoloads.get(key)):
+			serialised_autoloads[key] = _get_serialised_state_node(
+				key,
+				_autoloads.get(key)
+			)
 	EngineDebugger.send_message("dm:state", [serialised_context, serialised_autoloads])
 
 

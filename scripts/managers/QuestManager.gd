@@ -12,7 +12,8 @@ var completed_quests: Array[Quest]
 
 func start_quest(quest: Quest) -> void:
 	active_quest = quest
-	current_quests.append(active_quest)
+	if current_quests.has(active_quest) == false:
+		current_quests.append(active_quest)
 	quest_started.emit(active_quest)
 
 ##Updates the quest status.
@@ -30,8 +31,8 @@ func give_quest_reward() -> void:
 	DataManager.shards += active_quest.shards
 	quest_completed.emit(active_quest)
 	
-	print(active_quest.shards)
-	print(active_quest.cash)
+	print(DataManager.cash)
+	print(DataManager.shards)
 	
 	completed_quests.append(active_quest)
 	current_quests.erase(active_quest)

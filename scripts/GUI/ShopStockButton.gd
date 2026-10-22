@@ -28,8 +28,10 @@ func _on_pressed() -> void:
 	
 	if DataManager.inventory.get(item) != null:
 		DataManager.inventory[item] += 1
+		DataManager.inventory_updated.emit()
 	else:
-		DataManager.inventory.set(item, 1)
+		DataManager.inventory[item] = 1
+		DataManager.inventory_updated.emit()
 	
 	if item.item_type != item.ITEM_TYPE.FOOD:
 		disabled = true
@@ -38,6 +40,3 @@ func _on_pressed() -> void:
 	DEF: %d
 	SPEED: %d
 	OWNED: x%d" % [item.atk, item.def, item.speed, find_item_instances(item)]
-	
-	print(str(DataManager.cash))
-	print(DataManager.inventory)

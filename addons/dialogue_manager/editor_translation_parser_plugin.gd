@@ -44,22 +44,35 @@ func _parse_file(path: String) -> Array[PackedStringArray]:
 		known_keys.append(static_id)
 		translated_lines.append(line)
 
-		var message: String = line.text.replace('"', '\"')
-		var context: String = static_id.replace('"', '\"') if static_id != line.text else "dialogue"
+		var has_static_id: bool = static_id != "" and static_id != line.text
+		var use_static_id_as_key: bool = DMSettings.get_setting(DMSettings.USE_STATIC_IDS_AS_TRANSLATION_KEYS, true)
+
 		var plural: String = ""
 		var extra_details: PackedStringArray = []
 		if line.has("character"):
-			extra_details.append("Character name: %s" % line.get("character", ""))
+			extra_details.append("Character: %s" % line.get("character", ""))
+		if has_static_id and use_static_id_as_key and not line.text.is_empty():
+			extra_details.append("Line: %s" % line.text)
 		if line.has("notes"):
-			extra_details.append(line.get("notes", ""))
+			extra_details.append("Notes: %s" % line.get("notes", ""))
 		var notes: String = "\n".join(extra_details)
-		msgs.append(PackedStringArray([
-			message,
-			context,
-			plural,
-			notes,
-			key
-		]))
+
+		if use_static_id_as_key:
+			msgs.append(PackedStringArray([
+				static_id.replace('"', '\"') if has_static_id else line.text,
+				"dialogue",
+				plural,
+				notes,
+				key
+			]))
+		else:
+			msgs.append(PackedStringArray([
+				line.text,
+				static_id if has_static_id else "",
+				plural,
+				notes,
+				key
+			]))
 
 	return msgs
 
