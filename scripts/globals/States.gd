@@ -19,5 +19,7 @@ var enemy_states: Dictionary[String, BaseEnemyState] = {
 	"hunt": HuntEnemyState.new(),
 	"hurt": HurtEnemyState.new(),
 	"death": DeathEnemyState.new(),
-	"attack": AttackEnemyState.new()
+	"attack": AttackEnemyState.new(),
+	"back_away": BackAwayEnemyState.new(),
+	"circle": CircleEnemyState.new()
 }

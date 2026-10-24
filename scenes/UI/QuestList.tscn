@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ilp4tlp3kbb1"]
+
+[ext_resource type="Script" uid="uid://bo5rbyh5aikf2" path="res://scripts/GUI/QuestList.gd" id="1_8wf7q"]
+
+[node name="QuestList" type="FoldableContainer" unique_id=1883821411]
+theme_override_font_sizes/font_size = 40
+title = "QUEST_NAME"
+script = ExtResource("1_8wf7q")
+
+[node name="Steps" type="Label" parent="." unique_id=25020468]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "QUEST_STEP 1
+QUEST_STEP 2"

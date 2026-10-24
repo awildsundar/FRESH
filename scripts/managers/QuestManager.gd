@@ -3,7 +3,8 @@ extends Node
 signal quest_started(q: Quest)
 signal quest_updated(q: Quest)
 signal quest_completed(q: Quest)
-
+signal current_quests_updated
+signal completed_quests_updated
 
 
 var active_quest: Quest
@@ -14,6 +15,7 @@ func start_quest(quest: Quest) -> void:
 	active_quest = quest
 	if current_quests.has(active_quest) == false:
 		current_quests.append(active_quest)
+		current_quests_updated.emit()
 	quest_started.emit(active_quest)
 
 ##Updates the quest status.
@@ -36,6 +38,10 @@ func give_quest_reward() -> void:
 	
 	completed_quests.append(active_quest)
 	current_quests.erase(active_quest)
+	
+	completed_quests_updated.emit()
+	current_quests_updated.emit()
+	
 	active_quest = null
 
 func sort_quests() -> void:

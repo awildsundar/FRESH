@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvpooeswrpwfe" path="res://scripts/Enemy.gd" id="1_3gvst"]
 [ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_55jtl"]
+[ext_resource type="Script" uid="uid://sqtg0mmaj601" path="res://scripts/managers/RapidApproachDetector.gd" id="3_mpr68"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3gvst"]
 
@@ -5826,6 +5827,7 @@ radius = 1.0
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1772613504 node_paths=PackedStringArray("anim_player", "hitbox", "limit_area", "mesh", "nav_agent", "lock_on_indicator")]
 collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_3gvst")
 anim_player = NodePath("FemaleBody/AnimationPlayer")
 hitbox = NodePath("FemaleBody/Armature/Skeleton3D/BoneAttachment3D/ShapeCast3D")
@@ -5833,6 +5835,10 @@ limit_area = NodePath("LimitArea")
 mesh = NodePath("FemaleBody")
 nav_agent = NodePath("NavigationAgent3D")
 lock_on_indicator = NodePath("LockOnIndicator")
+direct_approach_threshold = 0.1
+back_away_distance = 3.0
+circle_distance = 3.0
+max_combo = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1304060759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -6329,6 +6335,9 @@ billboard = 1
 texture = ExtResource("2_55jtl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1893583717]
+height = 2.0
+avoidance_layers = 3
+avoidance_mask = 3
 
 [node name="StateIndicator" type="Label3D" parent="." unique_id=1232628347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -6339,6 +6348,10 @@ text = "hrrrrmmm"
 monitorable = false
 
 [node name="LimitCylinder" type="CollisionShape3D" parent="LimitArea" unique_id=715778141]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.5)
 shape = SubResource("CylinderShape3D_55jtl")
 debug_color = Color(0.33833334, 0.7, 0, 0.41960785)
+
+[node name="RapidApproachDetector" type="Node" parent="." unique_id=1666317846]
+script = ExtResource("3_mpr68")
+metadata/_custom_type_script = "uid://sqtg0mmaj601"

@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("main_menu"):
-		if overworld_manager.main_menu.visible == false:
+		if overworld_manager.main_menu.visible == false && overworld_manager.current_menu == null:
 			overworld_manager.main_menu.show()
 		else:
 			overworld_manager.main_menu.hide()

@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Menu
 class_name ShopManager
 
 #Shop Keeper Display nodes
@@ -21,6 +21,7 @@ var player: OverworldCharacter
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	player.can_move = false
+	player.overworld_manager.current_menu = self
 	
 	shop_icon.texture = shop.shop_logo
 	shop_level.text = "LVL " + str(shop.level)
@@ -39,4 +40,5 @@ func _ready() -> void:
 func _on_exit_pressed() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	player.can_move = true
+	player.overworld_manager.current_menu = null
 	self.queue_free()

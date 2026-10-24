@@ -10,18 +10,6 @@ func enter(player: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
-	var closest_dist: float = INF
-	var screen_center: Vector2 = player.get_viewport().get_visible_rect().size
-	var characters: Array = player.arena_manager.characters
-	characters.erase(player)
-	
-	for ch in characters:
-		var ch_screen_pos: Vector2 = player.camera.unproject_position(ch.global_position)
-		var dist: float = ch_screen_pos.distance_squared_to(screen_center)
-		if dist < closest_dist and player.camera.is_position_in_frustum(ch.global_position):
-			closest_dist = dist
-			closest_character = ch
-	
 	if Input.is_action_just_released("switch_control"):
 		if closest_character != null:
 			player.enable_control(false)
@@ -34,6 +22,18 @@ func transition(player: ArenaCharacter) -> void:
 
 ##Runs during a state
 func update(player: ArenaCharacter, delta: float) -> void:
+	var closest_dist: float = INF
+	var screen_center: Vector2 = player.get_viewport().get_visible_rect().size
+	var characters: Array = player.arena_manager.characters
+	var filtered_characters: Array = characters.filter(func(ch): return not ch.in_control == true)
+	
+	for ch: ArenaCharacter in filtered_characters:
+		var ch_screen_pos: Vector2 = player.camera.unproject_position(ch.global_position)
+		var dist: float = ch_screen_pos.distance_squared_to(screen_center)
+		if dist < closest_dist and player.camera.is_position_in_frustum(ch.global_position):
+			closest_dist = dist
+			closest_character = ch
+	
 	player.velocity.x = player.move_dir.x * player.speed
 	player.velocity.z = player.move_dir.z * player.speed
 

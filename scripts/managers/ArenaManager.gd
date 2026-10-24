@@ -10,11 +10,12 @@ enum ARENA_TYPE {
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var wait_time: float = 3.0
 
-var characters: Array[Character]
+var characters: Array[ArenaCharacter]
 var enemies: Array[Enemy]
 
 var player_hp: float = 0.0
 var enemy_shards: int = 0
+var enemy_cash: int = 0
 
 var last_location: Dictionary = {
 	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
@@ -23,13 +24,14 @@ var last_location: Dictionary = {
 func _ready() -> void:
 	for player in characters:
 		player_hp += player.hp
-	print(player_hp)
 	
 	for enemy in enemies:
 		enemy_shards += enemy.shards
+		enemy_cash += enemy.cash
 
 func battle_won() -> void:
-	DataManager.cash += (enemy_shards * 10)
+	DataManager.shards += enemy_shards
+	DataManager.cash += enemy_cash
 	await get_tree().create_timer(wait_time).timeout
 	TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
 

@@ -118,6 +118,7 @@ func cancel() -> void:
 	emit_signal("animation_cancelled")
 
 func hurt(damage: float) -> void:
+	pass
 	if state is BasePlayerState:
 		change_state_to(States.player_states["hurt"])
 	arena_manager.player_hp -= damage

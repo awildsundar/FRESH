@@ -7,19 +7,17 @@ func enter(enemy: Enemy) -> void:
 	var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 	var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)
 	var dir: Vector2 = (look_target - enemy_rot)
-	enemy.mesh.rotation.y = lerp_angle(enemy.mesh.rotation.y, atan2(dir.x, dir.y), 0.5)
+	enemy.rotation.y = lerp_angle(enemy.rotation.y, atan2(dir.x, dir.y), 0.5)
 	enemy.anim_player.play("kick1")
+	enemy.combo += 1
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
-	if enemy.limit_area.get_overlapping_bodies() == []:
-		enemy.change_state_to(States.enemy_states["idle"])
-	
-	
 	await enemy.anim_player.animation_finished
-	await enemy.get_tree().create_timer(enemy.rest_time).timeout
-	if is_instance_valid(enemy) and enemy.is_queued_for_deletion() == false:
-		enemy.change_state_to(States.enemy_states["idle"])
+	
+	if enemy.combo >= enemy.max_combo:
+		enemy.combo = 0
+		enemy.change_state_to(States.enemy_states["back_away"])
 
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:

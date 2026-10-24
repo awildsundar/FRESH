@@ -10,5 +10,7 @@ enum LOCATION {
 @export var location: LOCATION
 @export var main_menu: CanvasLayer
 
+var current_menu: Menu = null
+
 func _ready() -> void:
 	main_menu.hide()

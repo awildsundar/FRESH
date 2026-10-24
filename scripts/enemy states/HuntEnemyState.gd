@@ -24,7 +24,7 @@ func update(enemy: Enemy, delta: float) -> void:
 		var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 		var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)
 		var dir: Vector2 = (look_target - enemy_rot)
-		enemy.mesh.rotation.y = lerp_angle(enemy.mesh.rotation.y, atan2(dir.x, dir.y), 0.5)
+		enemy.rotation.y = lerp_angle(enemy.rotation.y, atan2(dir.x, dir.y), 0.5)
 
 		enemy.velocity = Vector3.ZERO
 		enemy.nav_agent.target_position = current_target.global_position

@@ -1,4 +1,5 @@
-extends CanvasLayer
+extends Menu
+class_name DialogueDisplay
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 
@@ -40,6 +41,8 @@ var locals: Dictionary = {}
 
 var _locale: String = TranslationServer.get_locale()
 
+var overworld_manager: OverWorldManager
+
 ## The current line
 var dialogue_line: DialogueLine:
 	set(value):
@@ -49,6 +52,7 @@ var dialogue_line: DialogueLine:
 		else:
 			# The dialogue has finished so close the balloon
 			if owner == null:
+				overworld_manager.current_menu = null
 				queue_free()
 			else:
 				hide()
@@ -77,6 +81,8 @@ var mutation_cooldown: Timer = Timer.new()
 func _ready() -> void:
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
+
+	overworld_manager = self.get_tree().current_scene
 
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
@@ -122,6 +128,7 @@ func start(with_dialogue_resource: DialogueResource = null, cue: String = "", ex
 	if not cue.is_empty():
 		start_from_cue = cue
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_cue, temporary_game_states)
+	overworld_manager.current_menu = self
 	show()
 
 

@@ -12,18 +12,40 @@ class_name Enemy
 
 #gameplay vars
 @export_category("Gameplay")
-@export var attack_distance: float = 100.0
+@export_group("Stats")
 @export var speed: float = 5.0
 @export var atk: float = 50.0
 @export var def: float = 50.0
 @export var hp: float = 100.0
+@export_group("Config")
+@export_subgroup("Rapid Approach Detection")
+@export var approach_speed_threshold: float = 0.0
+@export var detection_range: float = 15.0
+@export var direct_approach_threshold: float = 0.7
+@export_subgroup("Back Away")
+@export var attack_distance: float = 100.0
+@export var back_away_distance: float = 1.0
+@export var back_away_timer: float = 3.0
+@export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
+@export_subgroup("Circle")
+@export var circle_distance: float = 1.0
+@export var min_circle_time: float = 1.0
+@export var max_circle_time: float = 3.0
+@export_range(0.1, 0.9) var attack_chance: float = 0.3
+@export_subgroup("Misc")
+@export var max_combo: int = 3
 @export var rest_time: float = 0.5
 @export var shards: int = 5
+@export var cash: int = 10
 
 @onready var state_indicator: Label3D = $StateIndicator
 
 var arena_manager: ArenaManager
 var state: BaseEnemyState
+
+var combo: int = 0
+
+var target: Node3D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -48,7 +70,7 @@ func change_state_to(next_state: BaseEnemyState) -> void:
 	state.enter(self)
 
 func find_nearest_candidate() -> Node3D:
-	var candidates: Array[Character] = arena_manager.characters
+	var candidates: Array[ArenaCharacter] = arena_manager.characters
 	var lowest_dist: float = INF
 	var nearest: Node3D = null
 	
@@ -59,8 +81,10 @@ func find_nearest_candidate() -> Node3D:
 				lowest_dist = dist
 				nearest = candidate
 	
+	target = nearest
 	return nearest
 
 func hurt(damage: float) -> void:
-	change_state_to(States.enemy_states["hurt"])
-	hp -= damage
+	if hp > 0.0:
+		change_state_to(States.enemy_states["hurt"])
+		hp -= damage

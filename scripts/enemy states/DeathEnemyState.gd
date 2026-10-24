@@ -3,6 +3,9 @@ class_name DeathEnemyState
 
 ##Runs when state is entered
 func enter(enemy: Enemy) -> void:
+	enemy.limit_area.monitoring = false
+	
+	
 	enemy.anim_player.play("death")
 	enemy.arena_manager.enemies.erase(enemy)
 	if enemy.arena_manager.enemies.is_empty():
