@@ -20,5 +20,8 @@ func quest_updated(quest: Quest) -> void:
 	quest_step.text = quest.steps[quest.quest_progression]
 
 func quest_completed(quest: Quest) -> void:
+	quest_name.text = quest.quest_title
+	quest_step.text = "Cash: %d \n Shards: %d" % [quest.cash, quest.shards]
+	await get_tree().create_timer(1.5).timeout
 	quest_name.text = ""
 	quest_step.text = ""

@@ -7,6 +7,7 @@ var shop_manager: ShopManager
 func _ready() -> void:
 	text = "$" + str(item.price)
 	icon = item.icon
+	DataManager.cash_updated.connect(disable_stock)
 
 func _on_mouse_entered() -> void:
 	shop_manager.item_icon.texture = item.icon
@@ -19,6 +20,10 @@ func _on_mouse_entered() -> void:
 
 func find_item_instances(searchable_item: Item) -> int:
 	return DataManager.inventory.get(searchable_item, 0)
+
+func disable_stock(cash: int) -> void:
+	if cash < item.price:
+		self.disabled = true
 
 func _on_pressed() -> void:
 	if DataManager.cash < item.price:

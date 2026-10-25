@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://bbmolr22abo0a" path="res://scripts/interactable classes/DialogueInteractable.gd" id="3_xb0qy"]
 [ext_resource type="Resource" uid="uid://b0y7yiw0ul7ui" path="res://dialogues/test_quest.dialogue" id="4_kye7l"]
 [ext_resource type="Script" uid="uid://cd3222nx3y3k5" path="res://addons/dialogue_manager/nodes/context/dialogue_state_context.gd" id="4_xb0qy"]
-[ext_resource type="Resource" uid="uid://dlh5nq0aysplw" path="res://quests/TestQuest.tres" id="5_jji4p"]
 [ext_resource type="Script" uid="uid://c35xeiqhimogk" path="res://scripts/GUI/QuestDisplay.gd" id="7_jji4p"]
+[ext_resource type="Resource" uid="uid://bjt8py1pivakp" path="res://quests/DialogueQuest.tres" id="8_hjjtq"]
 [ext_resource type="Script" uid="uid://c2iv7npiu60kd" path="res://scripts/interactable classes/ShopInteractable.gd" id="8_qjamo"]
 [ext_resource type="Resource" uid="uid://bhjn8am4xbq8h" path="res://shops/burger.tres" id="11_hjjtq"]
 
@@ -114,11 +114,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 pixel_size = 0.005
 billboard = 1
 
+[node name="Label3D" type="Label3D" parent="StaticBody3D" unique_id=1443642746]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.75)
+text = "Arena"
+
 [node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=282519790]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, -4.5)
 script = ExtResource("3_xb0qy")
 dialogue = ExtResource("4_kye7l")
-quest = ExtResource("5_jji4p")
+quest = ExtResource("8_hjjtq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=939587425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -137,6 +141,10 @@ alias = "Danny"
 target = NodePath("..")
 metadata/_custom_type_script = "uid://cd3222nx3y3k5"
 
+[node name="Label3D" type="Label3D" parent="StaticBody3D2" unique_id=579009942]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.75, 0, 0)
+text = "Dialogue + Quest"
+
 [node name="StaticBody3D3" type="StaticBody3D" parent="." unique_id=2147381036]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -4.5)
 script = ExtResource("8_qjamo")
@@ -150,3 +158,7 @@ shape = SubResource("SphereShape3D_i1w3v")
 
 [node name="Sprite3D" type="Sprite3D" parent="StaticBody3D3" unique_id=139445226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="Label3D" type="Label3D" parent="StaticBody3D3" unique_id=255201344]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+text = "Shop"

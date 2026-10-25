@@ -7,6 +7,7 @@ class_name InventoryDisplay
 @onready var inventory_display: VBoxContainer = $Panel/MarginContainer/VBoxContainer/ScrollContainer/InventoryDisplay
 
 func _ready() -> void:
+	shards_cash_display.text = "SHARDS: %d CASH: %d" % [DataManager.shards, DataManager.cash]
 	DataManager.connect("inventory_updated", inventory_updated)
 	DataManager.connect("shards_updated", shards_cash_updated)
 	DataManager.connect("cash_updated", shards_cash_updated)

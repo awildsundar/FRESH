@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://qu54y2revsmk"]
 
 [ext_resource type="Script" uid="uid://b8fqxojmbph5k" path="res://scripts/GUI/InventoryDisplay.gd" id="1_grs2b"]
-[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_jbkmq"]
 [ext_resource type="Script" uid="uid://mj5ublpd6cr8" path="res://scripts/managers/MainMenuManager.gd" id="1_wxmjq"]
 [ext_resource type="Script" uid="uid://b2pxkvge1rux5" path="res://scripts/GUI/QuestListDisplay.gd" id="4_3s8xc"]
 
@@ -26,11 +25,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 tab_alignment = 1
-current_tab = 1
+current_tab = 0
 tab_3/title = "Save/Load"
 
 [node name="Inventory" type="Control" parent="Control/TabContainer" unique_id=1414568234]
-visible = false
 layout_mode = 2
 script = ExtResource("1_grs2b")
 metadata/_tab_index = 0
@@ -61,7 +59,7 @@ layout_mode = 2
 [node name="ShardsCashDisplay" type="Label" parent="Control/TabContainer/Inventory/Panel/MarginContainer/VBoxContainer" unique_id=1154673926]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "BEH"
+text = "Shards: 0 Cash: 0"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/TabContainer/Inventory/Panel/MarginContainer/VBoxContainer" unique_id=379520192]
 layout_mode = 2
@@ -73,14 +71,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="Button" type="Button" parent="Control/TabContainer/Inventory/Panel/MarginContainer/VBoxContainer/ScrollContainer/InventoryDisplay" unique_id=401625678]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "asdfdsa"
-icon = ExtResource("1_jbkmq")
-alignment = 0
-
 [node name="Quests" type="Control" parent="Control/TabContainer" unique_id=1843980516]
+visible = false
 layout_mode = 2
 script = ExtResource("4_3s8xc")
 metadata/_tab_index = 1

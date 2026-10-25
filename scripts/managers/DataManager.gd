@@ -13,3 +13,4 @@ var shards: int:
 		shards = value
 		shards_updated.emit(value)
 var inventory: Dictionary[Item, int]
+var arena_entered: bool = false

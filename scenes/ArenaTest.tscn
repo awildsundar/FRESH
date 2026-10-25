@@ -29,12 +29,6 @@ script = ExtResource("1_wmg8w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3685927, 0, -3.3555942)
 in_control = true
 
-[node name="Player2" parent="." unique_id=1147003936 instance=ExtResource("1_favoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.69242, 0, -11.221115)
-
-[node name="Player3" parent="." unique_id=1210765461 instance=ExtResource("1_favoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2922544, 0, 8.606972)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453346797]
 environment = SubResource("Environment_wmg8w")
 
@@ -52,3 +46,6 @@ size = Vector3(30, 0.5, 30)
 
 [node name="Enemy" parent="NavigationRegion3D" unique_id=1303781746 instance=ExtResource("1_ldgcu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, -6)
+
+[node name="Enemy2" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("1_ldgcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, 5)
