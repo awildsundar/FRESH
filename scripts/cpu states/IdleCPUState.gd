@@ -7,7 +7,8 @@ func enter(cpu: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:
-	pass
+	if cpu.arena_manager.enemies != []:
+		cpu.change_state_to(States.cpu_states["hunt"])
 
 ##Runs during a state
 func update(cpu: ArenaCharacter, delta: float) -> void:

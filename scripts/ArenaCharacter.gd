@@ -11,9 +11,9 @@ signal animation_cancelled
 @export var hitbox: ShapeCast3D
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var rig: SpringArm3D = $SpringArm3D
-
+@onready var limit_area: Area3D = $LimitArea
 #gameplay vars
-@export_category("Gameplay")
+@export_category("Player")
 @export_group("Basics")
 @export var speed: float = 10.0
 @export var dash_time: float = 0.25
@@ -28,6 +28,21 @@ signal animation_cancelled
 @export var in_control: bool = false
 @export var control_distance: float = 100.0
 
+#cpu vars
+@export_category("CPU")
+@export_subgroup("Back Away")
+@export var attack_distance: float = 100.0
+@export var back_away_distance: float = 1.0
+@export var back_away_timer: float = 3.0
+@export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
+@export_subgroup("Circle")
+@export var circle_distance: float = 1.0
+@export var min_circle_time: float = 1.0
+@export var max_circle_time: float = 3.0
+@export_range(0.1, 0.9) var attack_chance: float = 0.3
+@export_subgroup("Misc")
+@export var max_combo: int = 3
+
 var can_move: bool = true
 var input_dir: Vector2
 var move_dir: Vector3
@@ -35,6 +50,12 @@ var move_dir: Vector3
 var atk_buffer := []
 var is_attacking: bool = false
 var buffer_input: bool = true
+
+var combo: int = 0
+
+var is_blocking: bool = false
+
+var target: Node3D = null
 
 var arena_manager: ArenaManager
 var state: BaseState
@@ -45,17 +66,21 @@ func _ready() -> void:
 	
 	if in_control:
 		state = States.player_states["idle"]
+		camera.make_current()
 	else:
 		state = States.cpu_states["idle"]
+		camera.clear_current()
 	state.enter(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if in_control:
-		if event.is_action_pressed("dash"):
-			change_state_to(States.player_states["dash"])
-		if event.is_action_pressed("switch_control"):
+		if event.is_action_pressed("dodge"):
+			change_state_to(States.player_states["dodge"])
+		elif event.is_action_pressed("switch_control"):
 			change_state_to(States.player_states["switch"])
-		if event.is_action_pressed("basic_attack") or event.is_action_pressed("heavy_attack") or event.is_action_pressed("special_attack"):
+		elif event.is_action_pressed("block"):
+			change_state_to(States.player_states["block"])
+		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("heavy_attack") or event.is_action_pressed("special_attack"):
 			if atk_buffer.size() < max_buffer_size && buffer_input == true:
 				atk_buffer.append(event.as_text())
 			if atk_buffer != [] && is_attacking == false:
@@ -105,6 +130,7 @@ func find_nearest_candidate(group: int, max_distance: float) -> Node3D:
 				lowest_dist = dist
 				nearest = candidate
 	
+	target = nearest
 	return nearest
 
 ##Rotates player mesh based on direction of input
@@ -121,4 +147,6 @@ func hurt(damage: float) -> void:
 	pass
 	if state is BasePlayerState:
 		change_state_to(States.player_states["hurt"])
+	elif state is BaseCPUState:
+		change_state_to(States.cpu_states["hurt"])
 	arena_manager.player_hp -= damage

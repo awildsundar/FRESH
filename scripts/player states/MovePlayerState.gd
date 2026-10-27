@@ -14,7 +14,7 @@ func transition(player: Character) -> void:
 func update(player: Character, delta: float) -> void:
 	player.velocity.x = player.move_dir.x * player.speed
 	player.velocity.z = player.move_dir.z * player.speed
-
+	
 	player.move_and_slide()
 	player.turn_to(player.move_dir)
 

@@ -46,6 +46,7 @@ var state: BaseEnemyState
 var combo: int = 0
 
 var target: Node3D = null
+var target_list: Array[ArenaCharacter]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -69,8 +70,8 @@ func change_state_to(next_state: BaseEnemyState) -> void:
 	state = next_state
 	state.enter(self)
 
-func find_nearest_candidate() -> Node3D:
-	var candidates: Array[ArenaCharacter] = arena_manager.characters
+func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
+	var candidates: Array[ArenaCharacter] = list if list != [] else arena_manager.characters
 	var lowest_dist: float = INF
 	var nearest: Node3D = null
 	

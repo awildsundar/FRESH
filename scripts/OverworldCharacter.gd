@@ -41,6 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					current_target.interact()
 	
 	interact_ray.rotation_degrees.x = -camera_rig.rotation_degrees.x
+	interact_ray.global_rotation_degrees.y = camera_rig.global_rotation_degrees.y - 180.0
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("main_menu"):

@@ -1,5 +1,3 @@
-@abstract
-
 extends BaseState
 class_name BasePlayerState
 

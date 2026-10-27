@@ -7,7 +7,7 @@ var back_away_timer: float = 0.0
 func enter(enemy: Enemy) -> void:
 	back_away_timer = 0.0
 	enemy.limit_area.monitoring = false
-	enemy.anim_player.play("run")
+	enemy.anim_player.play_backwards("run")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:

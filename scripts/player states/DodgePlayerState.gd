@@ -1,5 +1,5 @@
 extends BasePlayerState
-class_name DashPlayerState
+class_name DodgePlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
@@ -8,12 +8,12 @@ func enter(player: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
-	if player.move_dir == Vector3.ZERO:
-		player.anim_player.speed_scale = 1.0
-		player.change_state_to(States.player_states["idle"])
 	await player.get_tree().create_timer(player.dash_time).timeout
 	player.anim_player.speed_scale = 1.0
-	player.change_state_to(States.player_states["move"])
+	if player.move_dir == Vector3.ZERO:
+		player.change_state_to(States.player_states["idle"])
+	else:
+		player.change_state_to(States.player_states["move"])
 
 ##Runs during a state
 func update(player: ArenaCharacter, delta: float) -> void:
