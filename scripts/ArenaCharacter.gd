@@ -53,7 +53,7 @@ var buffer_input: bool = true
 
 var combo: int = 0
 
-var is_blocking: bool = false
+var is_invincible: bool = false
 
 var target: Node3D = null
 
@@ -82,14 +82,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			change_state_to(States.player_states["block"])
 		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("heavy_attack") or event.is_action_pressed("special_attack"):
 			if atk_buffer.size() < max_buffer_size && buffer_input == true:
-				atk_buffer.append(event.as_text())
+				atk_buffer.append(event)
 			if atk_buffer != [] && is_attacking == false:
 				change_state_to(States.player_states["attack"])
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	move_dir = (camera.global_basis * Vector3(input_dir.x, 0, input_dir.y))
-	move_dir = Vector3(move_dir.x, 0, move_dir.z).normalized()
+	if can_move == true && in_control == true:
+		move_dir = (camera.global_basis * Vector3(input_dir.x, 0, input_dir.y))
+		move_dir = Vector3(move_dir.x, 0, move_dir.z).normalized()
 	
 	state.transition(self)
 	state.update(self, delta)
@@ -144,9 +145,9 @@ func cancel() -> void:
 	emit_signal("animation_cancelled")
 
 func hurt(damage: float) -> void:
-	pass
-	if state is BasePlayerState:
-		change_state_to(States.player_states["hurt"])
-	elif state is BaseCPUState:
-		change_state_to(States.cpu_states["hurt"])
-	arena_manager.player_hp -= damage
+	if is_invincible == false:
+		if state is BasePlayerState:
+			change_state_to(States.player_states["hurt"])
+		elif state is BaseCPUState:
+			change_state_to(States.cpu_states["hurt"])
+		arena_manager.player_hp -= damage

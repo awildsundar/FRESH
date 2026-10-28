@@ -7,7 +7,7 @@ var back_away_timer: float = 0.0
 func enter(cpu: ArenaCharacter) -> void:
 	back_away_timer = 0.0
 	cpu.combo = 0
-	cpu.anim_player.play_backwards("combat/run")
+	cpu.anim_player.play_backwards("run")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:

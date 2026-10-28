@@ -3,7 +3,7 @@ class_name MovePlayerState
 
 ##Runs when state is entered
 func enter(player: Character) -> void:
-	player.anim_player.play("combat/run")
+	player.anim_player.play("run")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: Character) -> void:

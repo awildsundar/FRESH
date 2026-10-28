@@ -25,9 +25,8 @@ func update(enemy: Enemy, delta: float) -> void:
 		if enemy.hitbox.is_colliding():
 			var body: Object = enemy.hitbox.get_collider(0)
 			if body is ArenaCharacter:
-				if body.is_blocking == false:
-					body.hurt(enemy.atk)
-					enemy.hitbox.enabled = false
+				body.hurt(enemy.atk)
+				enemy.hitbox.enabled = false
 
 ##Runs when state is exited
 func exit(enemy: Enemy) -> void:

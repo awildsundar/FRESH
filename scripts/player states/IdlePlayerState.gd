@@ -3,7 +3,7 @@ class_name IdlePlayerState
 
 ##Runs when state is entered
 func enter(player: Character) -> void:
-	player.anim_player.play("combat/idle")
+	player.anim_player.play("idle")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: Character) -> void:

@@ -3,7 +3,7 @@ class_name HurtCPUState
 
 ##Runs when state is entered
 func enter(cpu: ArenaCharacter) -> void:
-	cpu.anim_player.play("combat/hurt")
+	cpu.anim_player.play("hurt")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:

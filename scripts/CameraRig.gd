@@ -1,6 +1,5 @@
 extends SpringArm3D
 
-@export var interact_ray: RayCast3D
 @export_range(0.1, 1.0, 0.1) var sensitivity: float
 @export var spring_distance: float = 4.0
 @export var min_angle: float = -30.0
@@ -10,14 +9,17 @@ extends SpringArm3D
 @onready var camera: Camera3D = $Camera3D
 @onready var camera_pos: Node3D = $"../CameraPos"
 
-var player: CharacterBody3D
+var player: Character
 var locked_on: bool = false
 var current_target: Node3D
+var initial_global_position: Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	player = get_parent()
+	add_excluded_object(player)
+	initial_global_position = self.global_position
 
 func _physics_process(delta: float) -> void:
 	self.global_position = lerp(global_position, camera_pos.global_position, 0.25)
@@ -27,7 +29,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		spring_length = lerp(spring_length, spring_distance, 0.5)
 	
-	if locked_on && is_instance_valid(current_target):
+	if locked_on == true && is_instance_valid(current_target):
 		_locked_cam()
 	else:
 		spring_length = lerp(spring_length, spring_distance, 0.5)
@@ -44,14 +46,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			_set_target(enemy)
 		else:
 			locked_on = false
-			if is_instance_valid(current_target):
-				current_target.lock_on_indicator.hide()
 
 	if locked_on:
 		if Input.is_action_just_pressed("switch_view_left"):
 			switch_target("left")
 		elif Input.is_action_just_pressed("switch_view_right"):
 			switch_target("right")
+	else:
+		if is_instance_valid(current_target):
+			current_target.lock_on_indicator.hide()
 		
 	if event is InputEventMouseMotion:
 		rotation_degrees.x -= event.relative.y * sensitivity

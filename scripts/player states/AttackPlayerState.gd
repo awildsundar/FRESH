@@ -1,13 +1,6 @@
 extends BasePlayerState
 class_name AttackPlayerState
 
-var anims: Dictionary = {
-	"Left Mouse Button": "combat/punch1",
-	"Left Mouse Button (Double Click)": "combat/punch2",
-	"R": "combat/kick1",
-	"F": "combat/kick2"
-}
-
 var consume_timer := 0.0
 var buffer_timer := 0.0
 
@@ -16,8 +9,7 @@ func enter(player: ArenaCharacter) -> void:
 	player.is_attacking = true
 	
 	if player.atk_buffer != []:
-		var action: Variant = player.atk_buffer.pop_front()
-		player.anim_player.play(anims.get(action))
+		play_attack_animation(player)
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
@@ -39,12 +31,20 @@ func update(player: ArenaCharacter, delta: float) -> void:
 	
 	if consume_timer > player.anim_player.current_animation_length - player.anim_duration:
 		if player.atk_buffer != []:
-			var action: String = player.atk_buffer.pop_front()
-			player.anim_player.play(anims.get(action))
+			play_attack_animation(player)
 		consume_timer = 0.0
 	
 	if buffer_timer > player.buffer_duration:
 		player.buffer_input = false
+
+func play_attack_animation(player: ArenaCharacter) -> void:
+	var action: InputEvent = player.atk_buffer.pop_front()
+	if action.is_action("basic_attack"):
+		player.anim_player.play("punch1")
+	elif action.is_action("heavy_attack"):
+		player.anim_player.play("kick1")
+	elif action.is_action("special_attack"):
+		player.anim_player.play("kick2")
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:

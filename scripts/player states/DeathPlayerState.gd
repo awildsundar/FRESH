@@ -3,7 +3,7 @@ class_name DeathPlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
-	player.anim_player.play("combat/death")
+	player.anim_player.play("death")
 	player.arena_manager.battle_lost()
 
 ##Runs a frame before update is called, allows for transitions

@@ -3,7 +3,7 @@ class_name IdleCPUState
 
 ##Runs when state is entered
 func enter(cpu: ArenaCharacter) -> void:
-	cpu.anim_player.play("combat/idle")
+	cpu.anim_player.play("idle")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:

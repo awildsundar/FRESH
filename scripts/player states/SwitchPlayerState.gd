@@ -15,6 +15,7 @@ func transition(player: ArenaCharacter) -> void:
 			player.enable_control(false)
 			closest_character.enable_control(true)
 		else:
+			player.enable_control(true)
 			player.change_state_to(States.player_states["idle"])
 	
 	await player.get_tree().create_timer(0.5).timeout
@@ -36,6 +37,7 @@ func update(player: ArenaCharacter, delta: float) -> void:
 	
 	player.velocity.x = player.move_dir.x * player.speed
 	player.velocity.z = player.move_dir.z * player.speed
+	player.velocity.y = 0.0
 
 	player.move_and_slide()
 	player.turn_to(player.move_dir)

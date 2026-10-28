@@ -3,7 +3,7 @@ class_name HurtPlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
-	player.anim_player.play("combat/hurt")
+	player.anim_player.play("hurt")
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:

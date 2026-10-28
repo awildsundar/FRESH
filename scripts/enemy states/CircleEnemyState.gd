@@ -15,20 +15,23 @@ func enter(enemy: Enemy) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
-	var to_player: Vector3 = (enemy.target.global_position - enemy.global_position)
-	var distance: float = to_player.length()
-	
-	
-	if circle_timer >= target_circle_time:
-		if randf() < enemy.attack_chance:
-			enemy.change_state_to(States.enemy_states["hunt"])
-		else:
-			circle_timer = 0.0
-			target_circle_time = randf_range(enemy.min_circle_time, enemy.max_circle_time)
-			if randf() > 0.7:
-				circle_direction *= -1
-	
-	if distance > enemy.circle_distance * 2.0:
+	if enemy.target != null:
+		var to_player: Vector3 = (enemy.target.global_position - enemy.global_position)
+		var distance: float = to_player.length()
+		
+		
+		if circle_timer >= target_circle_time:
+			if randf() < enemy.attack_chance:
+				enemy.change_state_to(States.enemy_states["hunt"])
+			else:
+				circle_timer = 0.0
+				target_circle_time = randf_range(enemy.min_circle_time, enemy.max_circle_time)
+				if randf() > 0.7:
+					circle_direction *= -1
+		
+		if distance > enemy.circle_distance * 2.0:
+			enemy.change_state_to(States.enemy_states["idle"])
+	else:
 		enemy.change_state_to(States.enemy_states["idle"])
 	
 ##Runs during a state

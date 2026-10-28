@@ -29,6 +29,9 @@ script = ExtResource("1_wmg8w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3685927, 0, -3.3555942)
 in_control = true
 
+[node name="Player2" parent="." unique_id=432533020 instance=ExtResource("1_favoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6314073, 0, -6.355594)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453346797]
 environment = SubResource("Environment_wmg8w")
 
@@ -39,10 +42,10 @@ shadow_enabled = true
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1888215311]
 navigation_mesh = SubResource("NavigationMesh_ldgcu")
 
+[node name="Enemy" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("1_ldgcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
+
 [node name="floor" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1392252466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 use_collision = true
 size = Vector3(30, 0.5, 30)
-
-[node name="Enemy" parent="NavigationRegion3D" unique_id=1303781746 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, -6)
