@@ -26,7 +26,8 @@ DialogueManager="*uid://c3rodes2l3gxb"
 TransitionManager="*uid://cn5m03fqgcveg"
 DataManager="*uid://dltdrgoosr3b3"
 QuestManager="*uid://d1gxgqy6tfl4x"
-StoryManager="*uid://7r205s80hcxv"
+SaveManager="*uid://duesn4o7n7fc3"
+SettingsManager="*uid://crqp6o4g6wmbc"
 
 [debug]
 
@@ -47,7 +48,7 @@ movie_writer/movie_file="C:/Users/Kenisha Roy/OneDrive - Melbourne Girls Grammar
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/blendkit/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg")
 
 [input]
 

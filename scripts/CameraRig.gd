@@ -1,6 +1,5 @@
 extends SpringArm3D
 
-@export_range(0.1, 1.0, 0.1) var sensitivity: float
 @export var spring_distance: float = 4.0
 @export var min_angle: float = -30.0
 @export var max_angle: float = 30.0
@@ -9,6 +8,8 @@ extends SpringArm3D
 @onready var camera: Camera3D = $Camera3D
 @onready var camera_pos: Node3D = $"../CameraPos"
 
+var sensitivity: float
+
 var player: Character
 var locked_on: bool = false
 var current_target: Node3D
@@ -16,6 +17,7 @@ var initial_global_position: Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	sensitivity = SettingsManager.mouse_sensitivity
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	player = get_parent()
 	add_excluded_object(player)

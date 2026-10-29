@@ -53,6 +53,7 @@ func update(enemy: Enemy, delta: float) -> void:
 	
 	enemy.velocity.x = move_dir.x * enemy.speed * enemy.back_away_speed_mult
 	enemy.velocity.z = move_dir.z * enemy.speed * enemy.back_away_speed_mult
+	enemy.velocity.y = 0.0
 	
 	var look_target: Vector2 = Vector2(enemy.target.global_position.x, enemy.target.global_position.z)
 	var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)

@@ -8,8 +8,8 @@ var move_dir_z: float
 func enter(player: ArenaCharacter) -> void:
 	player.anim_player.play("dodge")
 	player.is_invincible = true
-	move_dir_x = player.move_dir.x
-	move_dir_z = player.move_dir.z
+	move_dir_z = player.mesh_main.global_basis.z.z
+	move_dir_x = -player.mesh_main.global_basis.x.z
 	player.can_move = false
 
 ##Runs a frame before update is called, allows for transitions

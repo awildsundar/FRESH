@@ -7,6 +7,7 @@ enum ARENA_TYPE {
 	FLINDERS,
 }
 
+@export var starting_character: ArenaCharacter
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var wait_time: float = 3.0
 
@@ -28,6 +29,21 @@ func _ready() -> void:
 	for enemy in enemies:
 		enemy_shards += enemy.shards
 		enemy_cash += enemy.cash
+	
+	change_control_to(starting_character)
+
+func change_control_to(character: ArenaCharacter) -> void:
+	for ch in characters:
+		if ch == character:
+			ch.in_control = true
+			ch.rig.camera.make_current()
+			ch.change_state_to(States.player_states["idle"])
+		else:
+			ch.in_control = false
+			ch.rig.camera.clear_current()
+			ch.change_state_to(States.cpu_states["idle"])
+		ch.velocity.y = 0.0
+		ch.global_position.y = 0.0
 
 func battle_won() -> void:
 	DataManager.shards += enemy_shards

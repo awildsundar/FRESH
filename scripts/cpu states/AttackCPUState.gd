@@ -7,7 +7,7 @@ func enter(cpu: ArenaCharacter) -> void:
 	var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 	var cpu_rot: Vector2 = Vector2(cpu.global_position.x, cpu.global_position.z)
 	var dir: Vector2 = (look_target - cpu_rot)
-	cpu.rotation.y = lerp_angle(cpu.rotation.y, atan2(dir.x, dir.y), 0.5)
+	cpu.mesh_main.rotation.y = lerp_angle(cpu.rotation.y, atan2(dir.x, dir.y), 0.5)
 	cpu.anim_player.play("kick2")
 	cpu.combo += 1
 

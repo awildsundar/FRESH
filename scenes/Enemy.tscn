@@ -258,6 +258,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5rlt"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_d7enn"]
 size = Vector3(30, 30, 30)
 
@@ -8235,6 +8238,7 @@ skin = SubResource("Skin_g7kxm")
 [node name="Beta_Surface" type="MeshInstance3D" parent="female_body/Armature_001/Skeleton3D" unique_id=494668001]
 mesh = SubResource("ArrayMesh_cahtm")
 skin = SubResource("Skin_g7kxm")
+surface_material_override/0 = SubResource("StandardMaterial3D_b5rlt")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="female_body/Armature_001/Skeleton3D" unique_id=1331564798]
 transform = Transform3D(0.31717536, -0.3375404, -0.8862656, 0.71671736, 0.6973048, -0.009075776, 0.62106055, -0.6323234, 0.4630887, 6.539465, 58.371643, -121.421814)

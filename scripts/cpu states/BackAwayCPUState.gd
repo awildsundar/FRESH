@@ -29,12 +29,12 @@ func update(cpu: ArenaCharacter, delta: float) -> void:
 	
 	cpu.velocity.x = retreat_dir.x * (cpu.speed * cpu.back_away_speed_mult)
 	cpu.velocity.z = retreat_dir.z * (cpu.speed * cpu.back_away_speed_mult)
-
+	cpu.velocity.y = 0.0
 	
 	var look_target: Vector2 = Vector2(cpu.target.global_position.x, cpu.target.global_position.z)
 	var cpu_rot: Vector2 = Vector2(cpu.global_position.x, cpu.global_position.z)
 	var dir: Vector2 = (look_target - cpu_rot)
-	cpu.rotation.y = lerp_angle(cpu.rotation.y, atan2(dir.x, dir.y), 0.5)
+	cpu.mesh_main.rotation.y = lerp_angle(cpu.rotation.y, atan2(dir.x, dir.y), 0.5)
 	
 	cpu.move_and_slide()
 

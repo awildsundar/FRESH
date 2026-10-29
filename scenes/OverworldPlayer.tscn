@@ -7751,7 +7751,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 top_level = true
 shape = SubResource("SphereShape3D_5q5h1")
 script = ExtResource("2_g8x7f")
-sensitivity = 0.30000000000000004
 spring_distance = 3.0
 min_angle = -80.0
 

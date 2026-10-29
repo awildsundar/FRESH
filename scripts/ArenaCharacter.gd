@@ -64,12 +64,11 @@ func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.characters.append(self)
 	
-	if in_control:
+	if in_control == true:
 		state = States.player_states["idle"]
-		camera.make_current()
 	else:
 		state = States.cpu_states["idle"]
-		camera.clear_current()
+	
 	state.enter(self)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -100,17 +99,26 @@ func change_state_to(next_state: BaseState) -> void:
 	if state == States.player_states["death"]:
 		return
 	state.exit(self)
-	state = next_state
+	
+	if in_control == true:
+		if state is BasePlayerState && next_state is BasePlayerState:
+			state = next_state
+		else:
+			state = States.player_states["idle"]
+	else:
+		if state is BaseCPUState && next_state is BaseCPUState:
+			state = next_state
+		else:
+			state = States.cpu_states["idle"]
+	
 	state.enter(self)
 
-func enable_control(switch: bool) -> void:
-	in_control = switch
-	if in_control:
-		change_state_to(States.player_states["idle"])
-		camera.make_current()
-	else:
-		change_state_to(States.cpu_states["idle"])
-		camera.clear_current()
+func get_state_string() -> StringName:
+	var script: Script = state.get_script()
+	if script != null:
+		var state_name: StringName = script.get_global_name()
+		return state_name
+	return ""
 
 ##Finds the nearest node specified by the group, 0 = enemies, 1 = characters
 func find_nearest_candidate(group: int, max_distance: float) -> Node3D:
