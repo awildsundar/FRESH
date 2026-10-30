@@ -2,6 +2,7 @@ extends Character
 class_name ArenaCharacter
 
 signal animation_cancelled
+signal invincible_toggled(value: bool)
 
 #config vars
 @export_category("Config")
@@ -21,6 +22,7 @@ signal animation_cancelled
 @export var def: float = 50.0
 @export var hp: float = 100.0
 @export_group("Combat Config")
+@export var attack_distance: float = 100.0
 @export var buffer_duration: float = 1.25
 @export var anim_duration: float = 0.25
 @export var max_buffer_size: int = 6
@@ -31,7 +33,6 @@ signal animation_cancelled
 #cpu vars
 @export_category("CPU")
 @export_subgroup("Back Away")
-@export var attack_distance: float = 100.0
 @export var back_away_distance: float = 1.0
 @export var back_away_timer: float = 3.0
 @export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
@@ -151,6 +152,17 @@ func turn_to(dir: Vector3) -> void:
 
 func cancel() -> void:
 	emit_signal("animation_cancelled")
+
+func invincible(value: bool) -> void:
+	is_invincible = value
+	invincible_toggled.emit(value)
+	
+	# Checks if it was a perfect block/dodge
+	if value == true:
+		var enemy: Enemy = find_nearest_candidate(0, attack_distance)
+		if enemy != null:
+			if enemy.perfect_bd == true:
+				print("Perfect!")
 
 func hurt(damage: float) -> void:
 	if is_invincible == false:

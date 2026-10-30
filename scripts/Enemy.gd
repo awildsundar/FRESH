@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name Enemy
 
+signal perfect_block_dodge_possible(value: bool)
+
 #config vars
 @export_category("Config")
 @export var anim_player: AnimationPlayer
@@ -44,6 +46,7 @@ var arena_manager: ArenaManager
 var state: BaseEnemyState
 
 var combo: int = 0
+var perfect_bd: bool = false
 
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
@@ -84,6 +87,10 @@ func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
 	
 	target = nearest
 	return nearest
+
+func perfect_block_dodge(value: bool) -> void:
+	perfect_bd = value
+	perfect_block_dodge_possible.emit(value)
 
 func hurt(damage: float) -> void:
 	if hp > 0.0:

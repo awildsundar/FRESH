@@ -6,10 +6,12 @@ signal quest_completed(q: Quest)
 signal current_quests_updated
 signal completed_quests_updated
 
-
 var active_quest: Quest
 var current_quests: Array[Quest]
 var completed_quests: Array[Quest]
+
+func _ready() -> void:
+	SaveManager.saving_game.connect(save_quests)
 
 func start_quest(quest: Quest) -> void:
 	active_quest = quest
@@ -46,3 +48,8 @@ func give_quest_reward() -> void:
 
 func sort_quests() -> void:
 	pass
+
+func save_quests() -> void:
+	DataManager.save_data.active_quest = active_quest
+	DataManager.save_data.current_quests = current_quests
+	DataManager.save_data.completed_quests = completed_quests

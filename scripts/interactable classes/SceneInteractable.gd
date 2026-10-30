@@ -5,6 +5,6 @@ class_name SceneInteractable
 @export var scene_type: TransitionManager.LOADING_SCREEN_TYPE = TransitionManager.LOADING_SCREEN_TYPE.DEFAULT
 
 func interact() -> void:
-	if DataManager.arena_entered == false:
+	if DataManager.get_flag("arena_entered") == false:
 		TransitionManager.load_scene(scene, scene_type)
-		DataManager.arena_entered = true
+		DataManager.set_flag("arena_entered", true)

@@ -7,7 +7,6 @@ var move_dir_z: float
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
 	player.anim_player.play("dodge")
-	player.is_invincible = true
 	move_dir_z = player.mesh_main.global_basis.z.z
 	move_dir_x = -player.mesh_main.global_basis.x.z
 	player.can_move = false
@@ -30,5 +29,4 @@ func update(player: ArenaCharacter, delta: float) -> void:
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:
-	player.is_invincible = false
 	player.can_move = true

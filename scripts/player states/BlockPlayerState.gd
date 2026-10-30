@@ -3,9 +3,7 @@ class_name BlockPlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
-	player.is_invincible = true
 	player.anim_player.play("block")
-
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
 	await player.anim_player.animation_finished
@@ -17,4 +15,4 @@ func update(player: ArenaCharacter, delta: float) -> void:
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:
-	player.is_invincible = false
+	pass

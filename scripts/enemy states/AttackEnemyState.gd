@@ -1,9 +1,11 @@
 extends BaseEnemyState
 class_name AttackEnemyState
 
+var current_target: ArenaCharacter
+
 ##Runs when state is entered
 func enter(enemy: Enemy) -> void:
-	var current_target: Node3D = enemy.find_nearest_candidate()
+	current_target = enemy.find_nearest_candidate()
 	var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 	var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)
 	var dir: Vector2 = (look_target - enemy_rot)

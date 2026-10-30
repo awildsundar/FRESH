@@ -1,11 +1,12 @@
 extends Node
 
+signal saving_game
 signal game_saved(slot: int)
 signal game_loaded(slot: int)
 
 const SAVE_DIR: String = "user://save_files/"
 const MAX_SLOTS: int = 3
-const FILE_EXTENSION: String = ".dat"
+const FILE_EXTENSION: String = ".res"
 
 var save_data: Dictionary = {}
 
@@ -13,34 +14,33 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 
 func save_game(slot: int) -> void:
-	var data: Dictionary = DataManager.store_data_to_dict()
+	saving_game.emit()
+	var data: SaveData = DataManager.store_data_to_resource()
 	
-	var file := FileAccess.open(_get_path(slot), FileAccess.WRITE)
-	if file == null:
-		push_error("SaveManager: Failed to open file for writing: " + error_string(FileAccess.get_open_error()))
-		return
+	var error: Error = ResourceSaver.save(data, _get_path(slot))
 	
-	file.store_var(data)
+	if error != OK:
+		push_error("SaveManager: failed to save resource: " + error_string(error))
+
 	game_saved.emit(slot)
 
 func load_game(slot: int) -> bool:
 	var path := _get_path(slot)
 	
-	if not FileAccess.file_exists(path):
-		push_warning("SaveManager: No save file found at: " + path)
+	if not ResourceLoader.exists(path):
+		push_warning("SaveManager: No save file found at " + path)
 		return false
 	
-	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		push_error("SaveManager: Failed to open file for reading: " + error_string(FileAccess.get_open_error()))
+	var data: Resource = ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
+	
+	if not data is SaveData:
+		push_error("SaveManager: Save at " + path + " is not a valid SaveData path.")
+		return false
+	elif data == null:
+		push_error("SaveManager: Save at " + path + " is not a valid SaveData resource.")
 		return false
 	
-	var data: Variant = file.get_var()
-	if not data is Dictionary:
-		push_error("SaveManager: Save file does not contain valid dictionary: " + path)
-		return false
-	
-	DataManager.load_data_from_dict(data)
+	DataManager.load_data_from_resource(data)
 	game_loaded.emit(slot)
 	return true
 	
@@ -50,17 +50,15 @@ func has_save(slot: int) -> bool:
 
 func get_save_info(slot: int) -> Dictionary:
 	var path := _get_path(slot)
-	if FileAccess.file_exists(path):
-		var file := FileAccess.open(path, FileAccess.READ)
-		if file:
-			var data: Variant = file.get_var()
-			if data is Dictionary:
-				return {"story_act": data.get("story_act"), "timestamp": data.get("timestamp", "")}
+	if ResourceLoader.exists(path):
+		var data: Resource = ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
+		if data != null && data is SaveData:
+			return {"story_act": data.story_act, "timestamp": data.timestamp}
 	return {}
 
 func delete_save(slot: int) -> void:
 	var path := _get_path(slot)
-	if FileAccess.file_exists(path):
+	if ResourceLoader.exists(path):
 		DirAccess.remove_absolute(path)
 
 func _get_path(slot: int) -> String:
