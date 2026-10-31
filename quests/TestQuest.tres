@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="Quest" format=3 uid="uid://dlh5nq0aysplw"]
+[gd_resource type="Resource" script_class="Quest" format=3 uid="uid://bjt8py1pivakp"]
 
 [ext_resource type="Script" uid="uid://cxts0bylvviqx" path="res://scripts/inheritables/Quest.gd" id="1_sa42d"]
 
 [resource]
 script = ExtResource("1_sa42d")
-quest_title = "Fly Swatting"
+quest_type = 1
+quest_title = "Testing Testing"
 description = "Testing to make sure everything works as intended."
-steps = Array[String](["Buy an item from any shop.", "Enter the arena and win a fight."])
-shards = 20
-cash = 10
+steps = Array[String](["Talk to any NPC.", "Enter the Arena.", "Open your inventory by pressing TAB.", "Open the Shop."])
+shards = 5
 metadata/_custom_type_script = "uid://cxts0bylvviqx"

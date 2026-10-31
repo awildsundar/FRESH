@@ -147,8 +147,8 @@ func find_nearest_candidate(group: int, max_distance: float) -> Node3D:
 func turn_to(dir: Vector3) -> void:
 	if dir:
 		var yaw := atan2(dir.x, dir.z)
-		yaw = lerp_angle(mesh_main.rotation.y, yaw, 0.25)
-		mesh_main.rotation.y = yaw
+		yaw = lerp_angle(rotation.y, yaw, 0.25)
+		rotation.y = yaw
 
 func cancel() -> void:
 	emit_signal("animation_cancelled")

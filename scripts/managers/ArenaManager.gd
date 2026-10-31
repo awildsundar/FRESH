@@ -48,6 +48,10 @@ func change_control_to(character: ArenaCharacter) -> void:
 func battle_won() -> void:
 	DataManager.shards += enemy_shards
 	DataManager.cash += enemy_cash
+	
+	if QuestManager.get_active_quest_current_step() == 1:
+		QuestManager.update_quest()
+	
 	await get_tree().create_timer(wait_time).timeout
 	TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
 

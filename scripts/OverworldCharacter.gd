@@ -47,6 +47,8 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("main_menu"):
 		if overworld_manager.main_menu.visible == false && overworld_manager.current_menu == null:
 			overworld_manager.main_menu.show()
+			if QuestManager.get_active_quest_current_step() == 2:
+				QuestManager.update_quest()
 		else:
 			overworld_manager.main_menu.hide()
 
@@ -84,8 +86,8 @@ func change_state_to(next_state: BaseState) -> void:
 func turn_to(dir: Vector3) -> void:
 	if dir:
 		var yaw := atan2(dir.x, dir.z)
-		yaw = lerp_angle(mesh_main.rotation.y, yaw, 0.25)
-		mesh_main.rotation.y = yaw
+		yaw = lerp_angle(rotation.y, yaw, 0.25)
+		rotation.y = yaw
 
 func enable_movement(_resource: DialogueResource, allowed: bool) -> void:
 	can_move = allowed

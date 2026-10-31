@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cvpooeswrpwfe" path="res://scripts/Enemy.gd" id="1_3gvst"]
 [ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_55jtl"]
-[ext_resource type="Script" uid="uid://sqtg0mmaj601" path="res://scripts/managers/RapidApproachDetector.gd" id="3_mpr68"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3gvst"]
 
@@ -7798,7 +7797,6 @@ limit_area = NodePath("LimitArea")
 mesh = NodePath("female_body")
 nav_agent = NodePath("NavigationAgent3D")
 lock_on_indicator = NodePath("LockOnIndicator")
-hp = 5.0
 direct_approach_threshold = 0.1
 back_away_distance = 3.0
 circle_distance = 3.0
@@ -8315,7 +8313,3 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.25)
 shape = SubResource("CylinderShape3D_55jtl")
 debug_color = Color(0.33833334, 0.7, 0, 0.41960785)
-
-[node name="RapidApproachDetector" type="Node" parent="." unique_id=1666317846]
-script = ExtResource("3_mpr68")
-metadata/_custom_type_script = "uid://sqtg0mmaj601"

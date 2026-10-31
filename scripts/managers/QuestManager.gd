@@ -6,9 +6,9 @@ signal quest_completed(q: Quest)
 signal current_quests_updated
 signal completed_quests_updated
 
-var active_quest: Quest
-var current_quests: Array[Quest]
-var completed_quests: Array[Quest]
+@export var active_quest: Quest
+@export var current_quests: Array[Quest]
+@export var completed_quests: Array[Quest]
 
 func _ready() -> void:
 	SaveManager.saving_game.connect(save_quests)
@@ -19,6 +19,12 @@ func start_quest(quest: Quest) -> void:
 		current_quests.append(active_quest)
 		current_quests_updated.emit()
 	quest_started.emit(active_quest)
+
+func get_active_quest_current_step() -> int:
+	if active_quest != null:
+		return active_quest.quest_progression
+	else:
+		return -1
 
 ##Updates the quest status.
 func update_quest() -> void:

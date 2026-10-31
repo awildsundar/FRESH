@@ -12,3 +12,5 @@ func interact() -> void:
 		ui.shop = shop
 		ui.player = player
 		self.add_child(ui)
+		if QuestManager.get_active_quest_current_step() == 3:
+			QuestManager.update_quest()

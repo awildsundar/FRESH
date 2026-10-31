@@ -29,6 +29,11 @@ QuestManager="*uid://d1gxgqy6tfl4x"
 SaveManager="*uid://duesn4o7n7fc3"
 SettingsManager="*uid://crqp6o4g6wmbc"
 
+[blendkit]
+
+downloads/directory="res://assets/bk_assets"
+downloads/model_format="gltf_godot"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=1

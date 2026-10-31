@@ -1,6 +1,7 @@
 extends BaseInteractable
 class_name DialogueInteractable
 
+@export var npc_name: String
 @export var dialogue: DialogueResource
 @export var cue: String = "start"
 @export var quest: Quest
@@ -15,6 +16,11 @@ func _ready() -> void:
 	
 	if anim_player != null:
 		cutscene_enabled = true
+	
+	var dialogue_state_context: DialogueStateContext = DialogueStateContext.new()
+	dialogue_state_context.alias = npc_name
+	dialogue_state_context.target = self
+	add_child(dialogue_state_context)
 
 func interact() -> void:
 	if dialogue == null:

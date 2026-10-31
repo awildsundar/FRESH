@@ -1,10 +1,20 @@
 ~ start
 if DataManager.get_flag("got_quest") == true:
 	=> quest_got
-Danny: Welcome to your first quest! [$> QuestManager.start_quest(Danny.quest)]
-Danny: I hope this works correctly the first time... [$> QuestManager.update_quest()] [$> DataManager.set_flag("got_quest", true)]
+
+if QuestManager.completed_quests.has(Danny.quest):
+	=> quest_completed
+
+Danny: Welcome to the FRESH testing grounds! This is a [shake]HEAVY[/shake] work in progress, so expect this place to become pretty later.
+Danny: There are some things I think you should test out, starting with the Arena. [if QuestManager.get_active_quest_current_step() == 0][$> QuestManager.update_quest()][/if][$> DataManager.set_flag("got_quest", true)]
+
 => END
 
 ~ quest_got
 Danny: You already got my quest!
+=> END
+
+~ quest_completed
+Danny: Thank you for playing this ship :D
+
 => END

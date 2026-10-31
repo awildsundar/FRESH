@@ -58,7 +58,7 @@ func update(cpu: ArenaCharacter, delta: float) -> void:
 	var look_target: Vector2 = Vector2(cpu.target.global_position.x, cpu.target.global_position.z)
 	var cpu_rot: Vector2 = Vector2(cpu.global_position.x, cpu.global_position.z)
 	var dir: Vector2 = (look_target - cpu_rot)
-	cpu.mesh_main.rotation.y = lerp_angle(cpu.mesh_main.rotation.y, atan2(dir.x, dir.y), 0.5)
+	cpu.rotation.y = lerp_angle(cpu.rotation.y, atan2(dir.x, dir.y), 0.5)
 	
 	cpu.move_and_slide()
 

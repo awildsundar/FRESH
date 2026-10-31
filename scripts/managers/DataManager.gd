@@ -33,6 +33,10 @@ func store_data_to_resource() -> SaveData:
 	save_data.cash = cash
 	save_data.shards = shards
 	save_data.inventory = inventory
+	save_data.active_quest = QuestManager.active_quest
+	save_data.active_quest_progression = QuestManager.active_quest.quest_progression
+	save_data.current_quests = QuestManager.current_quests
+	save_data.completed_quests = QuestManager.completed_quests
 	save_data.story_flags = story_flags
 	save_data.story_act = story_act
 	save_data.timestamp = Time.get_datetime_string_from_system(false, true)
@@ -46,6 +50,7 @@ func load_data_from_resource(data: SaveData) -> void:
 	story_flags = data.story_flags
 	story_act = data.story_act
 	QuestManager.active_quest = data.active_quest
+	QuestManager.active_quest.quest_progression = data.active_quest_progression
 	QuestManager.current_quests = data.current_quests
 	QuestManager.completed_quests = data.completed_quests
 	QuestManager.completed_quests_updated.emit()

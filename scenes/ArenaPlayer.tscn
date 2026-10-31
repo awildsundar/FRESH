@@ -262,6 +262,21 @@ blend_shape_mode = 0
 [sub_resource type="BoxShape3D" id="BoxShape3D_swcv3"]
 size = Vector3(30, 30, 30)
 
+[sub_resource type="Animation" id="Animation_swcv3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature_001/Skeleton3D/BoneAttachment3D/ShapeCast3D:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_us8gq"]
 resource_name = "block"
 length = 1.3333334
@@ -6270,6 +6285,18 @@ tracks/105/path = NodePath("Armature_001/Skeleton3D:mixamorig_LeftToeBase")
 tracks/105/interp = 1
 tracks/105/loop_wrap = true
 tracks/105/keys = PackedFloat32Array(0, 1, 0.33530304, 5.8182064e-08, -2.2034964e-08, 0.94211036, 0.16666667, 1, 0.3354183, 1.1679804e-07, 6.6624923e-09, 0.9420693, 0.2, 1, 0.33807698, 1.4105721e-07, 5.4629723e-09, 0.9411185, 0.23333333, 1, 0.3411285, 9.783871e-08, 4.261525e-09, 0.94001675, 0.26666668, 1, 0.34174192, 1.3924537e-07, 2.2549258e-09, 0.9397938, 0.3, 1, 0.34000546, 1.329993e-07, 8.058128e-08, 0.9404235, 0.33333334, 1, 0.33933374, 1.9232091e-07, -6.772418e-10, 0.9406661, 0.36666667, 1, 0.34183, 1.255813e-07, -1.0584574e-08, 0.9397618, 0.4, 1, 0.34461644, 1.057569e-07, -1.05983355e-08, 0.9387436, 0.43333334, 1, 0.3433202, 8.683925e-08, -4.0834138e-08, 0.93921846, 0.46666667, 1, 0.33862144, 1.2483468e-07, 1.5855038e-08, 0.9409227, 0.5, 1, 0.33524185, 2.1001469e-07, 9.528944e-08, 0.9421321, 0.56666666, 1, 0.33604917, 1.362621e-07, -1.8327867e-08, 0.94184446, 0.6, 1, 0.3385422, -6.191226e-09, 8.691577e-09, 0.9409512, 0.6333333, 1, 0.34084055, 1.9474216e-07, -7.821208e-09, 0.9401211, 0.6666667, 1, 0.3424005, 1.5839727e-07, -8.2633036e-08, 0.93955415, 0.73333335, 1, 0.34241554, 7.911288e-08, 9.181697e-08, 0.9395486, 0.76666665, 1, 0.3401095, 1.4096273e-07, 6.781305e-08, 0.9403858, 0.8, 1, 0.3371318, 1.137633e-07, -9.767173e-08, 0.94145745, 0.8333333, 1, 0.33525094, 1.0643396e-07, -6.810903e-08, 0.9421289, 1.0666667, 1, 0.33530304, 5.8182064e-08, -2.2034964e-08, 0.94211036)
+tracks/106/type = "value"
+tracks/106/imported = false
+tracks/106/enabled = true
+tracks/106/path = NodePath("Armature_001/Skeleton3D/BoneAttachment3D/ShapeCast3D:enabled")
+tracks/106/interp = 1
+tracks/106/loop_wrap = true
+tracks/106/keys = {
+"times": PackedFloat32Array(0, 0.49, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="Animation" id="Animation_jtwqh"]
 resource_name = "punch2"
@@ -7766,6 +7793,7 @@ tracks/105/keys = PackedFloat32Array(0, 1, 0.35144538, 7.761356e-08, -9.419247e-
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s73te"]
 _data = {
+&"RESET": SubResource("Animation_swcv3"),
 &"block": SubResource("Animation_us8gq"),
 &"death": SubResource("Animation_af4yy"),
 &"dodge": SubResource("Animation_2tkda"),
@@ -8287,6 +8315,7 @@ bone_name = "mixamorig_LeftHand"
 bone_idx = 34
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="female_body/Armature_001/Skeleton3D/BoneAttachment3D" unique_id=1931695057]
+enabled = false
 shape = SubResource("BoxShape3D_swcv3")
 collision_mask = 2
 collide_with_areas = true

@@ -12,6 +12,7 @@ class_name SaveData
 @export var story_act: int = 0
 
 @export var active_quest: Quest = null
+@export var active_quest_progression: int = 0
 @export var current_quests: Array[Quest] = []
 @export var completed_quests: Array[Quest] = []
 

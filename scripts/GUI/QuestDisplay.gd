@@ -11,12 +11,19 @@ func _ready() -> void:
 	QuestManager.connect("quest_started", quest_started)
 	QuestManager.connect("quest_updated", quest_updated)
 	QuestManager.connect("quest_completed", quest_completed)
+	SaveManager.connect("game_loaded", quest_loaded)
 
 func quest_started(quest: Quest) -> void:
 	quest_name.text = quest.quest_title
 	quest_step.text = quest.steps[quest.quest_progression]
 
+func quest_loaded(_slot: int) -> void:
+	var quest: Quest = QuestManager.active_quest
+	quest_name.text = quest.quest_title
+	quest_step.text = quest.steps[quest.quest_progression]
+
 func quest_updated(quest: Quest) -> void:
+	quest_name.text = quest.quest_title
 	quest_step.text = quest.steps[quest.quest_progression]
 
 func quest_completed(quest: Quest) -> void:

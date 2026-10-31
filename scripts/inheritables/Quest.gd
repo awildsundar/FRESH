@@ -15,5 +15,5 @@ enum QUEST_TYPE {
 @export var shards: int
 @export var cash: int
 
-var quest_progression: int = 0
-var quest_completed: bool = false
+@export var quest_progression: int
+@export var quest_completed: bool
