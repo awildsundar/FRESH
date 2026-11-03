@@ -3,6 +3,7 @@ class_name DeathPlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
+	player.state_switchable = true
 	player.anim_player.play("death")
 	player.arena_manager.battle_lost()
 

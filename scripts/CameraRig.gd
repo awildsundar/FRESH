@@ -26,7 +26,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	self.global_position = lerp(global_position, camera_pos.global_position, 0.25)
 	
-	if player.state == States.player_states["switch"]:
+	if player.state == States.player_states["switch"] or player.state == States.player_states["counter"]:
 		spring_length = lerp(spring_length, 1.0, 0.5)
 	else:
 		spring_length = lerp(spring_length, spring_distance, 0.5)
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		spring_length = lerp(spring_length, spring_distance, 0.5)
 		locked_on = false
-		
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		get_tree().quit()

@@ -10,9 +10,6 @@ signal invincible_toggled(value: bool)
 @export var anim_player: AnimationPlayer
 @export var nav_agent: NavigationAgent3D
 @export var hitbox: ShapeCast3D
-@onready var camera: Camera3D = $SpringArm3D/Camera3D
-@onready var rig: SpringArm3D = $SpringArm3D
-@onready var limit_area: Area3D = $LimitArea
 #gameplay vars
 @export_category("Player")
 @export_group("Basics")
@@ -26,6 +23,7 @@ signal invincible_toggled(value: bool)
 @export var buffer_duration: float = 1.25
 @export var anim_duration: float = 0.25
 @export var max_buffer_size: int = 6
+@export var counter_time: float = 2.0
 @export_group("Control Config")
 @export var in_control: bool = false
 @export var control_distance: float = 100.0
@@ -44,6 +42,10 @@ signal invincible_toggled(value: bool)
 @export_subgroup("Misc")
 @export var max_combo: int = 3
 
+@onready var camera: Camera3D = $SpringArm3D/Camera3D
+@onready var rig: SpringArm3D = $SpringArm3D
+@onready var limit_area: Area3D = $LimitArea
+
 var can_move: bool = true
 var input_dir: Vector2
 var move_dir: Vector3
@@ -55,6 +57,8 @@ var buffer_input: bool = true
 var combo: int = 0
 
 var is_invincible: bool = false
+var state_switchable: bool = true
+var in_counter: bool = false
 
 var target: Node3D = null
 
@@ -81,10 +85,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event.is_action_pressed("block"):
 			change_state_to(States.player_states["block"])
 		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("heavy_attack") or event.is_action_pressed("special_attack"):
-			if atk_buffer.size() < max_buffer_size && buffer_input == true:
-				atk_buffer.append(event)
-			if atk_buffer != [] && is_attacking == false:
-				change_state_to(States.player_states["attack"])
+			if in_counter == false:
+				if atk_buffer.size() < max_buffer_size && buffer_input == true:
+					atk_buffer.append(event)
+				if atk_buffer != [] && is_attacking == false:
+					change_state_to(States.player_states["attack"])
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -97,8 +102,9 @@ func _physics_process(delta: float) -> void:
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseState) -> void:
-	if state == States.player_states["death"]:
+	if state_switchable == false:
 		return
+	
 	state.exit(self)
 	
 	if in_control == true:
@@ -162,7 +168,8 @@ func invincible(value: bool) -> void:
 		var enemy: Enemy = find_nearest_candidate(0, attack_distance)
 		if enemy != null:
 			if enemy.perfect_bd == true:
-				print("Perfect!")
+				state_switchable = true
+				change_state_to(States.player_states["counter"])
 
 func hurt(damage: float) -> void:
 	if is_invincible == false:

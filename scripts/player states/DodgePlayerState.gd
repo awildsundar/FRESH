@@ -6,6 +6,7 @@ var move_dir_z: float
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
+	player.state_switchable = false
 	player.anim_player.play("dodge")
 	move_dir_z = player.mesh_main.global_basis.z.z
 	move_dir_x = -player.mesh_main.global_basis.x.z
@@ -14,6 +15,7 @@ func enter(player: ArenaCharacter) -> void:
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
 	await player.anim_player.animation_finished
+	player.state_switchable = true
 	if player.move_dir == Vector3.ZERO:
 		player.change_state_to(States.player_states["idle"])
 	else:

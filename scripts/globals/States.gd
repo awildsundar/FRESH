@@ -8,7 +8,9 @@ var player_states: Dictionary[String, BasePlayerState] = {
 	"dodge": DodgePlayerState.new(),
 	"death": DeathPlayerState.new(),
 	"switch": SwitchPlayerState.new(),
-	"block": BlockPlayerState.new()
+	"block": BlockPlayerState.new(),
+	"counter": CounterPlayerState.new(),
+	"counter_attack": CounterAttackPlayerState.new()
 }
 
 var cpu_states: Dictionary[String, BaseCPUState] = {
@@ -27,5 +29,6 @@ var enemy_states: Dictionary[String, BaseEnemyState] = {
 	"death": DeathEnemyState.new(),
 	"attack": AttackEnemyState.new(),
 	"back_away": BackAwayEnemyState.new(),
-	"circle": CircleEnemyState.new()
+	"circle": CircleEnemyState.new(),
+	"countered": CounteredEnemyState.new()
 }

@@ -3,6 +3,7 @@ class_name AttackPlayerState
 
 var consume_timer := 0.0
 var buffer_timer := 0.0
+var basic_atk_count: int = 0
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
@@ -39,12 +40,20 @@ func update(player: ArenaCharacter, delta: float) -> void:
 
 func play_attack_animation(player: ArenaCharacter) -> void:
 	var action: InputEvent = player.atk_buffer.pop_front()
+	
 	if action.is_action("basic_attack"):
-		player.anim_player.play("punch1")
+		basic_atk_count += 1
+		if basic_atk_count >= 2:
+			player.anim_player.play("punch2")
+			basic_atk_count = 0
+		else:
+			player.anim_player.play("punch1")
 	elif action.is_action("heavy_attack"):
 		player.anim_player.play("kick1")
+		basic_atk_count = 0
 	elif action.is_action("special_attack"):
 		player.anim_player.play("kick2")
+		basic_atk_count = 0
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:

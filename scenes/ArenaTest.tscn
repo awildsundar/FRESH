@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b7q4webcoivt4"]
 
 [ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/ArenaPlayer.tscn" id="1_favoq"]
-[ext_resource type="PackedScene" uid="uid://c6ldg60vhftek" path="res://scenes/Enemy.tscn" id="1_ldgcu"]
 [ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
@@ -30,9 +29,6 @@ starting_character = NodePath("Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3685927, 0, -3.3555942)
 in_control = true
 
-[node name="Player2" parent="." unique_id=432533020 instance=ExtResource("1_favoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6314073, 0, -6.355594)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453346797]
 environment = SubResource("Environment_wmg8w")
 
@@ -42,12 +38,6 @@ shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1888215311]
 navigation_mesh = SubResource("NavigationMesh_ldgcu")
-
-[node name="Enemy" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
-
-[node name="Enemy2" parent="NavigationRegion3D" unique_id=379425067 instance=ExtResource("1_ldgcu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -4)
 
 [node name="floor" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1392252466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)

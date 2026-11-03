@@ -11,6 +11,7 @@ signal perfect_block_dodge_possible(value: bool)
 @export var mesh: Node3D
 @export var nav_agent: NavigationAgent3D
 @export var lock_on_indicator: Sprite3D
+@export var counter_indicator: Sprite3D
 
 #gameplay vars
 @export_category("Gameplay")
@@ -20,10 +21,6 @@ signal perfect_block_dodge_possible(value: bool)
 @export var def: float = 50.0
 @export var hp: float = 100.0
 @export_group("Config")
-@export_subgroup("Rapid Approach Detection")
-@export var approach_speed_threshold: float = 0.0
-@export var detection_range: float = 15.0
-@export var direct_approach_threshold: float = 0.7
 @export_subgroup("Back Away")
 @export var attack_distance: float = 100.0
 @export var back_away_distance: float = 1.0
@@ -56,6 +53,8 @@ func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.enemies.append(self)
 	
+	counter_indicator.hide()
+	
 	state = States.enemy_states["idle"]
 	state.enter(self)
 
@@ -72,6 +71,9 @@ func change_state_to(next_state: BaseEnemyState) -> void:
 	state.exit(self)
 	state = next_state
 	state.enter(self)
+	
+	if counter_indicator.visible:
+		counter_indicator.hide()
 
 func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
 	var candidates: Array[ArenaCharacter] = list if list != [] else arena_manager.characters
@@ -91,6 +93,11 @@ func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
 func perfect_block_dodge(value: bool) -> void:
 	perfect_bd = value
 	perfect_block_dodge_possible.emit(value)
+	
+	if value == true:
+		counter_indicator.show()
+	else:
+		counter_indicator.hide()
 
 func hurt(damage: float) -> void:
 	if hp > 0.0:
