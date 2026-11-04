@@ -17,7 +17,14 @@ func transition(cpu: ArenaCharacter) -> void:
 	
 	if cpu.combo >= cpu.max_combo:
 		cpu.change_state_to(States.cpu_states["back_away"])
-
+	
+	await cpu.get_tree().create_timer(cpu.rest_time).timeout
+	var body: Array[Node3D] = cpu.limit_area.get_overlapping_bodies()
+	for node in body:
+		if node is Enemy:
+			if node.hp > 0.0:
+				cpu.change_state_to(States.cpu_states["attack"])
+	
 ##Runs during a state
 func update(cpu: ArenaCharacter, delta: float) -> void:
 	if cpu.hitbox.enabled:

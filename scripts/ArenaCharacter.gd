@@ -15,9 +15,18 @@ signal invincible_toggled(value: bool)
 @export_group("Basics")
 @export var speed: float = 10.0
 @export var dash_time: float = 0.25
-@export var atk: float = 50.0
-@export var def: float = 50.0
-@export var hp: float = 100.0
+@export var base_atk: float = 50.0:
+	set(value):
+		base_atk = value
+		atk = value
+@export var base_def: float = 50.0:
+	set(value):
+		base_def = value
+		def = value
+@export var base_hp: float = 100.0:
+	set(value):
+		base_hp = value
+		hp = value
 @export_group("Combat Config")
 @export var attack_distance: float = 100.0
 @export var buffer_duration: float = 1.25
@@ -36,9 +45,18 @@ signal invincible_toggled(value: bool)
 @export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
 @export_subgroup("Circle")
 @export var circle_distance: float = 1.0
-@export var min_circle_time: float = 1.0
-@export var max_circle_time: float = 3.0
-@export_range(0.1, 0.9) var attack_chance: float = 0.3
+@export var base_min_circle_time: float = 1.0:
+	set(value):
+		base_min_circle_time = value
+		min_circle_time = value
+@export var base_max_circle_time: float = 3.0:
+	set(value):
+		base_max_circle_time = value
+		max_circle_time = value
+@export_range(0.1, 0.9) var base_attack_chance: float = 0.3:
+	set(value):
+		base_attack_chance = value
+		attack_chance = value
 @export_subgroup("Misc")
 @export var max_combo: int = 3
 
@@ -62,12 +80,28 @@ var in_counter: bool = false
 
 var target: Node3D = null
 
+var atk: float
+var def: float
+var hp: float
+var min_circle_time: float
+var max_circle_time: float
+var attack_chance: float
+
+var status_effects: Array[StatusEffect] = []
+
 var arena_manager: ArenaManager
 var state: BaseState
 
 func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.characters.append(self)
+	
+	atk = base_atk
+	def = base_def
+	hp = base_hp
+	min_circle_time = base_min_circle_time
+	max_circle_time = base_max_circle_time
+	attack_chance = base_attack_chance
 	
 	if in_control == true:
 		state = States.player_states["idle"]
@@ -170,6 +204,33 @@ func invincible(value: bool) -> void:
 			if enemy.perfect_bd == true:
 				state_switchable = true
 				change_state_to(States.player_states["counter"])
+
+func calculate_status_effects() -> void:
+	atk = base_atk
+	def = base_def
+	hp = base_hp
+	min_circle_time = base_min_circle_time
+	max_circle_time = base_max_circle_time
+	attack_chance = base_attack_chance
+	
+	for status_effect in status_effects:
+		match status_effect.affects:
+			status_effect.Affects.HEALTH:
+				hp *= status_effect.value
+			status_effect.Affects.ATTACK:
+				atk *= status_effect.value
+			status_effect.Affects.DEFENSE:
+				def *= status_effect.value
+			status_effect.Affects.TIME:
+				min_circle_time *= status_effect.value
+				max_circle_time *= status_effect.value
+			status_effect.Affects.CHANCE:
+				attack_chance *= status_effect.value
+	print(def)
+
+func erase_status_effect(effect: StatusEffect) -> void:
+	status_effects.erase(effect)
+	calculate_status_effects()
 
 func hurt(damage: float) -> void:
 	if is_invincible == false:

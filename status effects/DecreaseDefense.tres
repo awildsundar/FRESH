@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatusEffect" format=3 uid="uid://ckcspk1ftptx6"]
+
+[ext_resource type="Script" uid="uid://dfyynt16eoa1a" path="res://scripts/inheritables/StatusEffect.gd" id="1_b3yj0"]
+
+[resource]
+script = ExtResource("1_b3yj0")
+effect_name = "Decrease Defense"
+affects = 2
+value = 0.5
+metadata/_custom_type_script = "uid://dfyynt16eoa1a"

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/ArenaPlayer.tscn" id="1_favoq"]
 [ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
+[ext_resource type="PackedScene" uid="uid://c6ldg60vhftek" path="res://scenes/Enemy.tscn" id="3_wmg8w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -38,6 +39,9 @@ shadow_enabled = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1888215311]
 navigation_mesh = SubResource("NavigationMesh_ldgcu")
+
+[node name="Enemy" parent="NavigationRegion3D" unique_id=1772613504 instance=ExtResource("3_wmg8w")]
+rest_time = 0.1
 
 [node name="floor" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1392252466]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
