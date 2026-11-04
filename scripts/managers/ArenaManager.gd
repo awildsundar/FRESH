@@ -10,17 +10,26 @@ enum ARENA_TYPE {
 @export var starting_character: ArenaCharacter
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var wait_time: float = 3.0
+@export var max_synergy: float = 100.0
+@export var synergy_timer: float = 3.0
+
+const last_location: Dictionary = {
+	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
+}
 
 var characters: Array[ArenaCharacter]
+
 var enemies: Array[Enemy]
 
 var player_hp: float = 0.0
 var enemy_shards: int = 0
 var enemy_cash: int = 0
 
-var last_location: Dictionary = {
-	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
-}
+var synergy: float = 0.0: 
+	set(value):
+		if value > max_synergy:
+			value = max_synergy
+		synergy = value
 
 func _ready() -> void:
 	for player in characters:

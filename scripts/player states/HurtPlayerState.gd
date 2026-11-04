@@ -9,10 +9,10 @@ func enter(player: ArenaCharacter) -> void:
 func transition(player: ArenaCharacter) -> void:
 	if player.arena_manager.player_hp <= 0.0:
 		player.change_state_to(States.player_states["death"])
-	await player.animation_cancelled
+		
+	await player.anim_player.animation_finished
 	if player.move_dir != Vector3.ZERO:
 		player.change_state_to(States.player_states["move"])
-	await player.anim_player.animation_finished
 	player.change_state_to(States.player_states["idle"])
 
 ##Runs during a state

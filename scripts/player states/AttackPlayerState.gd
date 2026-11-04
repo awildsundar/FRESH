@@ -3,11 +3,15 @@ class_name AttackPlayerState
 
 var consume_timer := 0.0
 var buffer_timer := 0.0
+var atk_count: int = 0
 var basic_atk_count: int = 0
+
+var rest_timer: SceneTreeTimer
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
 	player.is_attacking = true
+	atk_count += 1
 	
 	if player.atk_buffer != []:
 		play_attack_animation(player)
@@ -27,7 +31,10 @@ func update(player: ArenaCharacter, delta: float) -> void:
 		if player.hitbox.is_colliding():
 			var body: Object = player.hitbox.get_collider(0)
 			if body is Enemy:
-				body.hurt(player.atk)
+				body.hurt(player)
+				if atk_count >= player.max_buffer_size:
+					body.start_synergy_combo()
+					atk_count = 0
 				player.hitbox.enabled = false
 	
 	if consume_timer > player.anim_player.current_animation_length - player.anim_duration:

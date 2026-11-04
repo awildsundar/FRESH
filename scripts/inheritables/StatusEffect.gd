@@ -9,7 +9,9 @@ enum Affects {
 	CHANCE
 }
 
+@export var effect_icon: Texture2D
 @export var effect_name: String
+@export_multiline() var effect_description: String
 @export var affects: Affects
 ## value expressed as a decimal from 0 to 3
 @export_range(0.0, 3.0, 0.01) var value: float = 0.0

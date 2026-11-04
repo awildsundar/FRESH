@@ -14,7 +14,6 @@ func enter(player: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
-	print(enemy.global_position)
 	if Input.is_action_just_pressed("basic_attack"):
 		player.turn_to(enemy.global_position)
 		player.change_state_to(States.player_states["counter_attack"])

@@ -1,17 +1,14 @@
 extends BaseEnemyState
 class_name AttackEnemyState
 
-var current_target: ArenaCharacter
-
 ##Runs when state is entered
 func enter(enemy: Enemy) -> void:
-	current_target = enemy.find_nearest_candidate()
+	var current_target: ArenaCharacter = enemy.find_nearest_candidate()
 	var look_target: Vector2 = Vector2(current_target.global_position.x, current_target.global_position.z)
 	var enemy_rot: Vector2 = Vector2(enemy.global_position.x, enemy.global_position.z)
 	var dir: Vector2 = (look_target - enemy_rot)
 	enemy.rotation.y = lerp_angle(enemy.rotation.y, atan2(dir.x, dir.y), 0.5)
 	enemy.anim_player.play("kick1")
-	print(enemy.combo)
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:

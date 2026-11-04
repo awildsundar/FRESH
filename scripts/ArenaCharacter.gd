@@ -118,12 +118,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			change_state_to(States.player_states["switch"])
 		elif event.is_action_pressed("block"):
 			change_state_to(States.player_states["block"])
-		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("heavy_attack") or event.is_action_pressed("special_attack"):
+		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("special_attack"):
 			if in_counter == false:
 				if atk_buffer.size() < max_buffer_size && buffer_input == true:
 					atk_buffer.append(event)
 				if atk_buffer != [] && is_attacking == false:
 					change_state_to(States.player_states["attack"])
+		elif event.is_action_pressed("synergy_attack"):
+			if arena_manager.synergy == arena_manager.max_synergy:
+				for enemy in arena_manager.enemies:
+					enemy.hurt(self, 5.0)
+				arena_manager.synergy = 0.0
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")

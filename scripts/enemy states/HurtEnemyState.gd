@@ -19,4 +19,4 @@ func update(enemy: Enemy, delta: float) -> void:
 
 ##Runs when state is exited
 func exit(enemy: Enemy) -> void:
-	pass
+	enemy.current_attacker = null

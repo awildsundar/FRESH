@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Character
 class_name Enemy
 
 signal perfect_block_dodge_possible(value: bool)
@@ -72,6 +72,13 @@ var combo: int = 0
 var perfect_bd: bool = false
 
 var status_effects: Array[StatusEffect] = []
+
+var current_attacker: ArenaCharacter:
+	set(value):
+		current_attacker = value
+		attacker_changed = true
+
+var attacker_changed: bool = false
 
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
@@ -158,6 +165,15 @@ func erase_status_effect(effect: StatusEffect) -> void:
 	status_effects.erase(effect)
 	calculate_status_effects()
 
+func start_synergy_combo() -> void:
+	get_tree().create_timer(arena_manager.synergy_timer).timeout
+	
+	if attacker_changed == true:
+		arena_manager.synergy += 10
+		attacker_changed = false
+	
+	print(arena_manager.synergy)
+
 func perfect_block_dodge(value: bool) -> void:
 	perfect_bd = value
 	perfect_block_dodge_possible.emit(value)
@@ -167,7 +183,8 @@ func perfect_block_dodge(value: bool) -> void:
 	else:
 		counter_indicator.hide()
 
-func hurt(damage: float) -> void:
+func hurt(attacker: ArenaCharacter, mult: float = 1.0) -> void:
 	if hp > 0.0:
 		change_state_to(States.enemy_states["hurt"])
-		hp -= damage
+		hp -= (attacker.atk * mult)
+		current_attacker = attacker
