@@ -52,11 +52,13 @@ signal perfect_block_dodge_possible(value: bool)
 		attack_chance = value
 @export_subgroup("Misc")
 @export var max_combo: int = 3
+@export var base_synergy_time: float = 0.5
 @export var rest_time: float = 0.5
 @export var shards: int = 5
 @export var cash: int = 10
 
 @onready var state_indicator: Label3D = $StateIndicator
+@onready var synergy_timer: Timer = Timer.new()
 
 var atk: float
 var def: float
@@ -79,6 +81,7 @@ var current_attacker: ArenaCharacter:
 		attacker_changed = true
 
 var attacker_changed: bool = false
+var synergy_time: float = 0.0
 
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
@@ -97,6 +100,8 @@ func _ready() -> void:
 	
 	counter_indicator.hide()
 	
+	add_child(synergy_timer)
+	
 	state = States.enemy_states["idle"]
 	state.enter(self)
 
@@ -105,6 +110,8 @@ func _physics_process(delta: float) -> void:
 	state.transition(self)
 	state.update(self, delta)
 	state_indicator.text = States.enemy_states.find_key(state)
+
+	synergy_time = synergy_timer.time_left
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseEnemyState) -> void:
@@ -166,13 +173,16 @@ func erase_status_effect(effect: StatusEffect) -> void:
 	calculate_status_effects()
 
 func start_synergy_combo() -> void:
-	get_tree().create_timer(arena_manager.synergy_timer).timeout
-	
-	if attacker_changed == true:
-		arena_manager.synergy += 10
-		attacker_changed = false
-	
-	print(arena_manager.synergy)
+	synergy_timer.start(base_synergy_time)
+
+func check_synergy_combo(time_left: float) -> void:
+	print(time_left)
+	if time_left > 0.0:
+		if attacker_changed == true:
+			arena_manager.synergy += 25.0
+			attacker_changed = false
+	else:
+		synergy_time = 0.0
 
 func perfect_block_dodge(value: bool) -> void:
 	perfect_bd = value
@@ -188,3 +198,4 @@ func hurt(attacker: ArenaCharacter, mult: float = 1.0) -> void:
 		change_state_to(States.enemy_states["hurt"])
 		hp -= (attacker.atk * mult)
 		current_attacker = attacker
+		check_synergy_combo(synergy_time)

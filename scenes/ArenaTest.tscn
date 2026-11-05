@@ -26,6 +26,30 @@ cell_height = 0.01
 script = ExtResource("1_wmg8w")
 starting_character = NodePath("Player")
 
+[node name="ArenaUI" type="CanvasLayer" parent="." unique_id=1282760147]
+
+[node name="Control" type="Control" parent="ArenaUI" unique_id=1521477707]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ArenaUI/Control" unique_id=1556959754]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+
+[node name="SynergyBar" type="ProgressBar" parent="ArenaUI/Control/MarginContainer" unique_id=1792772806]
+layout_mode = 2
+size_flags_vertical = 4
+
 [node name="Player" parent="." unique_id=265262453 instance=ExtResource("1_favoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3685927, 0, -3.3555942)
 in_control = true

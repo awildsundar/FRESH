@@ -1,6 +1,10 @@
 extends Node3D
 class_name ArenaManager
 
+const last_location: Dictionary = {
+	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
+}
+
 enum ARENA_TYPE {
 	DEFAULT,
 	SPENCER_STREET,
@@ -13,9 +17,7 @@ enum ARENA_TYPE {
 @export var max_synergy: float = 100.0
 @export var synergy_timer: float = 3.0
 
-const last_location: Dictionary = {
-	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
-}
+@onready var synergy_bar: ProgressBar = $ArenaUI/Control/MarginContainer/SynergyBar
 
 var characters: Array[ArenaCharacter]
 
@@ -30,8 +32,11 @@ var synergy: float = 0.0:
 		if value > max_synergy:
 			value = max_synergy
 		synergy = value
+		synergy_bar.value = synergy
 
 func _ready() -> void:
+	synergy_bar.max_value = max_synergy
+	
 	for player in characters:
 		player_hp += player.hp
 	

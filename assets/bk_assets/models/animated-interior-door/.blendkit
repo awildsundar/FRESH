@@ -1,0 +1,10 @@
+[asset]
+
+id="63da78a8-ea3c-4eeb-94e9-38e701fcada9"
+assetBaseId="5b017692-720c-4d46-942a-3e69bb30d817"
+files={
+"animated-interior-door_gltf_godot.glb": "gltf_godot"
+}
+versions={
+"animated-interior-door_gltf_godot.glb": "63da78a8-ea3c-4eeb-94e9-38e701fcada9"
+}
