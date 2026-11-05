@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b7q4webcoivt4"]
 
-[ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/ArenaPlayer.tscn" id="1_favoq"]
+[ext_resource type="PackedScene" uid="uid://cy7q15dradsep" path="res://scenes/entities/ArenaPlayer.tscn" id="1_favoq"]
 [ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
-[ext_resource type="PackedScene" uid="uid://c6ldg60vhftek" path="res://scenes/Enemy.tscn" id="3_wmg8w"]
+[ext_resource type="Resource" uid="uid://deexv6fwmcapo" path="res://resources/special attacks/Test.tres" id="3_iieaf"]
+[ext_resource type="PackedScene" uid="uid://c6ldg60vhftek" path="res://scenes/entities/Enemy.tscn" id="3_wmg8w"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -52,11 +53,13 @@ size_flags_vertical = 4
 
 [node name="Player" parent="." unique_id=265262453 instance=ExtResource("1_favoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3685927, 0, -3.3555942)
+special_attack = ExtResource("3_iieaf")
 in_control = true
 max_combo = 3
 
 [node name="Player2" parent="." unique_id=432533020 instance=ExtResource("1_favoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3685927, 0, 2.6444058)
+special_attack = ExtResource("3_iieaf")
 in_control = true
 max_combo = 3
 

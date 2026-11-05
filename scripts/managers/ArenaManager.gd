@@ -14,10 +14,11 @@ enum ARENA_TYPE {
 @export var starting_character: ArenaCharacter
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var wait_time: float = 3.0
-@export var max_synergy: float = 100.0
 @export var synergy_timer: float = 3.0
 
 @onready var synergy_bar: ProgressBar = $ArenaUI/Control/MarginContainer/SynergyBar
+@onready var synergy_combo_time: float = 2.0
+@onready var synergy_combo_timer: Timer = Timer.new()
 
 var characters: Array[ArenaCharacter]
 
@@ -27,18 +28,32 @@ var player_hp: float = 0.0
 var enemy_shards: int = 0
 var enemy_cash: int = 0
 
+var active_camera: Camera3D
+
+var max_synergy: float = -100.0
 var synergy: float = 0.0: 
 	set(value):
 		if value > max_synergy:
 			value = max_synergy
 		synergy = value
 		synergy_bar.value = synergy
+var synergy_combo_mult: float = 1.0:
+	set(value):
+		if value > 5.0:
+			value = 5.0
+		synergy_combo_mult = value
+		if value != 1.0:
+			synergy_combo_timer.start(synergy_combo_time)
 
 func _ready() -> void:
-	synergy_bar.max_value = max_synergy
-	
 	for player in characters:
 		player_hp += player.hp
+		max_synergy += 100.0
+	
+	synergy_bar.max_value = max_synergy
+	synergy_combo_timer.one_shot = true
+	synergy_combo_timer.timeout.connect(reset_synergy_combo_mult)
+	add_child(synergy_combo_timer)
 	
 	for enemy in enemies:
 		enemy_shards += enemy.shards
@@ -46,11 +61,15 @@ func _ready() -> void:
 	
 	change_control_to(starting_character)
 
+func reset_synergy_combo_mult() -> void:
+	synergy_combo_mult = 1.0
+
 func change_control_to(character: ArenaCharacter) -> void:
 	for ch in characters:
 		if ch == character:
 			ch.in_control = true
 			ch.rig.camera.make_current()
+			active_camera = ch.rig.camera
 			ch.change_state_to(States.player_states["idle"])
 		else:
 			ch.in_control = false

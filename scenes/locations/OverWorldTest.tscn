@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://blq5h3bovmvqp"]
+
+[ext_resource type="Script" uid="uid://c2futblaeoa7p" path="res://scripts/managers/OverWorldManager.gd" id="1_uickh"]
+[ext_resource type="Resource" uid="uid://bjt8py1pivakp" path="res://resources/quests/TestQuest.tres" id="2_dfuhx"]
+[ext_resource type="PackedScene" uid="uid://qu54y2revsmk" path="res://scenes/UI/MenuScreen.tscn" id="3_ss8jh"]
+[ext_resource type="Script" uid="uid://c35xeiqhimogk" path="res://scripts/GUI/QuestDisplay.gd" id="4_ji8if"]
+[ext_resource type="PackedScene" uid="uid://dehe3vrgd3mg8" path="res://scenes/entities/OverworldPlayer.tscn" id="5_82rkl"]
+[ext_resource type="PackedScene" uid="uid://c3fkdqx4xjsv5" path="res://assets/bk_assets/models/animated-interior-door/animated-interior-door_gltf_godot.glb" id="6_c4r2h"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lugn5"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_amem7"]
+sky_material = SubResource("ProceduralSkyMaterial_lugn5")
+
+[sub_resource type="Environment" id="Environment_xb0qy"]
+background_mode = 2
+sky = SubResource("Sky_amem7")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Node3D" type="Node3D" unique_id=36840124 node_paths=PackedStringArray("main_menu")]
+script = ExtResource("1_uickh")
+main_menu = NodePath("Main Menu")
+quest = ExtResource("2_dfuhx")
+
+[node name="Main Menu" parent="." unique_id=1992576013 instance=ExtResource("3_ss8jh")]
+process_mode = 3
+
+[node name="Base GUI" type="CanvasLayer" parent="." unique_id=770362252]
+
+[node name="Control" type="Control" parent="Base GUI" unique_id=526961047]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="QuestDisplay" type="MarginContainer" parent="Base GUI/Control" unique_id=84222497]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+script = ExtResource("4_ji8if")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Base GUI/Control/QuestDisplay" unique_id=1392798762]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="QuestName" type="Label" parent="Base GUI/Control/QuestDisplay/VBoxContainer" unique_id=1321957580]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "QUEST NAME"
+horizontal_alignment = 2
+
+[node name="QuestStep" type="Label" parent="Base GUI/Control/QuestDisplay/VBoxContainer" unique_id=1864528325]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "QUEST STEP"
+horizontal_alignment = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=854229242]
+environment = SubResource("Environment_xb0qy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1535192948]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1409606560]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 0)
+use_collision = true
+flip_faces = true
+size = Vector3(8, 3, 8)
+
+[node name="Player" parent="." unique_id=432533020 instance=ExtResource("5_82rkl")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.25, 0, 0)
+
+[node name="upload" parent="." unique_id=1587471911 instance=ExtResource("6_c4r2h")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 5, 0, 0)

@@ -28,6 +28,7 @@ signal invincible_toggled(value: bool)
 		base_hp = value
 		hp = value
 @export_group("Combat Config")
+@export var special_attack: SpecialAttack
 @export var attack_distance: float = 100.0
 @export var buffer_duration: float = 1.25
 @export var anim_duration: float = 0.25
@@ -59,14 +60,26 @@ signal invincible_toggled(value: bool)
 		attack_chance = value
 @export_subgroup("Misc")
 @export var max_combo: int = 3
+@export var rest_time: float = 0.2
+
 
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var rig: SpringArm3D = $SpringArm3D
 @onready var limit_area: Area3D = $LimitArea
+@onready var special_attack_timer: Timer = Timer.new()
+@onready var animation_cancel_timer: Timer = Timer.new()
+
+var atk: float
+var def: float
+var hp: float
+var min_circle_time: float
+var max_circle_time: float
+var attack_chance: float
 
 var can_move: bool = true
 var input_dir: Vector2
 var move_dir: Vector3
+var animation_cancel_time: float = 0.2
 
 var atk_buffer := []
 var is_attacking: bool = false
@@ -79,13 +92,6 @@ var state_switchable: bool = true
 var in_counter: bool = false
 
 var target: Node3D = null
-
-var atk: float
-var def: float
-var hp: float
-var min_circle_time: float
-var max_circle_time: float
-var attack_chance: float
 
 var status_effects: Array[StatusEffect] = []
 
@@ -103,6 +109,12 @@ func _ready() -> void:
 	max_circle_time = base_max_circle_time
 	attack_chance = base_attack_chance
 	
+	special_attack_timer.one_shot = true
+	add_child(special_attack_timer)
+	
+	animation_cancel_timer.one_shot = true
+	add_child(animation_cancel_timer)
+	
 	if in_control == true:
 		state = States.player_states["idle"]
 	else:
@@ -118,12 +130,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			change_state_to(States.player_states["switch"])
 		elif event.is_action_pressed("block"):
 			change_state_to(States.player_states["block"])
-		elif event.is_action_pressed("basic_attack") or event.is_action_pressed("special_attack"):
+		elif event.is_action_pressed("basic_attack"):
 			if in_counter == false:
 				if atk_buffer.size() < max_buffer_size && buffer_input == true:
 					atk_buffer.append(event)
 				if atk_buffer != [] && is_attacking == false:
 					change_state_to(States.player_states["attack"])
+		elif event.is_action_pressed("special_attack"):
+			if special_attack_timer.is_stopped() == true or special_attack_timer.time_left <= 0.0:
+				atk_buffer = []
+				change_state_to(States.player_states["special_attack"])
 		elif event.is_action_pressed("synergy_attack"):
 			if arena_manager.synergy == arena_manager.max_synergy:
 				for enemy in arena_manager.enemies:

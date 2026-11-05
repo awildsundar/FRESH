@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpecialAttack" format=3 uid="uid://deexv6fwmcapo"]
+
+[ext_resource type="Script" uid="uid://cmaioqnip5pmp" path="res://scripts/inheritables/SpecialAttack.gd" id="1_idi5o"]
+[ext_resource type="Resource" uid="uid://ckcspk1ftptx6" path="res://resources/status effects/DecreaseDefense.tres" id="2_jbm48"]
+
+[resource]
+script = ExtResource("1_idi5o")
+status_effect = ExtResource("2_jbm48")
+animation_name = "punch1"
+cooldown = 5.0
+metadata/_custom_type_script = "uid://cmaioqnip5pmp"

@@ -14,11 +14,12 @@ func enter(cpu: ArenaCharacter) -> void:
 func transition(cpu: ArenaCharacter) -> void:
 	await cpu.anim_player.animation_finished
 	
-	if cpu.combo >= cpu.max_combo:
+	if cpu.combo >= cpu.max_combo - 1:
 		cpu.combo = 0
 		cpu.change_state_to(States.cpu_states["back_away"])
 		
 	if cpu.state != States.cpu_states["back_away"]:
+		await cpu.get_tree().create_timer(cpu.rest_time).timeout
 		cpu.change_state_to(States.cpu_states["hunt"])
 
 ##Runs during a state
@@ -27,7 +28,7 @@ func update(cpu: ArenaCharacter, delta: float) -> void:
 		if cpu.hitbox.is_colliding():
 			var body: Object = cpu.hitbox.get_collider(0)
 			if body is Enemy:
-				body.hurt(cpu)
+				body.hurt(cpu, cpu.atk)
 				if cpu.combo >= cpu.max_combo - 1:
 					body.start_synergy_combo()
 				cpu.hitbox.enabled = false

@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://j2awinpda33k" path="res://scripts/inheritables/Shop.gd" id="1_unsh3"]
 [ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_or2lh"]
 [ext_resource type="Script" uid="uid://b5kq3qdns8qcp" path="res://scripts/inheritables/ItemData.gd" id="3_30gxw"]
-[ext_resource type="Resource" uid="uid://sjaebalb4fdu" path="res://purchasables/burger/Hamburger.tres" id="4_bhv5a"]
-[ext_resource type="Resource" uid="uid://b7kuy4ynppbqd" path="res://purchasables/burger/SoftDrink.tres" id="5_23xvr"]
+[ext_resource type="Resource" uid="uid://sjaebalb4fdu" path="res://resources/purchasables/burger/Hamburger.tres" id="4_bhv5a"]
+[ext_resource type="Resource" uid="uid://b7kuy4ynppbqd" path="res://resources/purchasables/burger/SoftDrink.tres" id="5_23xvr"]
 
 [resource]
 script = ExtResource("1_unsh3")

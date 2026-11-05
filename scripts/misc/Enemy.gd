@@ -52,13 +52,14 @@ signal perfect_block_dodge_possible(value: bool)
 		attack_chance = value
 @export_subgroup("Misc")
 @export var max_combo: int = 3
-@export var base_synergy_time: float = 0.5
 @export var rest_time: float = 0.5
 @export var shards: int = 5
 @export var cash: int = 10
 
 @onready var state_indicator: Label3D = $StateIndicator
 @onready var synergy_timer: Timer = Timer.new()
+@onready var synergy_visual: ColorRect = $SynergyVisual
+@onready var synergy_visual_position: Marker3D = $SynergyVisualPosition
 
 var atk: float
 var def: float
@@ -77,11 +78,15 @@ var status_effects: Array[StatusEffect] = []
 
 var current_attacker: ArenaCharacter:
 	set(value):
+		if value != current_attacker && value != null:
+			attacker_changed = true
+		elif value == null:
+			attacker_changed = false
+		elif value == current_attacker:
+			attacker_changed = false
 		current_attacker = value
-		attacker_changed = true
 
 var attacker_changed: bool = false
-var synergy_time: float = 0.0
 
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
@@ -99,7 +104,9 @@ func _ready() -> void:
 	attack_chance = base_attack_chance
 	
 	counter_indicator.hide()
-	
+	synergy_visual.hide()
+	synergy_timer.one_shot = true
+	synergy_timer.timeout.connect(end_synergy_combo)
 	add_child(synergy_timer)
 	
 	state = States.enemy_states["idle"]
@@ -110,8 +117,10 @@ func _physics_process(delta: float) -> void:
 	state.transition(self)
 	state.update(self, delta)
 	state_indicator.text = States.enemy_states.find_key(state)
-
-	synergy_time = synergy_timer.time_left
+	
+	if synergy_visual.is_visible_in_tree():
+		synergy_visual.position = arena_manager.active_camera.unproject_position(synergy_visual_position.global_position) - synergy_visual.size / 2
+		synergy_visual.set_instance_shader_parameter("progress", synergy_timer.time_left / arena_manager.synergy_timer)
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseEnemyState) -> void:
@@ -173,16 +182,28 @@ func erase_status_effect(effect: StatusEffect) -> void:
 	calculate_status_effects()
 
 func start_synergy_combo() -> void:
-	synergy_timer.start(base_synergy_time)
-
-func check_synergy_combo(time_left: float) -> void:
-	print(time_left)
-	if time_left > 0.0:
-		if attacker_changed == true:
-			arena_manager.synergy += 25.0
-			attacker_changed = false
+	if state == States.enemy_states["death"]:
+		return
 	else:
-		synergy_time = 0.0
+		synergy_visual.show()
+		synergy_timer.start(arena_manager.synergy_timer)
+
+func check_synergy_combo() -> void:
+	if synergy_visual.is_visible_in_tree() == false:
+		return
+	else:
+		if attacker_changed == true:
+			("attacker changed")
+			synergy_visual.hide()
+			arena_manager.synergy += 25.0
+			arena_manager.synergy_combo_mult += 1.0
+			current_attacker = null
+			attacker_changed = false
+
+func end_synergy_combo() -> void:
+	synergy_visual.hide()
+	current_attacker = null
+	attacker_changed = false
 
 func perfect_block_dodge(value: bool) -> void:
 	perfect_bd = value
@@ -193,9 +214,9 @@ func perfect_block_dodge(value: bool) -> void:
 	else:
 		counter_indicator.hide()
 
-func hurt(attacker: ArenaCharacter, mult: float = 1.0) -> void:
+func hurt(attacker: ArenaCharacter, damage: float) -> void:
 	if hp > 0.0:
 		change_state_to(States.enemy_states["hurt"])
-		hp -= (attacker.atk * mult)
+		hp -= damage
 		current_attacker = attacker
-		check_synergy_combo(synergy_time)
+		check_synergy_combo()
