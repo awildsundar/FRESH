@@ -10,13 +10,4 @@ Currently, the game is extremely bare bones, only the Quest, Save/Load, Dialogue
 ## How to Play
 Go to the itch.io page: https://awildsundar.itch.io/fresh-wip, and download the latest file (the file with the highest iteration number), then just run it!
 
-Controls:
-WASD to move
-E to interact (only for objects with the godot icon above them)
-LMB to attack
-RMB to block
-Shift to dodge
-MMB to lock-on
-TAB to open inventory + quests (unavailable in arena)
-hold TAB to switch to another player (only in arena)
-ESC to quit the game
+Controls can be found on the itch.io page (github formatting is fighting me)
