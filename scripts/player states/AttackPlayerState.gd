@@ -16,14 +16,25 @@ func enter(player: ArenaCharacter) -> void:
 	
 	if player.atk_buffer != []:
 		play_attack_animation(player)
+	
+	var enemy: Enemy = player.find_nearest_candidate(0, player.attack_distance)
+	var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+	var forward: Vector3 = -player.global_transform.basis.z.normalized()
+	var dot_product: float = forward.dot(to_enemy)
+	
+	if dot_product > player.snap_angle:
+		var direction_to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+		var closest_point: Vector3 = enemy.global_position + (direction_to_enemy * enemy.hurtbox.shape.radius * 2)
+	
+		player.global_position = closest_point
+		player.look_at(enemy.global_position, Vector3.UP, true)
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
 	if player.animation_cancel_timer.time_left > 0.0:
-		if Input.is_anything_pressed():
-			if Input.is_action_pressed("basic_attack") == false:
-				player.atk_buffer = []
-				player.change_state_to(States.player_states["idle"])
+		if Input.is_action_just_pressed("block") or Input.is_action_just_pressed("dodge"):
+			player.atk_buffer = []
+			player.change_state_to(States.player_states["idle"])
 	
 	if player.atk_buffer == []:
 		await player.anim_player.animation_finished
@@ -41,6 +52,7 @@ func update(player: ArenaCharacter, delta: float) -> void:
 				body.hurt(player, player.atk * player.arena_manager.synergy_combo_mult)
 				if atk_count >= player.max_buffer_size:
 					body.start_synergy_combo()
+					body.previous_attacker = player
 					atk_count = 0
 				player.hitbox.enabled = false
 	

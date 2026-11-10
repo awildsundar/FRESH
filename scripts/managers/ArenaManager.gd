@@ -16,11 +16,15 @@ enum ARENA_TYPE {
 @export var wait_time: float = 3.0
 @export var synergy_timer: float = 3.0
 
-@onready var synergy_bar: ProgressBar = $ArenaUI/Control/MarginContainer/SynergyBar
+@onready var synergy_bar: ProgressBar = $ContextArenaUI/Context/MarginContainer/SynergyBar
 @onready var synergy_combo_time: float = 2.0
 @onready var synergy_combo_timer: Timer = Timer.new()
 
+@onready var escape_arena_ui: CanvasLayer = $EscapeArenaUI
+
+
 var characters: Array[ArenaCharacter]
+var active_character: ArenaCharacter
 
 var enemies: Array[Enemy]
 
@@ -46,6 +50,8 @@ var synergy_combo_mult: float = 1.0:
 			synergy_combo_timer.start(synergy_combo_time)
 
 func _ready() -> void:
+	escape_arena_ui.hide()
+	
 	for player in characters:
 		player_hp += player.hp
 		max_synergy += 100.0
@@ -69,6 +75,7 @@ func change_control_to(character: ArenaCharacter) -> void:
 		if ch == character:
 			ch.in_control = true
 			ch.rig.camera.make_current()
+			active_character = ch
 			active_camera = ch.rig.camera
 			ch.change_state_to(States.player_states["idle"])
 		else:
@@ -91,3 +98,13 @@ func battle_won() -> void:
 func battle_lost() -> void:
 	await get_tree().create_timer(wait_time).timeout
 	get_tree().quit()
+
+func _on_continue_pressed() -> void:
+	escape_arena_ui.hide()
+	Engine.time_scale = 1.0
+	active_character.can_move = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _on_escape_pressed() -> void:
+	Engine.time_scale = 1.0
+	TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)

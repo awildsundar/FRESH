@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://cwa4avklyw6cr"]
+
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_c8dkf"]
+[ext_resource type="Script" uid="uid://b5kq3qdns8qcp" path="res://scripts/inheritables/ItemData.gd" id="2_yo56h"]
+
+[resource]
+script = ExtResource("2_yo56h")
+item_type = 1
+item_name = "Fries"
+icon = ExtResource("1_c8dkf")
+description = "just put the fries in the bag"
+price = 5
+def = 10
+metadata/_custom_type_script = "uid://b5kq3qdns8qcp"

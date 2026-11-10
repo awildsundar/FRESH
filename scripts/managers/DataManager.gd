@@ -6,7 +6,7 @@ signal cash_updated(value: int)
 
 const CURRENT_SAVE_VERSION: int = 1
 
-var cash: int:
+var cash: int = 10000:
 	set(value):
 		cash = value
 		cash_updated.emit(value)

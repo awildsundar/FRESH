@@ -7790,6 +7790,9 @@ _data = {
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_55jtl"]
 radius = 0.75
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_i1w3v"]
+radius = 1.5
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_665n7"]
 shader = ExtResource("5_5wwv6")
 shader_parameter/base_color = Color(0, 1, 0, 1)
@@ -7812,7 +7815,7 @@ status_effect = ExtResource("2_ft8do")
 base_atk = 1.0
 back_away_distance = 3.0
 circle_distance = 3.0
-max_combo = 1
+rest_time = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1304060759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -8337,6 +8340,12 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_55jtl")
 debug_color = Color(0.33833334, 0.7, 0, 0.41960785)
+
+[node name="SnapArea" type="Area3D" parent="." unique_id=154883755]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapArea" unique_id=331395044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_i1w3v")
 
 [node name="SynergyVisual" type="ColorRect" parent="." unique_id=477364130]
 material = SubResource("ShaderMaterial_665n7")

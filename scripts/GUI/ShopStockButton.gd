@@ -30,6 +30,7 @@ func _on_pressed() -> void:
 		return
 	else:
 		DataManager.cash -= item.price
+		shop_manager.shop.level_progression += 1
 	
 	if DataManager.inventory.get(item) != null:
 		DataManager.inventory[item] += 1

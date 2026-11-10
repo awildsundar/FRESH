@@ -34,6 +34,7 @@ signal invincible_toggled(value: bool)
 @export var anim_duration: float = 0.25
 @export var max_buffer_size: int = 6
 @export var counter_time: float = 2.0
+@export var snap_angle: float = 0.7
 @export_group("Control Config")
 @export var in_control: bool = false
 @export var control_distance: float = 100.0
@@ -68,6 +69,7 @@ signal invincible_toggled(value: bool)
 @onready var limit_area: Area3D = $LimitArea
 @onready var special_attack_timer: Timer = Timer.new()
 @onready var animation_cancel_timer: Timer = Timer.new()
+@onready var hurtbox: CollisionShape3D = $CollisionShape3D
 
 var atk: float
 var def: float
@@ -145,6 +147,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				for enemy in arena_manager.enemies:
 					enemy.hurt(self, 5.0)
 				arena_manager.synergy = 0.0
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("main_menu"):
+		arena_manager.escape_arena_ui.show()
+		Engine.time_scale = 0.0
+		can_move = false
+		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 func _physics_process(delta: float) -> void:
 	input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")

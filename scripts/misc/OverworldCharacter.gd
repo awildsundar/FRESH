@@ -34,6 +34,9 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if can_move == true:
+		if event.is_action_pressed("toggle_enemy_visibility"):
+			overworld_manager.show_enemy_locations()
+		
 		if interact_ray.is_colliding():
 			var current_target: Object = interact_ray.get_collider()
 			if current_target is BaseInteractable:

@@ -8237,3 +8237,4 @@ libraries/ = SubResource("AnimationLibrary_s73te")
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1889738087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 target_position = Vector3(0, 0, 3)
+collision_mask = 3

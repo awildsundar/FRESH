@@ -2,6 +2,7 @@ extends BaseInteractable
 class_name ShopInteractable
 
 @export var shop: Shop
+@export var animation_name: String = ""
 
 var shop_ui: PackedScene = preload("uid://cmu8rlfgh4hxu")
 
@@ -11,6 +12,15 @@ func interact() -> void:
 		var ui: ShopManager = shop_ui.instantiate()
 		ui.shop = shop
 		ui.player = player
+		
+		if animation_name != "":
+			var anim_player: AnimationPlayer = get_animation_player()
+			if anim_player.has_animation(animation_name):
+				anim_player.play(animation_name)
+				await anim_player.animation_finished
+			else:
+				printerr("ShopInteractable: No animation found!")
+		
 		self.add_child(ui)
 		if QuestManager.get_active_quest_current_step() == 3:
 			QuestManager.update_quest()

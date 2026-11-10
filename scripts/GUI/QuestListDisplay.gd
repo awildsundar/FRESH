@@ -9,7 +9,9 @@ var quest_list_display: PackedScene = preload("uid://ilp4tlp3kbb1")
 func _ready() -> void:
 	QuestManager.connect("current_quests_updated", current_quests_updated)
 	QuestManager.connect("completed_quests_updated", completed_quests_updated)
-
+	current_quests_updated()
+	completed_quests_updated()
+	
 func current_quests_updated() -> void:
 	for child in current_quests.get_children():
 		child.queue_free()

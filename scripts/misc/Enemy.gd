@@ -60,6 +60,8 @@ signal perfect_block_dodge_possible(value: bool)
 @onready var synergy_timer: Timer = Timer.new()
 @onready var synergy_visual: ColorRect = $SynergyVisual
 @onready var synergy_visual_position: Marker3D = $SynergyVisualPosition
+@onready var snap_area: Area3D = $SnapArea
+@onready var hurtbox: CollisionShape3D = $CollisionShape3D
 
 var atk: float
 var def: float
@@ -76,17 +78,8 @@ var perfect_bd: bool = false
 
 var status_effects: Array[StatusEffect] = []
 
-var current_attacker: ArenaCharacter:
-	set(value):
-		if value != current_attacker && value != null:
-			attacker_changed = true
-		elif value == null:
-			attacker_changed = false
-		elif value == current_attacker:
-			attacker_changed = false
-		current_attacker = value
-
-var attacker_changed: bool = false
+var previous_attacker: ArenaCharacter
+var current_attacker: ArenaCharacter
 
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
@@ -192,18 +185,19 @@ func check_synergy_combo() -> void:
 	if synergy_visual.is_visible_in_tree() == false:
 		return
 	else:
-		if attacker_changed == true:
-			("attacker changed")
-			synergy_visual.hide()
-			arena_manager.synergy += 25.0
-			arena_manager.synergy_combo_mult += 1.0
-			current_attacker = null
-			attacker_changed = false
+		if current_attacker != null && previous_attacker != null:
+			if current_attacker != previous_attacker:
+				("attacker changed")
+				synergy_visual.hide()
+				arena_manager.synergy += 25.0
+				arena_manager.synergy_combo_mult += 1.0
+				current_attacker = null
+				previous_attacker = null
 
 func end_synergy_combo() -> void:
 	synergy_visual.hide()
 	current_attacker = null
-	attacker_changed = false
+	previous_attacker = null
 
 func perfect_block_dodge(value: bool) -> void:
 	perfect_bd = value

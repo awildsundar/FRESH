@@ -4,6 +4,7 @@ class_name ShopManager
 #Shop Keeper Display nodes
 @onready var shop_icon: TextureRect = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/ShopIcon
 @onready var shop_level: Label = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/ShopLevel
+@onready var shop_keeper_dialogue: Label = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/MarginContainer/Panel2/ShopKeeperDialogue
 
 #Stock Display nodes
 @onready var stock: GridContainer = $Control/MarginContainer/HBoxContainer/StockDisplay/MarginContainer/ScrollContainer/Stock
@@ -25,17 +26,37 @@ func _ready() -> void:
 	
 	shop_icon.texture = shop.shop_logo
 	shop_level.text = "LVL " + str(shop.level)
+	shop_keeper_dialogue.text = "Welcome!"
 	
 	item_icon.texture = null
 	item_name.text = ""
 	item_description.text = ""
 	item_stats.text = ""
 	
+	shop.progressed.connect(on_progress_changed, shop.level_progression)
+	stock_up()
+	
+
+func stock_up() -> void:
+	for item in stock.get_children():
+		item.queue_free()
+	
 	for item in shop.stock:
 		var stock_item: ShopStockButton = stock_button.instantiate()
 		stock_item.item = item
 		stock_item.shop_manager = self
 		stock.add_child(stock_item)
+
+func on_progress_changed(progress: int) -> void:
+	if progress == shop.level_requirements.get(shop.level + 1):
+		shop.level += 1
+		shop_keeper_dialogue.text = "Got some new stuff in stock!"
+		shop_level.text = "LVL " + str(shop.level)
+		shop.stock.append(shop.level_locked_stock.get(shop.level))
+		stock_up()
+		progress = 0
+	else:
+		shop_keeper_dialogue.text = "Thanks for your purchase!"
 
 func _on_exit_pressed() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
