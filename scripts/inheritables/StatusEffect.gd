@@ -24,7 +24,7 @@ enum Affects {
 			inflicts_state = false
 
 func inflict_status_effect(body: Variant) -> void:
-	if body is not Character and body is not Enemy:
+	if body is not ArenaCharacter and body is not Enemy:
 		return
 	
 	body.status_effects.append(self)
@@ -34,7 +34,7 @@ func inflict_status_effect(body: Variant) -> void:
 	if inflicts_state == true:
 		if body is Enemy:
 			body.change_state_to(States.enemy_states[state])
-		elif body is Character:
+		elif body is ArenaCharacter:
 			if body.in_control == true:
 				body.change_state_to(States.player_states[state])
 			else:

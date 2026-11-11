@@ -5,13 +5,6 @@ class_name SceneInteractable
 @export var scene_type: TransitionManager.LOADING_SCREEN_TYPE = TransitionManager.LOADING_SCREEN_TYPE.DEFAULT
 @export var animation_name: String = ""
 
-func _ready() -> void:
-	if scene_type == TransitionManager.LOADING_SCREEN_TYPE.BATTLE:
-		var manager: OverWorldManager = get_manager()
-		manager.enemy_locations.append(self)
-		self.hide()
-		get_collision_shape().disabled = true
-
 func interact() -> void:
 	if DataManager.get_flag("arena_entered") == false:
 		if animation_name != "":

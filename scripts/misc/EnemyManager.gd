@@ -1,10 +1,11 @@
-extends Character
+extends CharacterBody3D
 class_name Enemy
 
 signal perfect_block_dodge_possible(value: bool)
 
 #config vars
 @export_category("Config")
+@export var enemy: EnemyResource
 @export var anim_player: AnimationPlayer
 @export var hitbox: ShapeCast3D
 @export var limit_area: Area3D
@@ -13,48 +14,7 @@ signal perfect_block_dodge_possible(value: bool)
 @export var lock_on_indicator: Sprite3D
 @export var counter_indicator: Sprite3D
 
-#gameplay vars
-@export_category("Gameplay")
-@export var status_effect: StatusEffect
-@export_group("Stats")
-@export var speed: float = 5.0
-@export var base_atk: float = 50.0:
-	set(value):
-		base_atk = value
-		atk = value
-@export var base_def: float = 50.0:
-	set(value):
-		base_def = value
-		def = value
-@export var base_hp: float = 100.0:
-	set(value):
-		base_hp = value
-		hp = value
-@export_group("Config")
-@export_subgroup("Back Away")
-@export var attack_distance: float = 100.0
-@export var back_away_distance: float = 1.0
-@export var back_away_timer: float = 3.0
-@export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
-@export_subgroup("Circle")
-@export var circle_distance: float = 1.0
-@export var base_min_circle_time: float = 1.0:
-	set(value):
-		base_min_circle_time = value
-		min_circle_time = value
-@export var base_max_circle_time: float = 3.0:
-	set(value):
-		base_max_circle_time = value
-		max_circle_time = value
-@export_range(0.1, 0.9) var base_attack_chance: float = 0.3:
-	set(value):
-		base_attack_chance = value
-		attack_chance = value
-@export_subgroup("Misc")
-@export var max_combo: int = 3
-@export var rest_time: float = 0.5
-@export var shards: int = 5
-@export var cash: int = 10
+
 
 @onready var state_indicator: Label3D = $StateIndicator
 @onready var synergy_timer: Timer = Timer.new()
@@ -63,6 +23,7 @@ signal perfect_block_dodge_possible(value: bool)
 @onready var snap_area: Area3D = $SnapArea
 @onready var hurtbox: CollisionShape3D = $CollisionShape3D
 
+var speed: float
 var atk: float
 var def: float
 var hp: float
@@ -89,12 +50,13 @@ func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.enemies.append(self)
 	
-	atk = base_atk
-	def = base_def
-	hp = base_hp
-	min_circle_time = base_min_circle_time
-	max_circle_time = base_max_circle_time
-	attack_chance = base_attack_chance
+	speed = enemy.base_speed
+	atk = enemy.base_atk
+	def = enemy.base_def
+	hp = enemy.base_hp
+	min_circle_time = enemy.base_min_circle_time
+	max_circle_time = enemy.base_max_circle_time
+	attack_chance = enemy.base_attack_chance
 	
 	counter_indicator.hide()
 	synergy_visual.hide()
@@ -141,7 +103,7 @@ func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
 	for candidate in candidates:
 		if is_instance_valid(candidate):
 			var dist: float = global_position.distance_to(candidate.global_position)
-			if dist < attack_distance && dist < lowest_dist:
+			if dist < enemy.attack_distance && dist < lowest_dist:
 				lowest_dist = dist
 				nearest = candidate
 	
@@ -149,12 +111,13 @@ func find_nearest_candidate(list: Array[ArenaCharacter] = []) -> Node3D:
 	return nearest
 
 func calculate_status_effects() -> void:
-	atk = base_atk
-	def = base_def
-	hp = base_hp
-	min_circle_time = base_min_circle_time
-	max_circle_time = base_max_circle_time
-	attack_chance = base_attack_chance
+	speed = enemy.base_speed
+	atk = enemy.base_atk
+	def = enemy.base_def
+	hp = enemy.base_hp
+	min_circle_time = enemy.base_min_circle_time
+	max_circle_time = enemy.base_max_circle_time
+	attack_chance = enemy.base_attack_chance
 	
 	for status_effect in status_effects:
 		match status_effect.affects:

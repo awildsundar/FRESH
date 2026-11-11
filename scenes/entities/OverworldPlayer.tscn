@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dehe3vrgd3mg8"]
 
-[ext_resource type="Script" uid="uid://ba3gixo6wbefw" path="res://scripts/misc/OverworldCharacter.gd" id="1_rvioi"]
+[ext_resource type="Script" uid="uid://ba3gixo6wbefw" path="res://scripts/misc/OverworldCharacterManager.gd" id="1_rvioi"]
+[ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="2_brlib"]
 [ext_resource type="Script" uid="uid://csx0gg56jykap" path="res://scripts/misc/CameraRig.gd" id="2_g8x7f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
@@ -7738,6 +7739,7 @@ _data = {
 [node name="Player" type="CharacterBody3D" unique_id=432533020 node_paths=PackedStringArray("mesh_main", "interact_ray", "anim_player")]
 collision_mask = 3
 script = ExtResource("1_rvioi")
+character = ExtResource("2_brlib")
 mesh_main = NodePath("female_body")
 interact_ray = NodePath("RayCast3D")
 anim_player = NodePath("female_body/AnimationPlayer")
@@ -8231,8 +8233,6 @@ skin = SubResource("Skin_g7kxm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="female_body" unique_id=1716075803]
 libraries/ = SubResource("AnimationLibrary_s73te")
-
-[node name="Node3D" type="Node3D" parent="." unique_id=472189768]
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1889738087]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

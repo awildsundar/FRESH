@@ -17,7 +17,7 @@ func enter(player: ArenaCharacter) -> void:
 	if player.atk_buffer != []:
 		play_attack_animation(player)
 	
-	var enemy: Enemy = player.find_nearest_candidate(0, player.attack_distance)
+	var enemy: Enemy = player.find_nearest_candidate(0, player.character.attack_distance)
 	var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
 	var forward: Vector3 = -player.global_transform.basis.z.normalized()
 	var dot_product: float = forward.dot(to_enemy)

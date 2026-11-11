@@ -1,4 +1,29 @@
-@abstract
+extends Resource
+class_name CharacterResource
 
-extends CharacterBody3D
-class_name Character
+#gameplay vars
+@export_category("Player")
+@export_group("Basics")
+@export var base_speed: float = 10.0
+@export var dash_time: float = 0.25
+@export var base_atk: float = 50.0
+@export var base_def: float = 50.0
+@export var base_hp: float = 100.0
+@export_group("Combat Config")
+@export var special_attack: SpecialAttack
+@export var attack_distance: float = 100.0
+
+#cpu vars
+@export_category("CPU")
+@export_subgroup("Back Away")
+@export var back_away_distance: float = 1.0
+@export var back_away_timer: float = 3.0
+@export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
+@export_subgroup("Circle")
+@export var circle_distance: float = 1.0
+@export var base_min_circle_time: float = 1.0
+@export var base_max_circle_time: float = 3.0
+@export_range(0.1, 0.9) var base_attack_chance: float = 0.3
+@export_subgroup("Misc")
+@export var max_combo: int = 3
+@export var rest_time: float = 0.2

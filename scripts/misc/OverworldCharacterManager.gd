@@ -1,20 +1,18 @@
-extends Character
+extends CharacterBody3D
 class_name OverworldCharacter
 
 signal animation_cancelled
 
 #config vars
 @export_category("Config")
+@export var character: CharacterResource
 @export var mesh_main: Node3D
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var camera_rig: SpringArm3D = $SpringArm3D
 
-#gameplay vars
-@export_category("Gameplay")
-@export_group("Basics")
-@export var speed: float = 10.0
+var speed: float
 
 var can_move: bool = true
 var input_dir: Vector2
@@ -29,6 +27,9 @@ var overworld_manager: OverWorldManager
 func _ready() -> void:
 	state.enter(self)
 	overworld_manager = self.get_tree().current_scene
+	
+	speed = character.base_speed
+	
 	DialogueManager.dialogue_started.connect(enable_movement.bind(false))
 	DialogueManager.dialogue_ended.connect(enable_movement.bind(true))
 

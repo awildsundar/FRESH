@@ -1,68 +1,27 @@
-extends Character
+extends CharacterBody3D
 class_name ArenaCharacter
 
 signal animation_cancelled
 signal invincible_toggled(value: bool)
 
 #config vars
-@export_category("Config")
+@export_category("Nodes")
+@export var character: CharacterResource
 @export var mesh_main: Node3D
 @export var anim_player: AnimationPlayer
 @export var nav_agent: NavigationAgent3D
 @export var hitbox: ShapeCast3D
-#gameplay vars
-@export_category("Player")
-@export_group("Basics")
-@export var speed: float = 10.0
-@export var dash_time: float = 0.25
-@export var base_atk: float = 50.0:
-	set(value):
-		base_atk = value
-		atk = value
-@export var base_def: float = 50.0:
-	set(value):
-		base_def = value
-		def = value
-@export var base_hp: float = 100.0:
-	set(value):
-		base_hp = value
-		hp = value
+
 @export_group("Combat Config")
-@export var special_attack: SpecialAttack
-@export var attack_distance: float = 100.0
 @export var buffer_duration: float = 1.25
 @export var anim_duration: float = 0.25
 @export var max_buffer_size: int = 6
 @export var counter_time: float = 2.0
 @export var snap_angle: float = 0.7
+
 @export_group("Control Config")
 @export var in_control: bool = false
 @export var control_distance: float = 100.0
-
-#cpu vars
-@export_category("CPU")
-@export_subgroup("Back Away")
-@export var back_away_distance: float = 1.0
-@export var back_away_timer: float = 3.0
-@export_range(0.1, 1.0, 0.1) var back_away_speed_mult: float = 0.5
-@export_subgroup("Circle")
-@export var circle_distance: float = 1.0
-@export var base_min_circle_time: float = 1.0:
-	set(value):
-		base_min_circle_time = value
-		min_circle_time = value
-@export var base_max_circle_time: float = 3.0:
-	set(value):
-		base_max_circle_time = value
-		max_circle_time = value
-@export_range(0.1, 0.9) var base_attack_chance: float = 0.3:
-	set(value):
-		base_attack_chance = value
-		attack_chance = value
-@export_subgroup("Misc")
-@export var max_combo: int = 3
-@export var rest_time: float = 0.2
-
 
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var rig: SpringArm3D = $SpringArm3D
@@ -71,6 +30,7 @@ signal invincible_toggled(value: bool)
 @onready var animation_cancel_timer: Timer = Timer.new()
 @onready var hurtbox: CollisionShape3D = $CollisionShape3D
 
+var speed: float
 var atk: float
 var def: float
 var hp: float
@@ -104,12 +64,13 @@ func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.characters.append(self)
 	
-	atk = base_atk
-	def = base_def
-	hp = base_hp
-	min_circle_time = base_min_circle_time
-	max_circle_time = base_max_circle_time
-	attack_chance = base_attack_chance
+	speed = character.base_speed
+	atk = character.base_atk
+	def = character.base_def
+	hp = character.base_hp
+	min_circle_time = character.base_min_circle_time
+	max_circle_time = character.base_max_circle_time
+	attack_chance = character.base_attack_chance
 	
 	special_attack_timer.one_shot = true
 	add_child(special_attack_timer)
@@ -229,19 +190,20 @@ func invincible(value: bool) -> void:
 	
 	# Checks if it was a perfect block/dodge
 	if value == true:
-		var enemy: Enemy = find_nearest_candidate(0, attack_distance)
+		var enemy: Enemy = find_nearest_candidate(0, character.attack_distance)
 		if enemy != null:
 			if enemy.perfect_bd == true:
 				state_switchable = true
 				change_state_to(States.player_states["counter"])
 
 func calculate_status_effects() -> void:
-	atk = base_atk
-	def = base_def
-	hp = base_hp
-	min_circle_time = base_min_circle_time
-	max_circle_time = base_max_circle_time
-	attack_chance = base_attack_chance
+	speed = character.base_speed
+	atk = character.base_atk
+	def = character.base_def
+	hp = character.base_hp
+	min_circle_time = character.base_min_circle_time
+	max_circle_time = character.base_max_circle_time
+	attack_chance = character.base_attack_chance
 	
 	for status_effect in status_effects:
 		match status_effect.affects:

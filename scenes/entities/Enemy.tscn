@@ -1,8 +1,8 @@
 [gd_scene format=4 uid="uid://c6ldg60vhftek"]
 
-[ext_resource type="Script" uid="uid://cvpooeswrpwfe" path="res://scripts/misc/Enemy.gd" id="1_3gvst"]
+[ext_resource type="Script" uid="uid://cvpooeswrpwfe" path="res://scripts/misc/EnemyManager.gd" id="1_3gvst"]
 [ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="2_55jtl"]
-[ext_resource type="Resource" uid="uid://ckcspk1ftptx6" path="res://resources/status effects/DecreaseDefense.tres" id="2_ft8do"]
+[ext_resource type="Resource" uid="uid://dd56lbqux7ufa" path="res://resources/entities/enemies/Test.tres" id="2_306ko"]
 [ext_resource type="Texture2D" uid="uid://bboyibqn8w5ka" path="res://assets/icons/white-circle-fade.png" id="3_mpr68"]
 [ext_resource type="Shader" uid="uid://wdiuwyrqp1e3" path="res://scripts/shaders/enemy_synergy_bar.gdshader" id="5_5wwv6"]
 
@@ -7804,6 +7804,7 @@ shader_parameter/fill_direction = 1.0
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_3gvst")
+enemy = ExtResource("2_306ko")
 anim_player = NodePath("female_body/AnimationPlayer")
 hitbox = NodePath("female_body/Armature_001/Skeleton3D/BoneAttachment3D/ShapeCast3D")
 limit_area = NodePath("LimitArea")
@@ -7811,11 +7812,6 @@ mesh = NodePath("female_body")
 nav_agent = NodePath("NavigationAgent3D")
 lock_on_indicator = NodePath("LockOnIndicator")
 counter_indicator = NodePath("female_body/Armature_001/Skeleton3D/BoneAttachment3D2/Sprite3D")
-status_effect = ExtResource("2_ft8do")
-base_atk = 1.0
-back_away_distance = 3.0
-circle_distance = 3.0
-rest_time = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1304060759]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

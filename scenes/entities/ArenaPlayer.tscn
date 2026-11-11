@@ -1,7 +1,8 @@
 [gd_scene format=4 uid="uid://cy7q15dradsep"]
 
-[ext_resource type="Script" uid="uid://raxwijuok62h" path="res://scripts/misc/ArenaCharacter.gd" id="1_bhco5"]
+[ext_resource type="Script" uid="uid://raxwijuok62h" path="res://scripts/misc/ArenaCharacterManager.gd" id="1_bhco5"]
 [ext_resource type="Script" uid="uid://csx0gg56jykap" path="res://scripts/misc/CameraRig.gd" id="2_v6fml"]
+[ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="2_xyrf6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3vyb7"]
 
@@ -7812,14 +7813,12 @@ radius = 0.75
 [node name="Player" type="CharacterBody3D" unique_id=432533020 node_paths=PackedStringArray("mesh_main", "anim_player", "nav_agent", "hitbox")]
 collision_mask = 3
 script = ExtResource("1_bhco5")
+character = ExtResource("2_xyrf6")
 mesh_main = NodePath("female_body")
 anim_player = NodePath("female_body/AnimationPlayer")
 nav_agent = NodePath("NavigationAgent3D")
 hitbox = NodePath("female_body/Armature_001/Skeleton3D/BoneAttachment3D/ShapeCast3D")
 max_buffer_size = 4
-back_away_speed_mult = 0.30000000000000004
-circle_distance = 2.0
-max_combo = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1251224684]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -11,8 +11,18 @@ enum ARENA_TYPE {
 	FLINDERS,
 }
 
-@export var starting_character: ArenaCharacter
+enum ENEMY_TYPE {
+	BASIC,
+	FLIGHT,
+	MIND
+}
+
+@export var starting_character: CharacterResource
+@export var character_spawn: Node3D
+@export var enemy_spawn: NavigationRegion3D
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
+@export var enemy_type: ENEMY_TYPE = ENEMY_TYPE.BASIC
+@export var enemy_count: int = 3
 @export var wait_time: float = 3.0
 @export var synergy_timer: float = 3.0
 
@@ -21,7 +31,10 @@ enum ARENA_TYPE {
 @onready var synergy_combo_timer: Timer = Timer.new()
 
 @onready var escape_arena_ui: CanvasLayer = $EscapeArenaUI
+@onready var floor: CSGBox3D = $Enemies/floor
 
+const character_scene = preload("uid://cy7q15dradsep")
+const enemy_scene = preload("uid://c6ldg60vhftek")
 
 var characters: Array[ArenaCharacter]
 var active_character: ArenaCharacter
@@ -52,6 +65,16 @@ var synergy_combo_mult: float = 1.0:
 func _ready() -> void:
 	escape_arena_ui.hide()
 	
+	for i in DataManager.unlocked_characters:
+		var ch: ArenaCharacter = character_scene.instantiate()
+		character_spawn.add_child(ch)
+		ch.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+	
+	for i in enemy_count:
+		var enemy: Enemy = enemy_scene.instantiate()
+		enemy_spawn.add_child(enemy)
+		enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+	
 	for player in characters:
 		player_hp += player.hp
 		max_synergy += 100.0
@@ -62,10 +85,16 @@ func _ready() -> void:
 	add_child(synergy_combo_timer)
 	
 	for enemy in enemies:
-		enemy_shards += enemy.shards
-		enemy_cash += enemy.cash
+		enemy_shards += enemy.enemy.shards
+		enemy_cash += enemy.enemy.cash
 	
-	change_control_to(starting_character)
+	var control_ch: ArenaCharacter
+	for ch in characters:
+		if ch.character == starting_character:
+			control_ch = ch
+			break
+	
+	change_control_to(control_ch)
 
 func reset_synergy_combo_mult() -> void:
 	synergy_combo_mult = 1.0

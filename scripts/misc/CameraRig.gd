@@ -10,7 +10,7 @@ extends SpringArm3D
 
 var sensitivity: float
 
-var player: Character
+var player
 var locked_on: bool = false
 var current_target: Node3D
 var initial_global_position: Vector3

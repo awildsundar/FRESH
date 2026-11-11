@@ -19,6 +19,7 @@ var inventory: Dictionary[Item, int]
 
 var story_flags: Dictionary = {}
 var story_act: int = 0
+var unlocked_characters: int = 2
 
 var save_data: SaveData = SaveData.new()
 
@@ -39,6 +40,7 @@ func store_data_to_resource() -> SaveData:
 	save_data.completed_quests = QuestManager.completed_quests
 	save_data.story_flags = story_flags
 	save_data.story_act = story_act
+	save_data.unlocked_characters = unlocked_characters
 	save_data.timestamp = Time.get_datetime_string_from_system(false, true)
 	return save_data
 
@@ -49,6 +51,7 @@ func load_data_from_resource(data: SaveData) -> void:
 	inventory = data.inventory
 	story_flags = data.story_flags
 	story_act = data.story_act
+	unlocked_characters = data.unlocked_characters
 	QuestManager.active_quest = data.active_quest
 	QuestManager.active_quest.quest_progression = data.active_quest_progression
 	QuestManager.current_quests = data.current_quests

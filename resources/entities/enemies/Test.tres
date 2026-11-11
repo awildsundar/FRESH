@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://dd56lbqux7ufa"]
+
+[ext_resource type="Script" uid="uid://xgsq4oqq8klk" path="res://scripts/inheritables/Enemy.gd" id="1_80g1t"]
+[ext_resource type="Resource" uid="uid://ckcspk1ftptx6" path="res://resources/status effects/DecreaseDefense.tres" id="2_ftbfk"]
+
+[resource]
+script = ExtResource("1_80g1t")
+status_effect = ExtResource("2_ftbfk")
+metadata/_custom_type_script = "uid://xgsq4oqq8klk"
