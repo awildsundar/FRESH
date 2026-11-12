@@ -3,6 +3,14 @@
 extends CollisionObject3D
 class_name BaseInteractable
 
+const map_icon_textures: Dictionary[String, Texture2D] = {
+	"Dialogue": preload("res://icon.svg"),
+	"Scene": preload("res://icon.svg"),
+	"Shop": preload("res://icon.svg")
+}
+
+@onready var minimap_icon: MinimapIcon = self.get_minimap_icon_display()
+
 var icon: Texture2D = preload("res://icon.svg")
 
 func _ready() -> void:
@@ -24,6 +32,12 @@ func get_icon_display() -> Sprite3D:
 			child.texture = icon
 			child.pixel_size = 0.005
 			child.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			return child
+	return null
+
+func get_minimap_icon_display() -> MinimapIcon:
+	for child in get_children():
+		if child is MinimapIcon:
 			return child
 	return null
 

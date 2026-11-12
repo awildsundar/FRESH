@@ -4,6 +4,7 @@ class_name MainMenuManager
 var overworld_manager: OverWorldManager
 
 func _ready() -> void:
+	self.hide()
 	visibility_changed.connect(toggled)
 	overworld_manager = self.get_tree().current_scene
 	

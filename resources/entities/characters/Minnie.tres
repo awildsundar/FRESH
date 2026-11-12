@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterResource" format=3 uid="uid://53qq063tlq47"]
+
+[ext_resource type="Script" uid="uid://cgaa70cpqwf2s" path="res://scripts/inheritables/Character.gd" id="1_cvtjg"]
+[ext_resource type="Resource" uid="uid://deexv6fwmcapo" path="res://resources/special attacks/Test.tres" id="2_smw88"]
+
+[resource]
+script = ExtResource("1_cvtjg")
+special_attack = ExtResource("2_smw88")
+metadata/_custom_type_script = "uid://cgaa70cpqwf2s"

@@ -29,6 +29,7 @@ func get_active_quest_current_step() -> int:
 ##Updates the quest status.
 func update_quest() -> void:
 	active_quest.quest_progression += 1
+	print(active_quest.quest_progression)
 	if active_quest.quest_progression == active_quest.steps.size():
 		active_quest.quest_completed = true
 		give_quest_reward()

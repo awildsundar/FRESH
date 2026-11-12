@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
 [ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="2_sxgqi"]
+[ext_resource type="Script" uid="uid://xgsq4oqq8klk" path="res://scripts/inheritables/Enemy.gd" id="3_iieaf"]
+[ext_resource type="Resource" uid="uid://dd56lbqux7ufa" path="res://resources/entities/enemies/Test.tres" id="4_xwj2b"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -26,6 +28,9 @@ script = ExtResource("1_wmg8w")
 starting_character = ExtResource("2_sxgqi")
 character_spawn = NodePath("Characters")
 enemy_spawn = NodePath("Enemies")
+enemy_count = Array[ExtResource("3_iieaf")]([ExtResource("4_xwj2b"), ExtResource("4_xwj2b"), ExtResource("4_xwj2b")])
+wait_time = null
+synergy_timer = null
 
 [node name="EscapeArenaUI" type="CanvasLayer" parent="." unique_id=1904956859]
 layer = 2

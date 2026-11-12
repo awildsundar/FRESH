@@ -6,11 +6,14 @@ signal animation_cancelled
 #config vars
 @export_category("Config")
 @export var character: CharacterResource
+@export var minimap_camera_distance: float = 50.0
 @export var mesh_main: Node3D
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var camera_rig: SpringArm3D = $SpringArm3D
+@onready var main_menu: MainMenuManager = $"Main Menu"
+@onready var minimap_camera: Camera3D = $"Base GUI/Control/MarginContainer/SubViewport/MinimapCamera"
 
 var speed: float
 
@@ -49,14 +52,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("main_menu"):
-		if overworld_manager.main_menu.visible == false && overworld_manager.current_menu == null:
-			overworld_manager.main_menu.show()
-			if QuestManager.get_active_quest_current_step() == 2:
+		if main_menu.visible == false && overworld_manager.current_menu == null:
+			main_menu.show()
+			if QuestManager.get_active_quest_current_step() == 3:
 				QuestManager.update_quest()
 		else:
-			overworld_manager.main_menu.hide()
+			main_menu.hide()
 
 func _physics_process(delta: float) -> void:
+	minimap_camera.global_position = Vector3(global_position.x, minimap_camera_distance, global_position.z)
+	minimap_camera.rotation.y = camera_rig.rotation.y
+	
 	if interact_ray.is_colliding():
 		var current_target: Object = interact_ray.get_collider()
 		if current_target is BaseInteractable:

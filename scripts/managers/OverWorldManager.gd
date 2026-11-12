@@ -8,7 +8,6 @@ enum LOCATION {
 }
 
 @export var location: LOCATION
-@export var main_menu: CanvasLayer
 @export var quest: Quest
 
 var current_menu: Menu = null
@@ -17,9 +16,9 @@ var enemy_locations: Array[Arena]
 var enemies_visible: bool = false
 
 func _ready() -> void:
-	main_menu.hide()
 	if QuestManager.active_quest == null:
-		QuestManager.start_quest(quest)
+		if quest.quest_progression == 0:
+			QuestManager.start_quest(quest)
 
 func show_enemy_locations() -> void:
 	enemies_visible = !enemies_visible

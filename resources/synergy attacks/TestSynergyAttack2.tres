@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SynergyAttack" format=3 uid="uid://b2mqqxw848tyv"]
+
+[ext_resource type="Script" uid="uid://dxeatqvauias7" path="res://scripts/inheritables/SynergyAttack.gd" id="1_vwe1k"]
+[ext_resource type="Resource" uid="uid://ckcspk1ftptx6" path="res://resources/status effects/DecreaseDefense.tres" id="2_ivrwc"]
+
+[resource]
+script = ExtResource("1_vwe1k")
+animation_name = "kick2"
+status_effect = ExtResource("2_ivrwc")
+cost = 50
+metadata/_custom_type_script = "uid://dxeatqvauias7"

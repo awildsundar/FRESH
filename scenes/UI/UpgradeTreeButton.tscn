@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dsyx8mrn7aqqp"]
+
+[ext_resource type="Texture2D" uid="uid://jodgw1h4ytrf" path="res://icon.svg" id="1_4tjb2"]
+[ext_resource type="Script" uid="uid://d227mu57lu0pe" path="res://scripts/GUI/UpgradeTreeButton.gd" id="2_rqtj6"]
+
+[node name="SkillButton" type="TextureButton" unique_id=950632580]
+self_modulate = Color(0.45581734, 0.45581734, 0.45581734, 1)
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_4tjb2")
+texture_pressed = ExtResource("1_4tjb2")
+texture_hover = ExtResource("1_4tjb2")
+texture_disabled = ExtResource("1_4tjb2")
+texture_focused = ExtResource("1_4tjb2")
+script = ExtResource("2_rqtj6")
+
+[node name="Branch" type="Line2D" parent="." unique_id=219359053]
+top_level = true
+z_index = -1
+width = 5.0
+default_color = Color(0.6201665, 0.620167, 0.6201668, 1)
+
+[node name="Branch2" type="Line2D" parent="." unique_id=1540950272]
+top_level = true
+z_index = -1
+width = 5.0
+default_color = Color(0.6201665, 0.620167, 0.6201668, 1)
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

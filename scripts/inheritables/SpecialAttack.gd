@@ -17,4 +17,4 @@ enum TARGET {
 @export var damage: float = 100.0
 ## Time in seconds
 @export var cooldown: float = 1.0
-@export var unlocked: bool = true
+@export var unlocked: bool = false

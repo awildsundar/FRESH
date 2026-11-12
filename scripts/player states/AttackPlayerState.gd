@@ -33,7 +33,6 @@ func enter(player: ArenaCharacter) -> void:
 func transition(player: ArenaCharacter) -> void:
 	if player.animation_cancel_timer.time_left > 0.0:
 		if Input.is_action_just_pressed("block") or Input.is_action_just_pressed("dodge"):
-			player.atk_buffer = []
 			player.change_state_to(States.player_states["idle"])
 	
 	if player.atk_buffer == []:
@@ -77,6 +76,7 @@ func play_attack_animation(player: ArenaCharacter) -> void:
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:
+	consume_timer = 0.0
 	buffer_timer = 0.0
 	player.is_attacking = false
 	player.buffer_input = true

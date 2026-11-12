@@ -10,7 +10,9 @@ class_name SaveData
 
 @export var story_flags: Dictionary = {}
 @export var story_act: int = 0
-@export var unlocked_characters: int = 1
+
+@export var unlocked_characters: Array[CharacterResource]
+@export var synergy_attack: SynergyAttack
 
 @export var active_quest: Quest = null
 @export var active_quest_progression: int = 0

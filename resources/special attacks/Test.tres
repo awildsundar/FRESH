@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_idi5o")
 status_effect = ExtResource("2_jbm48")
+cost = 5
 animation_name = "punch1"
 cooldown = 5.0
 metadata/_custom_type_script = "uid://cmaioqnip5pmp"

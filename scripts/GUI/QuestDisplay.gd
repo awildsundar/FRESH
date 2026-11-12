@@ -6,12 +6,17 @@ class_name QuestDisplay
 
 
 func _ready() -> void:
-	quest_name.text = ""
-	quest_step.text = ""
 	QuestManager.connect("quest_started", quest_started)
 	QuestManager.connect("quest_updated", quest_updated)
 	QuestManager.connect("quest_completed", quest_completed)
 	SaveManager.connect("game_loaded", quest_loaded)
+	
+	if QuestManager.active_quest != null:
+		quest_name.text = QuestManager.active_quest.quest_title
+		quest_step.text = QuestManager.active_quest.steps[QuestManager.active_quest.quest_progression]
+	else:
+		quest_name.text = ""
+		quest_step.text = ""
 
 func quest_started(quest: Quest) -> void:
 	quest_name.text = quest.quest_title

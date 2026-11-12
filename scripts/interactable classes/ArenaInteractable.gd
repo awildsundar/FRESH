@@ -42,6 +42,8 @@ func on_player_exited(body: Node3D) -> void:
 
 func on_player_entered(body: Node3D) -> void:
 	if body is OverworldCharacter:
+		if QuestManager.active_quest.quest_progression == 2:
+			QuestManager.update_quest()
 		TransitionManager.load_scene(arena_scene.resource_path)
 
 func hover_up() -> void:

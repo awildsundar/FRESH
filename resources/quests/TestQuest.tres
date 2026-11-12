@@ -7,6 +7,6 @@ script = ExtResource("1_sa42d")
 quest_type = 1
 quest_title = "Testing Testing"
 description = "Testing to make sure everything works as intended."
-steps = Array[String](["Talk to Danny.", "Enter the Arena.", "Open your inventory by pressing TAB.", "Open the Shop."])
+steps = Array[String](["Talk to Danny.", "Head Outside.", "Start a Battle by walking to a portal.", "Press TAB to open your Inventory.", "Buy something from the Shop.", "Talk to Danny."])
 shards = 5
 metadata/_custom_type_script = "uid://cxts0bylvviqx"

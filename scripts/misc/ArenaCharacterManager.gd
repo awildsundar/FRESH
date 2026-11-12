@@ -4,9 +4,9 @@ class_name ArenaCharacter
 signal animation_cancelled
 signal invincible_toggled(value: bool)
 
+@export var character: CharacterResource
 #config vars
 @export_category("Nodes")
-@export var character: CharacterResource
 @export var mesh_main: Node3D
 @export var anim_player: AnimationPlayer
 @export var nav_agent: NavigationAgent3D
@@ -88,6 +88,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if in_control:
 		if event.is_action_pressed("dodge"):
+			can_move = true
 			change_state_to(States.player_states["dodge"])
 		elif event.is_action_pressed("switch_control"):
 			change_state_to(States.player_states["switch"])
@@ -105,12 +106,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				change_state_to(States.player_states["special_attack"])
 		elif event.is_action_pressed("synergy_attack"):
 			if arena_manager.synergy == arena_manager.max_synergy:
-				for enemy in arena_manager.enemies:
-					enemy.hurt(self, 5.0)
-				arena_manager.synergy = 0.0
+				if in_control:
+					change_state_to(States.player_states["synergy_attack"])
+				else:
+					change_state_to(States.cpu_states["synergy_attack"])
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("main_menu"):
+	if event.is_action_pressed("leave_battle"):
 		arena_manager.escape_arena_ui.show()
 		Engine.time_scale = 0.0
 		can_move = false

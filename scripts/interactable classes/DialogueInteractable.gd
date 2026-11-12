@@ -15,6 +15,9 @@ func _ready() -> void:
 	if anim_player != null:
 		cutscene_enabled = true
 	
+	if minimap_icon != null:
+		minimap_icon.icon.texture = minimap_icon.ICON_TEXTURES[minimap_icon.ICON_TYPE.DIALOGUE]
+	
 	var dialogue_state_context: DialogueStateContext = DialogueStateContext.new()
 	dialogue_state_context.alias = npc_name
 	dialogue_state_context.target = self

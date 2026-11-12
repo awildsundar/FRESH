@@ -2,9 +2,10 @@ extends Menu
 class_name ShopManager
 
 #Shop Keeper Display nodes
-@onready var shop_icon: TextureRect = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/ShopIcon
+@onready var shop_icon: TextureRect = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/HBoxContainer/ShopIcon
 @onready var shop_level: Label = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/ShopLevel
 @onready var shop_keeper_dialogue: Label = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/MarginContainer/Panel2/ShopKeeperDialogue
+@onready var cash_display: Label = $Control/MarginContainer/HBoxContainer/ShopKeeperDisplay/VBoxContainer/HBoxContainer/CashDisplay
 
 #Stock Display nodes
 @onready var stock: GridContainer = $Control/MarginContainer/HBoxContainer/StockDisplay/MarginContainer/ScrollContainer/Stock
@@ -34,8 +35,13 @@ func _ready() -> void:
 	item_stats.text = ""
 	
 	shop.progressed.connect(on_progress_changed, shop.level_progression)
+	DataManager.cash_updated.connect(cash_changed)
 	stock_up()
-	
+	cash_changed(DataManager.cash)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("exit_menu"):
+		_on_exit_pressed()
 
 func stock_up() -> void:
 	for item in stock.get_children():
@@ -46,6 +52,9 @@ func stock_up() -> void:
 		stock_item.item = item
 		stock_item.shop_manager = self
 		stock.add_child(stock_item)
+
+func cash_changed(cash: int) -> void:
+	cash_display.text = "CASH: %d" % [cash]
 
 func on_progress_changed(progress: int) -> void:
 	if progress == shop.level_requirements.get(shop.level + 1):

@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://dtcugv07a7pye"]
+
+[ext_resource type="Script" uid="uid://bfxo05283eq60" path="res://scripts/GUI/UpgradeManager.gd" id="1_ac7vt"]
+[ext_resource type="PackedScene" uid="uid://dsyx8mrn7aqqp" path="res://scenes/UI/UpgradeTreeButton.tscn" id="2_i7ccm"]
+[ext_resource type="Resource" uid="uid://deexv6fwmcapo" path="res://resources/special attacks/Test.tres" id="3_3k2y0"]
+[ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="3_py5oc"]
+[ext_resource type="Resource" uid="uid://irhu43bomhk2" path="res://resources/special attacks/Test2.tres" id="5_lfuds"]
+[ext_resource type="Resource" uid="uid://cbi35a8ramc5e" path="res://resources/synergy attacks/TestSynergyAttack.tres" id="6_b1a88"]
+[ext_resource type="Resource" uid="uid://b2mqqxw848tyv" path="res://resources/synergy attacks/TestSynergyAttack2.tres" id="7_alk0p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvruk"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1917402540]
+layer = 2
+script = ExtResource("1_ac7vt")
+
+[node name="Control" type="Control" parent="." unique_id=217791262]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1945494215]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="Control/HBoxContainer" unique_id=1133368562]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+current_tab = 3
+
+[node name="Archita" type="Control" parent="Control/HBoxContainer/TabContainer" unique_id=444806294]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/HBoxContainer/TabContainer/Archita" unique_id=275396787]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HBoxContainer/TabContainer/Archita/ScrollContainer" unique_id=666790868]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 50
+
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/Archita/ScrollContainer/MarginContainer" unique_id=950632580 instance=ExtResource("2_i7ccm")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+character = ExtResource("3_py5oc")
+special_attack = ExtResource("3_3k2y0")
+
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/Archita/ScrollContainer/MarginContainer/SkillButton" unique_id=1079851150 instance=ExtResource("2_i7ccm")]
+layout_mode = 0
+offset_top = 228.0
+offset_right = 128.0
+offset_bottom = 356.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+character = ExtResource("3_py5oc")
+special_attack = ExtResource("5_lfuds")
+
+[node name="Minnie" type="Control" parent="Control/HBoxContainer/TabContainer" unique_id=429647850]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Tom" type="Control" parent="Control/HBoxContainer/TabContainer" unique_id=1183613627]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="All" type="Control" parent="Control/HBoxContainer/TabContainer" unique_id=49086354]
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/HBoxContainer/TabContainer/All" unique_id=895846656]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HBoxContainer/TabContainer/All/ScrollContainer" unique_id=1334654032]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 50
+
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/All/ScrollContainer/MarginContainer" unique_id=2107117247 instance=ExtResource("2_i7ccm")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+upgrade_type = 1
+synergy_attack = ExtResource("6_b1a88")
+
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/All/ScrollContainer/MarginContainer/SkillButton" unique_id=1160097562 instance=ExtResource("2_i7ccm")]
+layout_mode = 0
+offset_left = -150.0
+offset_top = 222.0
+offset_right = -22.0
+offset_bottom = 350.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+upgrade_type = 1
+synergy_attack = ExtResource("7_alk0p")
+
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/All/ScrollContainer/MarginContainer/SkillButton/SkillButton" unique_id=27518080 node_paths=PackedStringArray("shared_parent") instance=ExtResource("2_i7ccm")]
+layout_mode = 0
+offset_left = 171.0
+offset_top = 245.0
+offset_right = 299.0
+offset_bottom = 373.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+upgrade_type = 1
+synergy_attack = ExtResource("7_alk0p")
+shared_parent = NodePath("../../SkillButton2")
+
+[node name="SkillButton2" parent="Control/HBoxContainer/TabContainer/All/ScrollContainer/MarginContainer/SkillButton" unique_id=497375835 node_paths=PackedStringArray("shared_child") instance=ExtResource("2_i7ccm")]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 240.0
+offset_right = 305.0
+offset_bottom = 368.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+upgrade_type = 1
+synergy_attack = ExtResource("7_alk0p")
+shared_child = NodePath("../SkillButton/SkillButton")
+
+[node name="Panel" type="Panel" parent="Control/HBoxContainer" unique_id=1687422294]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bvruk")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HBoxContainer/Panel" unique_id=1104649879]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+
+[node name="ShardsDisplay" type="Label" parent="Control/HBoxContainer/Panel/MarginContainer" unique_id=801595625]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "SHARDS: 1000000"

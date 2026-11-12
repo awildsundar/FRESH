@@ -22,7 +22,7 @@ enum ENEMY_TYPE {
 @export var enemy_spawn: NavigationRegion3D
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var enemy_type: ENEMY_TYPE = ENEMY_TYPE.BASIC
-@export var enemy_count: int = 3
+@export var enemy_count: Array[EnemyResource]
 @export var wait_time: float = 3.0
 @export var synergy_timer: float = 3.0
 
@@ -38,6 +38,8 @@ const enemy_scene = preload("uid://c6ldg60vhftek")
 
 var characters: Array[ArenaCharacter]
 var active_character: ArenaCharacter
+
+var synergy_attack: SynergyAttack
 
 var enemies: Array[Enemy]
 
@@ -65,13 +67,18 @@ var synergy_combo_mult: float = 1.0:
 func _ready() -> void:
 	escape_arena_ui.hide()
 	
+	synergy_attack = DataManager.synergy_attack
+	synergy_attack.arena_manager = self
+	
 	for i in DataManager.unlocked_characters:
 		var ch: ArenaCharacter = character_scene.instantiate()
+		ch.character = i
 		character_spawn.add_child(ch)
 		ch.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
 	
 	for i in enemy_count:
 		var enemy: Enemy = enemy_scene.instantiate()
+		enemy.enemy = i
 		enemy_spawn.add_child(enemy)
 		enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
 	

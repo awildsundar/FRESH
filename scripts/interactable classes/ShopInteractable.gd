@@ -6,6 +6,10 @@ class_name ShopInteractable
 
 var shop_ui: PackedScene = preload("uid://cmu8rlfgh4hxu")
 
+func _ready() -> void:
+	if minimap_icon != null:
+		minimap_icon.icon.texture = minimap_icon.ICON_TEXTURES[minimap_icon.ICON_TYPE.SHOP]
+
 func interact() -> void:
 	var player: OverworldCharacter = get_player()
 	if player.overworld_manager.current_menu == null:
@@ -22,5 +26,5 @@ func interact() -> void:
 				printerr("ShopInteractable: No animation found!")
 		
 		self.add_child(ui)
-		if QuestManager.get_active_quest_current_step() == 3:
+		if QuestManager.get_active_quest_current_step() == 4:
 			QuestManager.update_quest()
