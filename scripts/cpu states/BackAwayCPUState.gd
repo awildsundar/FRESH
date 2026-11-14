@@ -13,10 +13,10 @@ func enter(cpu: ArenaCharacter) -> void:
 func transition(cpu: ArenaCharacter) -> void:
 	var distance: float = cpu.global_position.distance_to(cpu.target.global_position)
 	
-	if distance >= cpu.back_away_distance:
+	if distance >= cpu.character.back_away_distance:
 		cpu.change_state_to(States.cpu_states["circle"])
 
-	if back_away_timer >= cpu.back_away_timer:
+	if back_away_timer >= cpu.character.back_away_timer:
 		cpu.change_state_to(States.cpu_states["circle"])
 
 ##Runs during a state

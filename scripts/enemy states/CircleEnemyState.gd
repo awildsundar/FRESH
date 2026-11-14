@@ -45,14 +45,14 @@ func update(enemy: Enemy, delta: float) -> void:
 	var strafe_dir: Vector3 = to_player.cross(Vector3.UP).normalized()
 	strafe_dir *= circle_direction
 	
-	var distance_diff: float = distance - enemy.circle_distance
+	var distance_diff: float = distance - enemy.enemy.circle_distance
 	var approach_dir: Vector3 = to_player * sign(distance_diff) * 0.3
 	
 	var move_dir: Vector3 = (strafe_dir + approach_dir).normalized()
 	move_dir.y = 0
 	
-	enemy.velocity.x = move_dir.x * enemy.speed * enemy.back_away_speed_mult
-	enemy.velocity.z = move_dir.z * enemy.speed * enemy.back_away_speed_mult
+	enemy.velocity.x = move_dir.x * enemy.speed * enemy.enemy.back_away_speed_mult
+	enemy.velocity.z = move_dir.z * enemy.speed * enemy.enemy.back_away_speed_mult
 	enemy.velocity.y = 0.0
 	
 	var look_target: Vector2 = Vector2(enemy.target.global_position.x, enemy.target.global_position.z)

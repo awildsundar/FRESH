@@ -6,11 +6,11 @@ signal cash_updated(value: int)
 
 const CURRENT_SAVE_VERSION: int = 1
 
-var cash: int = 10000:
+var cash: int:
 	set(value):
 		cash = value
 		cash_updated.emit(value)
-var shards: int = 10000:
+var shards: int:
 	set(value):
 		shards = value
 		shards_updated.emit(value)
@@ -25,7 +25,7 @@ var unlocked_characters: Array[CharacterResource] = [
 	preload("res://resources/entities/characters/Minnie.tres"),
 	preload("res://resources/entities/characters/Tom.tres")
 ]
-var synergy_attack: SynergyAttack
+var synergy_attack: SynergyAttack = preload("res://resources/synergy attacks/TestSynergyAttack.tres")
 
 var save_data: SaveData = SaveData.new()
 

@@ -15,3 +15,6 @@ func toggled() -> void:
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		overworld_manager.current_menu = null
+		
+		if QuestManager.active_quest.quest_progression == 3:
+			QuestManager.update_quest()

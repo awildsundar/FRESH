@@ -13,10 +13,10 @@ func enter(enemy: Enemy) -> void:
 func transition(enemy: Enemy) -> void:
 	var distance: float = enemy.global_position.distance_to(enemy.target.global_position)
 	
-	if distance >= enemy.back_away_distance:
+	if distance >= enemy.enemy.back_away_distance:
 		enemy.change_state_to(States.enemy_states["circle"])
 
-	if back_away_timer >= enemy.back_away_timer:
+	if back_away_timer >= enemy.enemy.back_away_timer:
 		enemy.change_state_to(States.enemy_states["circle"])
 	
 

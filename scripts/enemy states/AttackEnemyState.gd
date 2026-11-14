@@ -11,7 +11,7 @@ func enter(enemy: Enemy) -> void:
 func transition(enemy: Enemy) -> void:
 	await enemy.anim_player.animation_finished
 	
-	if enemy.combo >= enemy.max_combo:
+	if enemy.combo >= enemy.enemy.max_combo:
 		enemy.combo = 0
 		enemy.change_state_to(States.enemy_states["back_away"])
 		
@@ -25,8 +25,8 @@ func update(enemy: Enemy, delta: float) -> void:
 			var body: Object = enemy.hitbox.get_collider(0)
 			if body is ArenaCharacter:
 				body.hurt(enemy.atk)
-				if enemy.combo >= enemy.max_combo - 1:
-					enemy.status_effect.inflict_status_effect(body)
+				if enemy.combo >= enemy.enemy.max_combo - 1:
+					enemy.enemy.status_effect.inflict_status_effect(body)
 				enemy.hitbox.enabled = false
 
 ##Runs when state is exited

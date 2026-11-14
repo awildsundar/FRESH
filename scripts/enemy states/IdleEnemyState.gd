@@ -7,9 +7,8 @@ func enter(enemy: Enemy) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(enemy: Enemy) -> void:
-	pass
-	#if enemy.arena_manager.characters != []:
-		#enemy.change_state_to(States.enemy_states["hunt"])
+	if enemy.arena_manager.characters != []:
+		enemy.change_state_to(States.enemy_states["hunt"])
 ##Runs during a state
 func update(enemy: Enemy, delta: float) -> void:
 	pass

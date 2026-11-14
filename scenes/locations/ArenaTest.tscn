@@ -29,8 +29,6 @@ starting_character = ExtResource("2_sxgqi")
 character_spawn = NodePath("Characters")
 enemy_spawn = NodePath("Enemies")
 enemy_count = Array[ExtResource("3_iieaf")]([ExtResource("4_xwj2b"), ExtResource("4_xwj2b"), ExtResource("4_xwj2b")])
-wait_time = null
-synergy_timer = null
 
 [node name="EscapeArenaUI" type="CanvasLayer" parent="." unique_id=1904956859]
 layer = 2

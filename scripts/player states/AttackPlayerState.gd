@@ -18,16 +18,17 @@ func enter(player: ArenaCharacter) -> void:
 		play_attack_animation(player)
 	
 	var enemy: Enemy = player.find_nearest_candidate(0, player.character.attack_distance)
-	var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
-	var forward: Vector3 = -player.global_transform.basis.z.normalized()
-	var dot_product: float = forward.dot(to_enemy)
-	
-	if dot_product > player.snap_angle:
-		var direction_to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
-		var closest_point: Vector3 = enemy.global_position + (direction_to_enemy * enemy.hurtbox.shape.radius * 2)
-	
-		player.global_position = closest_point
-		player.look_at(enemy.global_position, Vector3.UP, true)
+	if enemy != null:
+		var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+		var forward: Vector3 = -player.global_transform.basis.z.normalized()
+		var dot_product: float = forward.dot(to_enemy)
+		
+		if dot_product > player.snap_angle:
+			var direction_to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+			var closest_point: Vector3 = enemy.global_position + (direction_to_enemy * enemy.hurtbox.shape.radius * 2)
+		
+			player.global_position = closest_point
+			player.look_at(enemy.global_position, Vector3.UP, true)
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
