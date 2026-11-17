@@ -3,7 +3,6 @@ class_name SpecialAttackPlayerState
 
 ##Runs when state is entered
 func enter(player: ArenaCharacter) -> void:
-	print("special")
 	player.anim_player.play(player.character.special_attack.animation_name)
 	player.is_invincible = true
 
@@ -14,13 +13,19 @@ func transition(player: ArenaCharacter) -> void:
 
 ##Runs during a state
 func update(player: ArenaCharacter, delta: float) -> void:
-	match player.character.special_attack.target:
-		SpecialAttack.TARGET.SINGLE:
-			if player.hitbox.enabled:
-				if player.hitbox.is_colliding():
-					var body: Object = player.hitbox.get_collider(0)
+	if player.hitbox.enabled == true:
+		if player.hitbox.is_colliding():
+			var body: Object = player.hitbox.get_collider(0)
+			
+			if body is ArenaCharacter:
+				if player.character.special_attack.character_target == body.character.character_name:
+					player.character.special_attack.character_status_effect.inflict_status_effect(body)
+					player.hitbox.enabled = false
+			
+			match player.character.special_attack.main_target:
+				SpecialAttack.MAIN_TARGET.SINGLE:
 					if body is Enemy:
-						body.hurt(player, player.special_attack.damage)
+						body.hurt(player, player.character.special_attack.damage)
 						player.character.special_attack.status_effect.inflict_status_effect(body)
 						player.hitbox.enabled = false
 

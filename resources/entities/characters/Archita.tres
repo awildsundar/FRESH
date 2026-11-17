@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="CharacterResource" format=3 uid="uid://cx2u8o6txigjw"]
 
 [ext_resource type="Script" uid="uid://cgaa70cpqwf2s" path="res://scripts/inheritables/Character.gd" id="1_hvdlw"]
-[ext_resource type="Resource" uid="uid://deexv6fwmcapo" path="res://resources/special attacks/Test.tres" id="2_35ayg"]
+[ext_resource type="Resource" uid="uid://irhu43bomhk2" path="res://resources/special attacks/Test2.tres" id="2_35ayg"]
 
 [resource]
 script = ExtResource("1_hvdlw")
+character_name = "Archita"
+albedo_color = Color(0.66154027, 0.51632595, 0.18527311, 1)
 special_attack = ExtResource("2_35ayg")
 metadata/_custom_type_script = "uid://cgaa70cpqwf2s"

@@ -29,6 +29,7 @@ signal invincible_toggled(value: bool)
 @onready var special_attack_timer: Timer = Timer.new()
 @onready var animation_cancel_timer: Timer = Timer.new()
 @onready var hurtbox: CollisionShape3D = $CollisionShape3D
+@onready var beta_surface: MeshInstance3D = $female_body/Armature_001/Skeleton3D/Beta_Surface
 
 var speed: float
 var atk: float
@@ -63,6 +64,8 @@ var state: BaseState
 func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
 	arena_manager.characters.append(self)
+	
+	beta_surface.mesh.surface_get_material(0).albedo_color = character.albedo_color
 	
 	speed = character.base_speed
 	atk = character.base_atk

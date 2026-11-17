@@ -6,5 +6,8 @@
 [resource]
 script = ExtResource("1_b5phj")
 status_effect = ExtResource("2_w5n2i")
+character_target = "Minnie"
+character_status_effect = ExtResource("2_w5n2i")
 cost = 10
+animation_name = "punch1"
 metadata/_custom_type_script = "uid://cmaioqnip5pmp"

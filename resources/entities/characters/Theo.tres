@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharacterResource" format=3 uid="uid://dvviagago127u"]
+
+[ext_resource type="Script" uid="uid://cgaa70cpqwf2s" path="res://scripts/inheritables/Character.gd" id="1_x454g"]
+[ext_resource type="Resource" uid="uid://deexv6fwmcapo" path="res://resources/special attacks/Test.tres" id="2_rbatn"]
+
+[resource]
+script = ExtResource("1_x454g")
+character_name = "Theo"
+albedo_color = Color(0.77053076, 0.2634242, 0, 1)
+special_attack = ExtResource("2_rbatn")
+metadata/_custom_type_script = "uid://cgaa70cpqwf2s"

@@ -10,10 +10,12 @@ signal animation_cancelled
 @export var mesh_main: Node3D
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
+
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var camera_rig: SpringArm3D = $SpringArm3D
 @onready var main_menu: MainMenuManager = $"Main Menu"
 @onready var minimap_camera: Camera3D = $"Base GUI/Control/MarginContainer/SubViewport/MinimapCamera"
+@onready var base_gui: CanvasLayer = $"Base GUI"
 
 var speed: float
 
@@ -38,7 +40,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if can_move == true:
-		if event.is_action_pressed("toggle_enemy_visibility"):
+		if event.is_action_pressed("toggle_enemy_visibility") && DataManager.arena_enemy_count.is_empty():
 			overworld_manager.show_enemy_locations()
 		
 		if interact_ray.is_colliding():

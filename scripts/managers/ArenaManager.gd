@@ -17,12 +17,13 @@ enum ENEMY_TYPE {
 	MIND
 }
 
+@export var enemy_count: Dictionary[int, Array] = {}
+@export var wave_number: int = 1
 @export var starting_character: CharacterResource
 @export var character_spawn: Node3D
 @export var enemy_spawn: NavigationRegion3D
 @export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var enemy_type: ENEMY_TYPE = ENEMY_TYPE.BASIC
-@export var enemy_count: Array[EnemyResource]
 @export var wait_time: float = 3.0
 @export var synergy_timer: float = 3.0
 
@@ -70,13 +71,15 @@ func _ready() -> void:
 	synergy_attack = DataManager.synergy_attack
 	synergy_attack.arena_manager = self
 	
-	for i in DataManager.unlocked_characters:
+	for character in DataManager.unlocked_characters:
 		var ch: ArenaCharacter = character_scene.instantiate()
-		ch.character = i
+		ch.character = character
+		print(ch.character.character_name)
 		character_spawn.add_child(ch)
 		ch.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
 	
-	for i in enemy_count:
+	enemy_count = DataManager.arena_enemy_count
+	for i in enemy_count.get(wave_number):
 		var enemy: Enemy = enemy_scene.instantiate()
 		enemy.enemy = i
 		enemy_spawn.add_child(enemy)
@@ -126,10 +129,22 @@ func battle_won() -> void:
 	DataManager.cash += enemy_cash
 	
 	await get_tree().create_timer(wait_time).timeout
-	TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
+	if wave_number == enemy_count.keys().back():
+		DataManager.arena_enemy_count = {}
+		wave_number = 1
+		TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
+	else:
+		wave_number += 1
+		for i in enemy_count.get(wave_number):
+			var enemy: Enemy = enemy_scene.instantiate()
+			enemy.enemy = i
+			enemy_spawn.add_child(enemy)
+			enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
 
 func battle_lost() -> void:
 	await get_tree().create_timer(wait_time).timeout
+	DataManager.arena_enemy_count = {}
+	wave_number = 1
 	get_tree().quit()
 
 func _on_continue_pressed() -> void:

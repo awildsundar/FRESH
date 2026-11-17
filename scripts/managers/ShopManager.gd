@@ -39,10 +39,6 @@ func _ready() -> void:
 	stock_up()
 	cash_changed(DataManager.cash)
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("exit_menu"):
-		_on_exit_pressed()
-
 func stock_up() -> void:
 	for item in stock.get_children():
 		item.queue_free()

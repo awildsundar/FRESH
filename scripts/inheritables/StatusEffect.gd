@@ -16,12 +16,7 @@ enum Affects {
 ## value expressed as a decimal from 0 to 3
 @export_range(0.0, 3.0, 0.01) var value: float = 0.0
 @export var affect_time: float = 5.0
-@export var inflicts_state: bool = false
-@export var state: String = "":
-	set(value):
-		state = value
-		if value == "":
-			inflicts_state = false
+@export var state: String = ""
 
 func inflict_status_effect(body: Variant) -> void:
 	if body is not ArenaCharacter and body is not Enemy:
@@ -31,7 +26,7 @@ func inflict_status_effect(body: Variant) -> void:
 	var timer: SceneTreeTimer = body.get_tree().create_timer(affect_time)
 	timer.connect("timeout", body.erase_status_effect.bind(self))
 
-	if inflicts_state == true:
+	if state != "":
 		if body is Enemy:
 			body.change_state_to(States.enemy_states[state])
 		elif body is ArenaCharacter:
@@ -41,3 +36,4 @@ func inflict_status_effect(body: Variant) -> void:
 				body.change_state_to(States.cpu_states[state])
 	
 	body.calculate_status_effects()
+	print("Inflicted %s on %s" % [effect_name, body.name])

@@ -1,14 +1,14 @@
 extends Area3D
 class_name Arena
 
+@export var enemies: Array[EnemyResource]
+
 @onready var detection_area: Area3D = $DetectionArea
 @onready var detection_collision: CollisionShape3D = $DetectionArea/CollisionShape3D
 @onready var icon: Sprite3D = $Sprite3D
-
-var arena_scene: PackedScene = preload("uid://b7q4webcoivt4")
+@onready var overworld_manager: OverWorldManager = self.get_tree().current_scene
 
 var default_position: Vector3
-
 
 func _ready() -> void:
 	var manager: OverWorldManager = get_manager()
@@ -44,7 +44,15 @@ func on_player_entered(body: Node3D) -> void:
 	if body is OverworldCharacter:
 		if QuestManager.active_quest.quest_progression == 2:
 			QuestManager.update_quest()
-		TransitionManager.load_scene(arena_scene.resource_path)
+		if DataManager.arena_enemy_count.keys().back() < DataManager.chain_limit:
+			if DataManager.arena_enemy_count.is_empty():
+				DataManager.arena_enemy_count.set(1, enemies)
+			else:
+				DataManager.arena_enemy_count.set(DataManager.arena_enemy_count.keys().back() + 1, enemies)
+			overworld_manager.enemy_chain_timer.start(overworld_manager.enemy_chain_time)
+			self.hide()
+		await overworld_manager.enemy_chain_timer.timeout
+		TransitionManager.load_scene(overworld_manager.arena_scene.resource_path, TransitionManager.LOADING_SCREEN_TYPE.BATTLE)
 
 func hover_up() -> void:
 	var tween: Tween = create_tween()

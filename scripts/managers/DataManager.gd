@@ -10,7 +10,7 @@ var cash: int:
 	set(value):
 		cash = value
 		cash_updated.emit(value)
-var shards: int:
+var shards: int = 10000:
 	set(value):
 		shards = value
 		shards_updated.emit(value)
@@ -23,9 +23,11 @@ var story_act: int = 0
 var unlocked_characters: Array[CharacterResource] = [
 	preload("res://resources/entities/characters/Archita.tres"),
 	preload("res://resources/entities/characters/Minnie.tres"),
-	preload("res://resources/entities/characters/Tom.tres")
+	preload("res://resources/entities/characters/Theo.tres")
 ]
 var synergy_attack: SynergyAttack = preload("res://resources/synergy attacks/TestSynergyAttack.tres")
+var chain_limit: int = 4
+var arena_enemy_count: Dictionary[int, Array] = {}
 
 var save_data: SaveData = SaveData.new()
 

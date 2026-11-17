@@ -2,7 +2,6 @@ extends Menu
 class_name UpgradeManager
 
 @onready var shards_display: Label = $Control/HBoxContainer/Panel/MarginContainer/ShardsDisplay
-@onready var upgrade_container: TabContainer = $Control/HBoxContainer/TabContainer
 
 var player: OverworldCharacter
 

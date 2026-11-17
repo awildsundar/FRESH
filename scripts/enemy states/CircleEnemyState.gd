@@ -21,7 +21,7 @@ func transition(enemy: Enemy) -> void:
 		
 		
 		if circle_timer >= target_circle_time:
-			if randf() < enemy.attack_chance:
+			if randf() < enemy.enemy.attack_chance:
 				enemy.change_state_to(States.enemy_states["hunt"])
 			else:
 				circle_timer = 0.0
@@ -29,7 +29,7 @@ func transition(enemy: Enemy) -> void:
 				if randf() > 0.7:
 					circle_direction *= -1
 		
-		if distance > enemy.circle_distance * 2.0:
+		if distance > enemy.enemy.circle_distance * 2.0:
 			enemy.change_state_to(States.enemy_states["idle"])
 	else:
 		enemy.change_state_to(States.enemy_states["idle"])

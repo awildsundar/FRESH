@@ -2,6 +2,8 @@ extends Resource
 class_name CharacterResource
 
 #gameplay vars
+@export var character_name: String = ""
+@export_color_no_alpha var albedo_color: Color
 @export_category("Player")
 @export_group("Basics")
 @export var base_speed: float = 10.0
