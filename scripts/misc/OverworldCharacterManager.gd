@@ -10,6 +10,7 @@ signal animation_cancelled
 @export var mesh_main: Node3D
 @export var interact_ray: RayCast3D
 @export var anim_player: AnimationPlayer
+@export var scan_shader: MeshInstance3D
 
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var camera_rig: SpringArm3D = $SpringArm3D
@@ -32,6 +33,7 @@ var overworld_manager: OverWorldManager
 func _ready() -> void:
 	state.enter(self)
 	overworld_manager = self.get_tree().current_scene
+	scan_shader.hide()
 	
 	speed = character.base_speed
 	

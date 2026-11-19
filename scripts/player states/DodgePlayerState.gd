@@ -8,8 +8,12 @@ var move_dir_z: float
 func enter(player: ArenaCharacter) -> void:
 	player.state_switchable = false
 	player.anim_player.play("dodge")
-	move_dir_z = player.mesh_main.global_basis.z.z
-	move_dir_x = -player.mesh_main.global_basis.x.z
+	if player.move_dir == Vector3.ZERO:
+		move_dir_z = player.mesh_main.global_basis.z.z
+		move_dir_x = -player.mesh_main.global_basis.x.z
+	else:
+		move_dir_z = player.move_dir.z
+		move_dir_x = player.move_dir.x
 	player.can_move = false
 
 ##Runs a frame before update is called, allows for transitions

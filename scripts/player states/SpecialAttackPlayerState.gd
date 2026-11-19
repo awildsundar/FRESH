@@ -27,6 +27,8 @@ func update(player: ArenaCharacter, delta: float) -> void:
 					if body is Enemy:
 						body.hurt(player, player.character.special_attack.damage)
 						player.character.special_attack.status_effect.inflict_status_effect(body)
+						player.arena_manager.score_manager.statuses_inflicted += 1
+						body.start_synergy_combo()
 						player.hitbox.enabled = false
 
 ##Runs when state is exited

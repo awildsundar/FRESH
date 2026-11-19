@@ -20,7 +20,8 @@ signal perfect_block_dodge_possible(value: bool)
 @onready var synergy_timer: Timer = Timer.new()
 @onready var synergy_visual: ColorRect = $SynergyVisual
 @onready var synergy_visual_position: Marker3D = $SynergyVisualPosition
-@onready var snap_area: Area3D = $SnapArea
+@onready var melee_snap_area: Area3D = $MeleeSnapArea
+@onready var ranged_snap_area: Area3D = $RangedSnapArea
 @onready var hurtbox: CollisionShape3D = $CollisionShape3D
 
 var speed: float
@@ -154,6 +155,7 @@ func check_synergy_combo() -> void:
 				synergy_visual.hide()
 				arena_manager.synergy += 25.0
 				arena_manager.synergy_combo_mult += 1.0
+				arena_manager.score_manager.synergy_combos += 1
 				current_attacker = null
 				previous_attacker = null
 
@@ -175,5 +177,7 @@ func hurt(attacker: ArenaCharacter, damage: float) -> void:
 	if hp > 0.0:
 		change_state_to(States.enemy_states["hurt"])
 		hp -= damage
+		arena_manager.score_manager.damage_inflicted += damage
+		arena_manager.score_manager.character_attacks_count[attacker.character] += 1
 		current_attacker = attacker
 		check_synergy_combo()

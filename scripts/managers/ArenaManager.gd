@@ -2,13 +2,8 @@ extends Node3D
 class_name ArenaManager
 
 const last_location: Dictionary = {
-	ARENA_TYPE.DEFAULT: "uid://blq5h3bovmvqp"
-}
-
-enum ARENA_TYPE {
-	DEFAULT,
-	SPENCER_STREET,
-	FLINDERS,
+	DataManager.LOCATION.FLINDERS_STREET: "uid://blq5h3bovmvqp",
+	DataManager.LOCATION.SPENCER_STREET: "uid://db02wftp23qin"
 }
 
 enum ENEMY_TYPE {
@@ -22,16 +17,18 @@ enum ENEMY_TYPE {
 @export var starting_character: CharacterResource
 @export var character_spawn: Node3D
 @export var enemy_spawn: NavigationRegion3D
-@export var arena_type: ARENA_TYPE = ARENA_TYPE.DEFAULT
 @export var enemy_type: ENEMY_TYPE = ENEMY_TYPE.BASIC
 @export var wait_time: float = 3.0
 @export var synergy_timer: float = 3.0
+
+@onready var score_manager: ScoreManager = $ScoreManager
 
 @onready var synergy_bar: ProgressBar = $ContextArenaUI/Context/MarginContainer/SynergyBar
 @onready var synergy_combo_time: float = 2.0
 @onready var synergy_combo_timer: Timer = Timer.new()
 
 @onready var escape_arena_ui: CanvasLayer = $EscapeArenaUI
+@onready var elapsed_time_display: Label = $ContextArenaUI/Context/MarginContainer2/ElapsedTime
 @onready var floor: CSGBox3D = $Enemies/floor
 
 const character_scene = preload("uid://cy7q15dradsep")
@@ -62,6 +59,10 @@ var synergy_combo_mult: float = 1.0:
 		if value > 5.0:
 			value = 5.0
 		synergy_combo_mult = value
+		
+		if value == 5.0:
+			score_manager.synergy_multipler_activations += 1
+		
 		if value != 1.0:
 			synergy_combo_timer.start(synergy_combo_time)
 
@@ -74,9 +75,12 @@ func _ready() -> void:
 	for character in DataManager.unlocked_characters:
 		var ch: ArenaCharacter = character_scene.instantiate()
 		ch.character = character
+		score_manager.character_attacks_count.set(character, 0)
 		print(ch.character.character_name)
 		character_spawn.add_child(ch)
 		ch.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+		if DataManager.starting_buff != null:
+			DataManager.starting_buff.inflict_status_effect(ch)
 	
 	enemy_count = DataManager.arena_enemy_count
 	for i in enemy_count.get(wave_number):
@@ -106,6 +110,14 @@ func _ready() -> void:
 	
 	change_control_to(control_ch)
 
+func _process(delta: float) -> void:
+	var ms: int = int(score_manager.elapsed_time) % 1000
+	var total_seconds: int = int(score_manager.elapsed_time / 1000.0)
+	var seconds: int = total_seconds % 60
+	var minutes: int = int(total_seconds / 60.0)
+	
+	elapsed_time_display.text = "%02d:%02d.%03d" % [minutes, seconds, ms]
+
 func reset_synergy_combo_mult() -> void:
 	synergy_combo_mult = 1.0
 
@@ -125,20 +137,24 @@ func change_control_to(character: ArenaCharacter) -> void:
 		ch.global_position.y = 0.0
 
 func battle_won() -> void:
-	DataManager.shards += enemy_shards
-	DataManager.cash += enemy_cash
-	
 	await get_tree().create_timer(wait_time).timeout
+	
 	if wave_number == enemy_count.keys().back():
 		DataManager.arena_enemy_count = {}
 		wave_number = 1
-		TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
+		DataManager.shards += enemy_shards
+		DataManager.cash += enemy_cash
+		score_manager.battle_ended()
+		TransitionManager.load_scene(last_location[DataManager.last_location], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
 	else:
 		wave_number += 1
 		for i in enemy_count.get(wave_number):
 			var enemy: Enemy = enemy_scene.instantiate()
 			enemy.enemy = i
 			enemy_spawn.add_child(enemy)
+			enemies.append(enemy)
+			enemy_shards += enemy.enemy.shards
+			enemy_cash += enemy.enemy.cash
 			enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
 
 func battle_lost() -> void:
@@ -155,4 +171,4 @@ func _on_continue_pressed() -> void:
 
 func _on_escape_pressed() -> void:
 	Engine.time_scale = 1.0
-	TransitionManager.load_scene(last_location[arena_type], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)
+	TransitionManager.load_scene(last_location[DataManager.last_location], TransitionManager.LOADING_SCREEN_TYPE.DEFAULT)

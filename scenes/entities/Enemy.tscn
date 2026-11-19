@@ -7793,6 +7793,9 @@ radius = 0.75
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_i1w3v"]
 radius = 1.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_306ko"]
+radius = 10.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_665n7"]
 shader = ExtResource("5_5wwv6")
 shader_parameter/base_color = Color(0, 1, 0, 1)
@@ -8337,11 +8340,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_55jtl")
 debug_color = Color(0.33833334, 0.7, 0, 0.41960785)
 
-[node name="SnapArea" type="Area3D" parent="." unique_id=154883755]
+[node name="MeleeSnapArea" type="Area3D" parent="." unique_id=154883755]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapArea" unique_id=331395044]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeleeSnapArea" unique_id=331395044]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_i1w3v")
+
+[node name="RangedSnapArea" type="Area3D" parent="." unique_id=1598756380]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RangedSnapArea" unique_id=2058179176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_306ko")
 
 [node name="SynergyVisual" type="ColorRect" parent="." unique_id=477364130]
 material = SubResource("ShaderMaterial_665n7")

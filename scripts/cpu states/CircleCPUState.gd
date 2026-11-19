@@ -29,7 +29,7 @@ func transition(cpu: ArenaCharacter) -> void:
 				if randf() > 0.7:
 					circle_direction *= -1
 		
-		if distance > cpu.circle_distance * 2.0:
+		if distance > cpu.character.circle_distance * 2.0:
 			cpu.change_state_to(States.cpu_states["idle"])
 	
 	else:
@@ -46,13 +46,13 @@ func update(cpu: ArenaCharacter, delta: float) -> void:
 	var strafe_dir: Vector3 = to_player.cross(Vector3.UP).normalized()
 	strafe_dir *= circle_direction
 	
-	var distance_diff: float = distance - cpu.cpu.circle_distance
+	var distance_diff: float = distance - cpu.character.circle_distance
 	var approach_dir: Vector3 = to_player * sign(distance_diff) * 0.3
 	
 	var move_dir: Vector3 = (strafe_dir + approach_dir).normalized()
 	
-	cpu.velocity.x = move_dir.x * cpu.speed * cpu.cpu.back_away_speed_mult
-	cpu.velocity.z = move_dir.z * cpu.speed * cpu.cpu.back_away_speed_mult
+	cpu.velocity.x = move_dir.x * cpu.speed * cpu.character.back_away_speed_mult
+	cpu.velocity.z = move_dir.z * cpu.speed * cpu.character.back_away_speed_mult
 	cpu.velocity.y = 0.0
 	
 	var look_target: Vector2 = Vector2(cpu.target.global_position.x, cpu.target.global_position.z)

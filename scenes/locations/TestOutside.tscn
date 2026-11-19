@@ -616,6 +616,7 @@ size = Vector3(1, 2, 0.5)
 
 [node name="Node3D" type="Node3D" unique_id=1114207876]
 script = ExtResource("1_gtmvb")
+location = 1
 quest = ExtResource("2_qf7qf")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1105523485]
@@ -647,6 +648,7 @@ material = SubResource("StandardMaterial3D_d7enn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, 1, 3)
 script = ExtResource("1_vrg7o")
 enemies = Array[ExtResource("5_qf7qf")]([ExtResource("6_cx5uy"), ExtResource("6_cx5uy"), ExtResource("6_cx5uy")])
+teleport_time = 1.0
 
 [node name="Sprite3D" type="Sprite3D" parent="StaticBody3D2" unique_id=1135235520]
 layers = 2
@@ -661,26 +663,6 @@ shape = SubResource("BoxShape3D_ugyrv")
 [node name="DetectionArea" type="Area3D" parent="StaticBody3D2" unique_id=1666380136]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/DetectionArea" unique_id=1023825736]
-shape = SubResource("SphereShape3D_gtmvb")
-
-[node name="StaticBody3D4" type="Area3D" parent="." unique_id=354555026]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75, 1, 0.25)
-script = ExtResource("1_vrg7o")
-enemies = Array[ExtResource("5_qf7qf")]([ExtResource("6_cx5uy")])
-
-[node name="Sprite3D" type="Sprite3D" parent="StaticBody3D4" unique_id=2007623130]
-layers = 2
-modulate = Color(1, 0, 0, 1)
-pixel_size = 0.003
-billboard = 1
-texture = ExtResource("2_3uo50")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4" unique_id=797375762]
-shape = SubResource("BoxShape3D_ugyrv")
-
-[node name="DetectionArea" type="Area3D" parent="StaticBody3D4" unique_id=1206791876]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4/DetectionArea" unique_id=1582391419]
 shape = SubResource("SphereShape3D_gtmvb")
 
 [node name="StaticBody3D3" type="StaticBody3D" parent="." unique_id=2138700745]

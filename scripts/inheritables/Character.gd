@@ -12,8 +12,10 @@ class_name CharacterResource
 @export var base_def: float = 50.0
 @export var base_hp: float = 100.0
 @export_group("Combat Config")
+@export var ranged_character: bool = false
+@export var projectile_speed: float = 40.0
 @export var special_attack: SpecialAttack
-@export var attack_distance: float = 100.0
+@export var attack_distance: float = 50.0
 
 #cpu vars
 @export_category("CPU")

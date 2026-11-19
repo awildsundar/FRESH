@@ -22,4 +22,10 @@ z_index = -1
 width = 5.0
 default_color = Color(0.6201665, 0.620167, 0.6201668, 1)
 
+[node name="Branch2" type="Line2D" parent="." unique_id=494385545]
+top_level = true
+z_index = -1
+width = 5.0
+default_color = Color(0.61960787, 0.61960787, 0.61960787, 1)
+
 [connection signal="pressed" from="." to="." method="_on_pressed"]

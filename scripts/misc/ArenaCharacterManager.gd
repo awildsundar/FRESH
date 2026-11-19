@@ -26,10 +26,14 @@ signal invincible_toggled(value: bool)
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var rig: SpringArm3D = $SpringArm3D
 @onready var limit_area: Area3D = $LimitArea
+@onready var ranged_limit_area: Area3D = $RangedLimitArea
 @onready var special_attack_timer: Timer = Timer.new()
 @onready var animation_cancel_timer: Timer = Timer.new()
 @onready var hurtbox: CollisionShape3D = $CollisionShape3D
 @onready var beta_surface: MeshInstance3D = $female_body/Armature_001/Skeleton3D/Beta_Surface
+@onready var projectile_pos: Node3D = $female_body/ProjectilePos
+
+var projectile: PackedScene = preload("res://scenes/projectile.tscn")
 
 var speed: float
 var atk: float
@@ -223,7 +227,6 @@ func calculate_status_effects() -> void:
 				max_circle_time *= status_effect.value
 			status_effect.Affects.CHANCE:
 				attack_chance *= status_effect.value
-	print(def)
 
 func erase_status_effect(effect: StatusEffect) -> void:
 	status_effects.erase(effect)
@@ -236,3 +239,4 @@ func hurt(damage: float) -> void:
 		elif state is BaseCPUState:
 			change_state_to(States.cpu_states["hurt"])
 		arena_manager.player_hp -= damage
+		arena_manager.score_manager.damage_taken += damage

@@ -13,6 +13,9 @@ class_name SaveData
 
 @export var unlocked_characters: Array[CharacterResource]
 @export var synergy_attack: SynergyAttack
+@export var starting_buff: StatusEffect
+@export var chain_limit: int = 4
+@export var last_location: DataManager.LOCATION
 
 @export var active_quest: Quest = null
 @export var active_quest_progression: int = 0

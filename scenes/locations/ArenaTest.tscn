@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://b7q4webcoivt4"]
 
 [ext_resource type="Script" uid="uid://bgospvaoks3mq" path="res://scripts/managers/ArenaManager.gd" id="1_wmg8w"]
-[ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="2_sxgqi"]
+[ext_resource type="Resource" uid="uid://cx2u8o6txigjw" path="res://resources/entities/characters/Archita.tres" id="2_od0ih"]
+[ext_resource type="Script" uid="uid://be46iuboevdps" path="res://scripts/managers/ScoreManager.gd" id="3_od0ih"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_favoq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -23,12 +24,16 @@ cell_height = 0.01
 
 [node name="Arena" type="Node3D" unique_id=914889805 node_paths=PackedStringArray("character_spawn", "enemy_spawn")]
 script = ExtResource("1_wmg8w")
-starting_character = ExtResource("2_sxgqi")
+starting_character = ExtResource("2_od0ih")
 character_spawn = NodePath("Characters")
 enemy_spawn = NodePath("Enemies")
 
+[node name="ScoreManager" type="Node" parent="." unique_id=1324795221]
+script = ExtResource("3_od0ih")
+
 [node name="EscapeArenaUI" type="CanvasLayer" parent="." unique_id=1904956859]
 layer = 2
+visible = false
 
 [node name="Escape Menu" type="Control" parent="EscapeArenaUI" unique_id=1975338707]
 layout_mode = 3
@@ -100,6 +105,24 @@ theme_override_constants/margin_right = 50
 [node name="SynergyBar" type="ProgressBar" parent="ContextArenaUI/Context/MarginContainer" unique_id=1792772806]
 layout_mode = 2
 size_flags_vertical = 4
+
+[node name="MarginContainer2" type="MarginContainer" parent="ContextArenaUI/Context" unique_id=28429601]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_bottom = 70
+
+[node name="ElapsedTime" type="Label" parent="ContextArenaUI/Context/MarginContainer2" unique_id=668898783]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 70
+text = "00:00:00"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1453346797]
 environment = SubResource("Environment_wmg8w")

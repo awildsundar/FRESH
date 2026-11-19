@@ -2,6 +2,7 @@ extends Area3D
 class_name Arena
 
 @export var enemies: Array[EnemyResource]
+@export var teleport_time: float = 3.0
 
 @onready var detection_area: Area3D = $DetectionArea
 @onready var detection_collision: CollisionShape3D = $DetectionArea/CollisionShape3D
@@ -44,13 +45,13 @@ func on_player_entered(body: Node3D) -> void:
 	if body is OverworldCharacter:
 		if QuestManager.active_quest.quest_progression == 2:
 			QuestManager.update_quest()
-		if DataManager.arena_enemy_count.keys().back() < DataManager.chain_limit:
-			if DataManager.arena_enemy_count.is_empty():
+		if DataManager.arena_enemy_count.is_empty():
 				DataManager.arena_enemy_count.set(1, enemies)
-			else:
+		else:
+			if DataManager.arena_enemy_count.keys().back() <= DataManager.chain_limit:
 				DataManager.arena_enemy_count.set(DataManager.arena_enemy_count.keys().back() + 1, enemies)
-			overworld_manager.enemy_chain_timer.start(overworld_manager.enemy_chain_time)
-			self.hide()
+		overworld_manager.enemy_chain_timer.start(teleport_time)
+		self.hide()
 		await overworld_manager.enemy_chain_timer.timeout
 		TransitionManager.load_scene(overworld_manager.arena_scene.resource_path, TransitionManager.LOADING_SCREEN_TYPE.BATTLE)
 

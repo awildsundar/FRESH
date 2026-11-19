@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="SpecialAttack" format=3 uid="uid://irhu43bomhk2"]
 
 [ext_resource type="Script" uid="uid://cmaioqnip5pmp" path="res://scripts/inheritables/SpecialAttack.gd" id="1_b5phj"]
+[ext_resource type="Resource" uid="uid://condtjh7nd4mh" path="res://resources/status effects/IncreaseAttack.tres" id="1_lskh4"]
 [ext_resource type="Resource" uid="uid://ckcspk1ftptx6" path="res://resources/status effects/DecreaseDefense.tres" id="2_w5n2i"]
 
 [resource]
 script = ExtResource("1_b5phj")
 status_effect = ExtResource("2_w5n2i")
 character_target = "Minnie"
-character_status_effect = ExtResource("2_w5n2i")
+character_status_effect = ExtResource("1_lskh4")
 cost = 10
 animation_name = "punch1"
 metadata/_custom_type_script = "uid://cmaioqnip5pmp"

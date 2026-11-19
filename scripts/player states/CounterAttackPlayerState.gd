@@ -8,6 +8,7 @@ func enter(player: ArenaCharacter) -> void:
 	enemy = player.find_nearest_candidate(0, player.attack_distance)
 	player.anim_player.play_section("punch1", 0.45)
 	enemy.hurt(player, player.atk * 2.0)
+	player.arena_manager.score_manager.counters_performed += 1
 
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:

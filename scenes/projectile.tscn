@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://veqay78v5uoy"]
+
+[ext_resource type="Script" uid="uid://dyc65n264kdn1" path="res://scripts/misc/ProjectileManager.gd" id="1_c8fcr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6aapk"]
+albedo_color = Color(0.4078496, 0.8374087, 0.8524495, 1)
+emission_enabled = true
+emission = Color(0.40784314, 0.8392157, 0.8509804, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_d7enn"]
+material = SubResource("StandardMaterial3D_6aapk")
+size = Vector3(0.05, 0.05, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1w3v"]
+size = Vector3(0.1, 0.1, 0.6)
+
+[node name="Node3D" type="Node3D" unique_id=1412395230 node_paths=PackedStringArray("mesh", "hitbox")]
+script = ExtResource("1_c8fcr")
+mesh = NodePath("mesh")
+hitbox = NodePath("Area3D")
+
+[node name="mesh" type="Node3D" parent="." unique_id=944280416]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mesh" unique_id=418650797]
+mesh = SubResource("BoxMesh_d7enn")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2034892624]
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1148979922]
+shape = SubResource("BoxShape3D_i1w3v")

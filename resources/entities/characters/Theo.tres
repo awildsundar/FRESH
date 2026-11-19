@@ -7,5 +7,9 @@
 script = ExtResource("1_x454g")
 character_name = "Theo"
 albedo_color = Color(0.77053076, 0.2634242, 0, 1)
+ranged_character = true
 special_attack = ExtResource("2_rbatn")
+attack_distance = 30.0
+back_away_distance = 25.0
+circle_distance = 25.0
 metadata/_custom_type_script = "uid://cgaa70cpqwf2s"

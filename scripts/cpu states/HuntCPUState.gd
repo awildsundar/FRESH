@@ -8,13 +8,15 @@ func enter(cpu: ArenaCharacter) -> void:
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:
 	var current_target: Node3D = cpu.find_nearest_candidate(0, cpu.control_distance)
-	var body: Array[Node3D] = cpu.limit_area.get_overlapping_bodies()
-	if current_target == null:
+	if current_target == null or is_instance_valid(current_target) == false:
 		cpu.change_state_to(States.cpu_states["idle"])
-	for node in body:
-		if node is Enemy:
-			if node.hp > 0.0:
-				cpu.change_state_to(States.cpu_states["attack"])
+		
+	if cpu.character.ranged_character == false:
+		if cpu.limit_area.overlaps_body(current_target):
+			cpu.change_state_to(States.cpu_states["attack"])
+	else:
+		if cpu.ranged_limit_area.overlaps_body(current_target):
+			cpu.change_state_to(States.cpu_states["attack"])
 
 ##Runs during a state
 func update(cpu: ArenaCharacter, delta: float) -> void:

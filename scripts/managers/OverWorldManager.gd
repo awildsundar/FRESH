@@ -1,13 +1,7 @@
 extends Node3D
 class_name OverWorldManager
 
-enum LOCATION {
-	SPENCER_STREET,
-	FLINDERS_STREET,
-	SOUTHGATE
-}
-
-@export var location: LOCATION
+@export var location: DataManager.LOCATION
 @export var quest: Quest
 
 @onready var enemy_chain_timer: Timer = Timer.new()
@@ -25,11 +19,12 @@ var player: OverworldCharacter
 
 var enemy_locations: Array[Arena]
 var enemies_visible: bool = false
-var enemy_chain_time: float = 3.0
 
 var arena_scene: PackedScene = preload("uid://b7q4webcoivt4")
 
 func _ready() -> void:
+	DataManager.last_location = location
+	
 	for child in self.get_children():
 		if child is OverworldCharacter:
 			player = child
@@ -43,6 +38,11 @@ func _ready() -> void:
 
 func show_enemy_locations() -> void:
 	enemies_visible = !enemies_visible
+	
+	if enemies_visible == true:
+		player.scan_shader.show()
+	else:
+		player.scan_shader.hide()
 	
 	for enemy_location: Arena in enemy_locations:
 		if enemies_visible == true:

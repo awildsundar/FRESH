@@ -19,17 +19,23 @@ func enter(player: ArenaCharacter) -> void:
 	
 	var enemy: Enemy = player.find_nearest_candidate(0, player.character.attack_distance)
 	if enemy != null:
-		var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
-		var forward: Vector3 = -player.global_transform.basis.z.normalized()
-		var dot_product: float = forward.dot(to_enemy)
-		
-		if dot_product > player.snap_angle:
-			var direction_to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
-			var closest_point: Vector3 = enemy.global_position + (direction_to_enemy * enemy.hurtbox.shape.radius * 2)
-		
-			player.global_position = closest_point
-			player.look_at(enemy.global_position, Vector3.UP, true)
+		if player.camera.is_position_in_frustum(enemy.global_position):
+			if enemy.ranged_snap_area.overlaps_body(player):
+				if player.character.ranged_character == true:
+					player.look_at(enemy.global_position, Vector3.UP, true)
 
+			if enemy.melee_snap_area.overlaps_body(player):
+				if player.character.ranged_character == false:
+					var to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+					var forward: Vector3 = -player.global_transform.basis.z.normalized()
+					var dot_product: float = forward.dot(to_enemy)
+					
+					if dot_product > player.snap_angle:
+						var direction_to_enemy: Vector3 = (player.global_position - enemy.global_position).normalized()
+						var closest_point: Vector3 = enemy.global_position + (direction_to_enemy * enemy.hurtbox.shape.radius * 2)
+						player.global_position = closest_point
+						player.look_at(enemy.global_position, Vector3.UP, true)
+		
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
 	if player.animation_cancel_timer.time_left > 0.0:
@@ -45,16 +51,17 @@ func update(player: ArenaCharacter, delta: float) -> void:
 	consume_timer += delta
 	buffer_timer += delta
 	
-	if player.hitbox.enabled:
-		if player.hitbox.is_colliding():
-			var body: Object = player.hitbox.get_collider(0)
-			if body is Enemy:
-				body.hurt(player, player.atk * player.arena_manager.synergy_combo_mult)
-				if atk_count >= player.max_buffer_size:
-					body.start_synergy_combo()
-					body.previous_attacker = player
-					atk_count = 0
-				player.hitbox.enabled = false
+	if player.character.ranged_character == false:
+		if player.hitbox.enabled:
+			if player.hitbox.is_colliding():
+				var body: Object = player.hitbox.get_collider(0)
+				if body is Enemy:
+					body.hurt(player, player.atk * player.arena_manager.synergy_combo_mult)
+					if atk_count >= player.max_buffer_size:
+						body.start_synergy_combo()
+						body.previous_attacker = player
+						atk_count = 0
+					player.hitbox.enabled = false
 	
 	if consume_timer > player.anim_player.current_animation_length - player.anim_duration:
 		if player.atk_buffer != []:
@@ -74,6 +81,13 @@ func play_attack_animation(player: ArenaCharacter) -> void:
 			basic_atk_count = 0
 		else:
 			player.anim_player.play("punch1")
+	
+	if player.character.ranged_character == true:
+		var instanced_projectile: ProjectileManager = player.projectile.instantiate()
+		instanced_projectile.attacker = player
+		player.add_child(instanced_projectile)
+		instanced_projectile.global_position = player.projectile_pos.global_position
+		instanced_projectile.global_basis = player.projectile_pos.global_basis
 
 ##Runs when state is exited
 func exit(player: ArenaCharacter) -> void:

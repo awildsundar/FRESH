@@ -13,7 +13,7 @@ enum Affects {
 @export var effect_name: String
 @export_multiline() var effect_description: String
 @export var affects: Affects
-## value expressed as a decimal from 0 to 3
+## value expressed as a decimal from 0 to 3, this is a multiplier
 @export_range(0.0, 3.0, 0.01) var value: float = 0.0
 @export var affect_time: float = 5.0
 @export var state: String = ""
@@ -36,4 +36,3 @@ func inflict_status_effect(body: Variant) -> void:
 				body.change_state_to(States.cpu_states[state])
 	
 	body.calculate_status_effects()
-	print("Inflicted %s on %s" % [effect_name, body.name])

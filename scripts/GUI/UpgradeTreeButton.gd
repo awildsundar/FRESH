@@ -17,6 +17,7 @@ enum UPGRADE_TYPE {
 
 @onready var parent: Node = self.get_parent()
 @onready var branch: Line2D = $Branch
+@onready var branch2: Line2D = $Branch2
 
 var skill
 
@@ -31,6 +32,10 @@ func _ready() -> void:
 		branch.add_point(self.global_position + self.size / 2)
 		branch.add_point(parent.global_position + parent.size / 2)
 		disabled = !is_parent_unlocked()
+	if shared_parent != null:
+		branch2.add_point(self.global_position + self.size / 2)
+		branch2.add_point(shared_parent.global_position + shared_parent.size / 2)
+		disabled = !is_parent_unlocked(shared_parent)
 
 func is_parent_unlocked(p: Node = parent) -> bool:
 	if p is SkillButton:
@@ -55,6 +60,9 @@ func _on_pressed() -> void:
 			
 			if is_parent_unlocked():
 				branch.default_color = Color.GREEN
+			if shared_parent != null:
+				if is_parent_unlocked(shared_parent):
+					branch2.default_color = Color.GREEN
 			
 			for button in self.get_children():
 				if button is SkillButton:

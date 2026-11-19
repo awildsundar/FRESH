@@ -4,6 +4,11 @@ signal inventory_updated
 signal shards_updated(value: int)
 signal cash_updated(value: int)
 
+enum LOCATION {
+	FLINDERS_STREET,
+	SPENCER_STREET
+}
+
 const CURRENT_SAVE_VERSION: int = 1
 
 var cash: int:
@@ -26,8 +31,10 @@ var unlocked_characters: Array[CharacterResource] = [
 	preload("res://resources/entities/characters/Theo.tres")
 ]
 var synergy_attack: SynergyAttack = preload("res://resources/synergy attacks/TestSynergyAttack.tres")
+var starting_buff: StatusEffect = preload("res://resources/status effects/IncreaseAttack.tres")
 var chain_limit: int = 4
 var arena_enemy_count: Dictionary[int, Array] = {}
+var last_location: LOCATION
 
 var save_data: SaveData = SaveData.new()
 
@@ -50,6 +57,9 @@ func store_data_to_resource() -> SaveData:
 	save_data.story_act = story_act
 	save_data.unlocked_characters = unlocked_characters
 	save_data.synergy_attack = synergy_attack
+	save_data.starting_buff = starting_buff
+	save_data.chain_limit = chain_limit
+	save_data.last_location = last_location
 	save_data.timestamp = Time.get_datetime_string_from_system(false, true)
 	return save_data
 
@@ -62,6 +72,9 @@ func load_data_from_resource(data: SaveData) -> void:
 	story_act = data.story_act
 	unlocked_characters = data.unlocked_characters
 	synergy_attack = data.synergy_attack
+	starting_buff = data.starting_buff
+	chain_limit = data.chain_limit
+	last_location = data.last_location
 	QuestManager.active_quest = data.active_quest
 	QuestManager.active_quest.quest_progression = data.active_quest_progression
 	QuestManager.current_quests = data.current_quests

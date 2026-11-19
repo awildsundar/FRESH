@@ -27,8 +27,8 @@ func update(cpu: ArenaCharacter, delta: float) -> void:
 	var retreat_dir: Vector3 = -to_player
 	retreat_dir.y = 0
 	
-	cpu.velocity.x = retreat_dir.x * (cpu.speed * cpu.back_away_speed_mult)
-	cpu.velocity.z = retreat_dir.z * (cpu.speed * cpu.back_away_speed_mult)
+	cpu.velocity.x = retreat_dir.x * (cpu.speed * cpu.character.back_away_speed_mult)
+	cpu.velocity.z = retreat_dir.z * (cpu.speed * cpu.character.back_away_speed_mult)
 	cpu.velocity.y = 0.0
 	
 	var look_target: Vector2 = Vector2(cpu.target.global_position.x, cpu.target.global_position.z)

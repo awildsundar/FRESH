@@ -48,16 +48,30 @@ special_attack = ExtResource("4_lfuds")
 
 [node name="SkillButton" parent="Control/HBoxContainer/TabContainer/Archita/SkillButton" unique_id=1998990486 instance=ExtResource("2_i7ccm")]
 layout_mode = 1
-offset_top = 192.0
-offset_bottom = 320.0
+offset_left = -128.0
+offset_top = 193.0
+offset_right = 0.0
+offset_bottom = 321.0
 character = ExtResource("3_3k2y0")
 special_attack = ExtResource("5_5s8og")
 
-[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/Archita/SkillButton/SkillButton" unique_id=581412465 instance=ExtResource("2_i7ccm")]
+[node name="SkillButton" parent="Control/HBoxContainer/TabContainer/Archita/SkillButton/SkillButton" unique_id=581412465 node_paths=PackedStringArray("shared_parent") instance=ExtResource("2_i7ccm")]
 layout_mode = 0
-offset_top = 192.0
-offset_bottom = 320.0
+offset_left = 128.0
+offset_top = 184.0
+offset_right = 256.0
+offset_bottom = 312.0
 character = ExtResource("3_3k2y0")
+shared_parent = NodePath("../../SkillButton2")
+
+[node name="SkillButton2" parent="Control/HBoxContainer/TabContainer/Archita/SkillButton" unique_id=102207307 node_paths=PackedStringArray("shared_child") instance=ExtResource("2_i7ccm")]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 201.0
+offset_right = 264.0
+offset_bottom = 329.0
+character = ExtResource("3_3k2y0")
+shared_child = NodePath("../SkillButton/SkillButton")
 
 [node name="Panel" type="Panel" parent="Control/HBoxContainer" unique_id=1687422294]
 layout_mode = 2

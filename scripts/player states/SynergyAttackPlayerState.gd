@@ -5,6 +5,9 @@ class_name SynergyAttackPlayerState
 func enter(player: ArenaCharacter) -> void:
 	player.anim_player.play(player.arena_manager.synergy_attack.animation_name)
 	player.arena_manager.synergy_attack.execute_attack()
+	player.arena_manager.score_manager.statuses_inflicted += 1
+	player.arena_manager.score_manager.synergy_activations += 1
+	
 ##Runs a frame before update is called, allows for transitions
 func transition(player: ArenaCharacter) -> void:
 	await player.anim_player.animation_finished
