@@ -9,6 +9,8 @@ class_name EnemyResource
 @export var base_atk: float = 50.0
 @export var base_def: float = 50.0
 @export var base_hp: float = 100.0
+@export var knockback_strength: float = 5.0
+@export var knockback_duration: float = 0.1
 @export_group("Config")
 @export_subgroup("Back Away")
 @export var attack_distance: float = 100.0

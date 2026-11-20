@@ -1,4 +1,5 @@
 extends SpringArm3D
+class_name CameraRigManager
 
 @export var spring_distance: float = 4.0
 @export var min_angle: float = -30.0
@@ -55,8 +56,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif Input.is_action_just_pressed("switch_view_right"):
 			switch_target("right")
 	else:
-		if is_instance_valid(current_target):
-			current_target.lock_on_indicator.hide()
+		if player is ArenaCharacter:
+			for enemy: Enemy in player.arena_manager.enemies:
+				enemy.lock_on_indicator.hide()
 		
 	if event is InputEventMouseMotion:
 		rotation_degrees.x -= event.relative.y * sensitivity
@@ -118,10 +120,13 @@ func switch_target(dir: String) -> void:
 			_set_target(best_candidate)
 
 func _set_target(target: Node3D) -> void:
-	if is_instance_valid(current_target):
-		current_target.lock_on_indicator.hide()
 	current_target = target
 	target.lock_on_indicator.show()
+	
+	if player is ArenaCharacter:
+		for enemy: Enemy in player.arena_manager.enemies:
+			if enemy != target:
+				enemy.lock_on_indicator.hide()
 
 func _free_cam(event: InputEvent) -> void:
 	rotation_degrees.y -= event.relative.x * sensitivity

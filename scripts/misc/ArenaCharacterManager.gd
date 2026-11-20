@@ -13,7 +13,7 @@ signal invincible_toggled(value: bool)
 @export var hitbox: ShapeCast3D
 
 @export_group("Combat Config")
-@export var buffer_duration: float = 1.25
+@export var buffer_duration: float = 0.5
 @export var anim_duration: float = 0.25
 @export var max_buffer_size: int = 6
 @export var counter_time: float = 2.0
@@ -24,7 +24,7 @@ signal invincible_toggled(value: bool)
 @export var control_distance: float = 100.0
 
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
-@onready var rig: SpringArm3D = $SpringArm3D
+@onready var rig: CameraRigManager = $SpringArm3D
 @onready var limit_area: Area3D = $LimitArea
 @onready var ranged_limit_area: Area3D = $RangedLimitArea
 @onready var special_attack_timer: Timer = Timer.new()

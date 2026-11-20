@@ -29,7 +29,7 @@ enum ENEMY_TYPE {
 
 @onready var escape_arena_ui: CanvasLayer = $EscapeArenaUI
 @onready var elapsed_time_display: Label = $ContextArenaUI/Context/MarginContainer2/ElapsedTime
-@onready var floor: CSGBox3D = $Enemies/floor
+@onready var arena_floor: CSGBox3D = $Enemies/floor
 
 const character_scene = preload("uid://cy7q15dradsep")
 const enemy_scene = preload("uid://c6ldg60vhftek")
@@ -76,18 +76,22 @@ func _ready() -> void:
 		var ch: ArenaCharacter = character_scene.instantiate()
 		ch.character = character
 		score_manager.character_attacks_count.set(character, 0)
-		print(ch.character.character_name)
 		character_spawn.add_child(ch)
-		ch.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+		ch.global_position = Vector3(randf_range(-arena_floor.size.x / 2, arena_floor.size.x / 2), 0.0, randf_range(-arena_floor.size.z / 2, arena_floor.size.z / 2))
 		if DataManager.starting_buff != null:
 			DataManager.starting_buff.inflict_status_effect(ch)
 	
 	enemy_count = DataManager.arena_enemy_count
+	
+	if DataManager.arena_enemy_count == {}:
+		enemy_count = {
+			1: [preload("res://resources/entities/enemies/Test.tres")]}
+	
 	for i in enemy_count.get(wave_number):
 		var enemy: Enemy = enemy_scene.instantiate()
 		enemy.enemy = i
 		enemy_spawn.add_child(enemy)
-		enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+		enemy.global_position = Vector3(randf_range(-arena_floor.size.x / 2, arena_floor.size.x / 2), 0.0, randf_range(-arena_floor.size.z / 2, arena_floor.size.z / 2))
 	
 	for player in characters:
 		player_hp += player.hp
@@ -155,7 +159,7 @@ func battle_won() -> void:
 			enemies.append(enemy)
 			enemy_shards += enemy.enemy.shards
 			enemy_cash += enemy.enemy.cash
-			enemy.global_position = Vector3(randf_range(-floor.size.x / 2, floor.size.x / 2), 0.0, randf_range(-floor.size.z / 2, floor.size.z / 2))
+			enemy.global_position = Vector3(randf_range(-arena_floor.size.x / 2, arena_floor.size.x / 2), 0.0, randf_range(-arena_floor.size.z / 2, arena_floor.size.z / 2))
 
 func battle_lost() -> void:
 	await get_tree().create_timer(wait_time).timeout

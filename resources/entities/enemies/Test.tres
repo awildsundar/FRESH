@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_80g1t")
 status_effect = ExtResource("2_ftbfk")
+base_hp = 1000.0
 metadata/_custom_type_script = "uid://xgsq4oqq8klk"

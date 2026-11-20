@@ -5,12 +5,18 @@ uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture, filter_linea
 uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_nearest;
 uniform sampler2D SCREEN_TEXTURE : source_color, hint_screen_texture, repeat_disable, filter_nearest;
 
+uniform float visibility : hint_range(0.0, 1.0, 0.01) = 1.0;
+
 uniform float zNear = 0.05;
 uniform float zFar = 100;
 
 uniform bool enable_outline = false;
 uniform vec3 outline_color : source_color = vec3(0.0,0.0,0.0);
 uniform float outline_thickness = 10.0;
+
+uniform float alpha = 1.0;
+uniform float inner_radius = 0.0;
+uniform float outer_radius = 1.0;
 
 uniform bool enable_color_limit = true;
 uniform int color_levels : hint_range(2, 32) = 8;
@@ -251,6 +257,11 @@ void fragment() {
 	float red = texture(screen_texture, SCREEN_UV - (offset / 2.0)).r;
 	float green = texture(screen_texture, SCREEN_UV).g; // Sampling green at the original UV is common and looks good.
 	float blue = texture(screen_texture, SCREEN_UV - offset).b;
+	
+	float x = abs(UV.r-.5)*2.0;
+	float y = abs(UV.g-.5)*2.0;
+	float q = 1.0-(1.0-sqrt(x*x+y*y)/outer_radius)/(1.0-inner_radius);
 
-	ALBEDO = vec3(red, green, blue) + final_color;
+	ALBEDO = (vec3(red, green*q, q*alpha*blue) * final_color);
+	ALPHA = visibility;
 }

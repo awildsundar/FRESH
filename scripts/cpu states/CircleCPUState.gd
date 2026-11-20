@@ -15,7 +15,7 @@ func enter(cpu: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:
-	if cpu.target != null:
+	if cpu.target != null && cpu.target.state != States.enemy_states["death"]:
 		var to_player: Vector3 = (cpu.target.global_position - cpu.global_position)
 		var distance: float = to_player.length()
 		

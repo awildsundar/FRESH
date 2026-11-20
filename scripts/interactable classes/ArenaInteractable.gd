@@ -16,20 +16,26 @@ func _ready() -> void:
 	manager.enemy_locations.append(self)
 	enable_interaction(false)
 	default_position = global_position
+	icon.modulate.a = 0.0
 	detection_area.body_entered.connect(on_player_detected)
 	detection_area.body_exited.connect(on_player_exited)
 	body_entered.connect(on_player_entered)
 
 func enable_interaction(toggle: bool) -> void:
 	if toggle == true:
-		self.show()
 		get_collision_shape().disabled = false
 		detection_collision.disabled = false
+		self.show()
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(icon, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		hover_up()
 	else:
-		self.hide()
 		get_collision_shape().disabled = true
 		detection_collision.disabled = true
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(icon, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		await tween.finished
+		self.hide()
 
 func on_player_detected(body: Node3D) -> void:
 	if body is OverworldCharacter:

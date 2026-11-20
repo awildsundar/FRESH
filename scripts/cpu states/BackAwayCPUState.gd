@@ -11,13 +11,16 @@ func enter(cpu: ArenaCharacter) -> void:
 
 ##Runs a frame before update is called, allows for transitions
 func transition(cpu: ArenaCharacter) -> void:
-	var distance: float = cpu.global_position.distance_to(cpu.target.global_position)
-	
-	if distance >= cpu.character.back_away_distance:
-		cpu.change_state_to(States.cpu_states["circle"])
+	if cpu.target != null && cpu.target.state != States.enemy_states["death"]:
+		var distance: float = cpu.global_position.distance_to(cpu.target.global_position)
+		
+		if distance >= cpu.character.back_away_distance:
+			cpu.change_state_to(States.cpu_states["circle"])
 
-	if back_away_timer >= cpu.character.back_away_timer:
-		cpu.change_state_to(States.cpu_states["circle"])
+		if back_away_timer >= cpu.character.back_away_timer:
+			cpu.change_state_to(States.cpu_states["circle"])
+	else:
+		cpu.change_state_to(States.cpu_states["idle"])
 
 ##Runs during a state
 func update(cpu: ArenaCharacter, delta: float) -> void:

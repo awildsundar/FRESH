@@ -27,20 +27,24 @@ viewport_path = NodePath("Base GUI/Control/MarginContainer/SubViewport")
 [sub_resource type="SphereShape3D" id="SphereShape3D_5q5h1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8w516"]
-render_priority = -1
+render_priority = -2
 shader = ExtResource("5_8w516")
+shader_parameter/visibility = 0.0
 shader_parameter/zNear = 0.05
 shader_parameter/zFar = 100.0
 shader_parameter/enable_outline = false
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_thickness = 10.0
+shader_parameter/alpha = 1.0
+shader_parameter/inner_radius = 2.145
+shader_parameter/outer_radius = 0.69
 shader_parameter/enable_color_limit = false
 shader_parameter/color_levels = 8
 shader_parameter/enable_color_palette = true
 shader_parameter/color1 = Color(0, 0.47150004, 0.69, 1)
 shader_parameter/color2 = Color(0, 0.32666674, 0.56, 1)
 shader_parameter/color3 = Color(0, 0.18200001, 0.39, 1)
-shader_parameter/color4 = Color(0.028800001, 0.046293315, 0.16, 1)
+shader_parameter/color4 = Color(0, 0.18039216, 0.3882353, 1)
 shader_parameter/enable_dithering = true
 shader_parameter/dither_strength = 0.3
 shader_parameter/aberration_strength = 0.0250000011875
@@ -7847,7 +7851,7 @@ size = Vector2i(300, 300)
 
 [node name="MinimapCamera" type="Camera3D" parent="Base GUI/Control/MarginContainer/SubViewport" unique_id=188927785]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 50, 0)
-cull_mask = 1048573
+cull_mask = 524285
 projection = 1
 size = 10.0
 
@@ -7878,7 +7882,7 @@ min_angle = -80.0
 cull_mask = 524287
 
 [node name="ScanShader" type="MeshInstance3D" parent="SpringArm3D/Camera3D" unique_id=2093417733]
-visible = false
+layers = 2
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_d7enn")
 

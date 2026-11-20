@@ -12,11 +12,13 @@ func transition(cpu: ArenaCharacter) -> void:
 		cpu.change_state_to(States.cpu_states["idle"])
 		
 	if cpu.character.ranged_character == false:
-		if cpu.limit_area.overlaps_body(current_target):
-			cpu.change_state_to(States.cpu_states["attack"])
+		if current_target != null && is_instance_valid(current_target):
+			if cpu.limit_area.overlaps_body(current_target):
+				cpu.change_state_to(States.cpu_states["attack"])
 	else:
-		if cpu.ranged_limit_area.overlaps_body(current_target):
-			cpu.change_state_to(States.cpu_states["attack"])
+		if current_target != null && is_instance_valid(current_target):
+			if cpu.ranged_limit_area.overlaps_body(current_target):
+				cpu.change_state_to(States.cpu_states["attack"])
 
 ##Runs during a state
 func update(cpu: ArenaCharacter, delta: float) -> void:

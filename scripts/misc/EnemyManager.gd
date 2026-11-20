@@ -46,6 +46,9 @@ var current_attacker: ArenaCharacter
 var target: Node3D = null
 var target_list: Array[ArenaCharacter]
 
+var knockback_dir: Vector3
+var knockback_strength: float
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	arena_manager = self.get_tree().current_scene
@@ -58,6 +61,7 @@ func _ready() -> void:
 	min_circle_time = enemy.base_min_circle_time
 	max_circle_time = enemy.base_max_circle_time
 	attack_chance = enemy.base_attack_chance
+	knockback_strength = enemy.knockback_strength
 	
 	counter_indicator.hide()
 	synergy_visual.hide()
@@ -77,6 +81,7 @@ func _physics_process(delta: float) -> void:
 	if synergy_visual.is_visible_in_tree():
 		synergy_visual.position = arena_manager.active_camera.unproject_position(synergy_visual_position.global_position) - synergy_visual.size / 2
 		synergy_visual.set_instance_shader_parameter("progress", synergy_timer.time_left / arena_manager.synergy_timer)
+	
 
 ##Changes the current state and runs the proper functions
 func change_state_to(next_state: BaseEnemyState) -> void:
@@ -175,9 +180,9 @@ func perfect_block_dodge(value: bool) -> void:
 
 func hurt(attacker: ArenaCharacter, damage: float) -> void:
 	if hp > 0.0:
-		change_state_to(States.enemy_states["hurt"])
 		hp -= damage
 		arena_manager.score_manager.damage_inflicted += damage
 		arena_manager.score_manager.character_attacks_count[attacker.character] += 1
 		current_attacker = attacker
-		check_synergy_combo()
+		knockback_dir = current_attacker.global_position.direction_to(self.global_position).normalized()
+		change_state_to(States.enemy_states["hurt"])
